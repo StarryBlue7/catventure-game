@@ -11,7 +11,7 @@ module.exports = {
         res.json(allCats);
     },
     async getSingleCat({ cat = null, params }, res) {
-        const singleCat = await Cat.findOne({ $or: [{ _id: Cat ? Cat._id : params.id }, { name: params.username }], })
+        const singleCat = await Cat.findOne({ $or: [{ _id: cat ? cat._id : params.id }, { name: params.name }], })
 
         if (!singleCat) {
             return res.status(400).json({ message: 'Cannot find cat' });

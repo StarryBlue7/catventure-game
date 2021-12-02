@@ -6,6 +6,7 @@ module.exports = {
 
     async getUser({ user = null, params }, res) {
         //find user by id or username
+        //bring cats that are assigned to that model
         const findUser = await User.findOne({ $or: [{ _id: user ? user._id : params.id }, { username: params.username }], });
 
         if (!findUser) {

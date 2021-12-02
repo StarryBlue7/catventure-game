@@ -2,11 +2,15 @@ const router = require('express').Router();
 
 const {
 
-} = require('../../controllers/userController');
+    getAllCats,
+    getSingleCat,
+
+} = require('../../controllers/catController');
 
 
+router.route('/cats').get(getAllCats);
 
-router.route('/')
+router.route('/singlecat').get(getSingleCat);
 
 
 

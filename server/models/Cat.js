@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose')
-const Class = require('./Class')
+
 
 const catSchema = new Schema({
     //name?
@@ -10,7 +10,8 @@ const catSchema = new Schema({
     },
     //role?
     class: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: "Class"
     },
     //image?
     level: {
