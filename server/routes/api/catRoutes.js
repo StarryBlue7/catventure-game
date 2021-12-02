@@ -4,6 +4,10 @@ const {
 
 } = require('../../controllers/userController');
 
+
+
 router.route('/')
+
+
 
 module.exports = router;

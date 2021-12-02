@@ -9,7 +9,9 @@ const catSchema = new Schema({
         unique: true,
     },
     //role?
-    class: [Class],
+    class: {
+        type: String,
+    },
     //image?
     level: {
         type: Number,
