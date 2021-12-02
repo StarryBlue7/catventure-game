@@ -43,6 +43,39 @@ function Navigation() {
             //         <button className="btn btn-sm btn-danger">Logout</button>
             //     </div>
             // </nav> */}
+            <Modal
+                size='lg'
+                show={loginShow}
+                onHide={() => setLoginShow(false)}
+                aria-labelledby='signup-modal'>
+                {/* tab container to do either signup or login component */}
+                <Tab.Container defaultActiveKey='login'>
+                    <Modal.Header closeButton>
+                        <Modal.Title id='signup-modal'>
+                        <Nav variant='pills'>
+                            <Nav.Item>
+                            <Nav.Link eventKey='login'>Login</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                            <Nav.Link eventKey='signup'>Sign Up</Nav.Link>
+                            </Nav.Item>
+                        </Nav>
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Tab.Content>
+                    <Tab.Pane eventKey='login'>
+                        login
+                        {/* <LoginForm handleModalClose={() => setLoginShow(false)} /> */}
+                    </Tab.Pane>
+                    <Tab.Pane eventKey='signup'>
+                        signup
+                        {/* <SignUpForm handleModalClose={() => setLoginShow(false)} /> */}
+                    </Tab.Pane>
+                    </Tab.Content>
+                </Modal.Body>
+                </Tab.Container>
+            </Modal>
         </>
     );
 }
