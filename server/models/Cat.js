@@ -9,10 +9,10 @@ const catSchema = new Schema({
         unique: true,
     },
     //role?
-    class: {
-        type: Schema.Types.ObjectId,
-        ref: "Class"
-    },
+    // class: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Class"
+    // },
     //level?
     level: {
         type: Number,
