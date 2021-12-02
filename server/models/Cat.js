@@ -13,7 +13,7 @@ const catSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Class"
     },
-    //image?
+    //level?
     level: {
         type: Number,
     },

@@ -17,7 +17,7 @@ module.exports = {
             return res.status(400).json({ message: 'Cannot find cat' });
         }
         res.json(singleCat);
-    }
+    },
 
     //add cat to user
 }
