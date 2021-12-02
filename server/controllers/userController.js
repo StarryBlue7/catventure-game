@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Cat } = require('../models');
 
 const { signToken } = require('../utils/auth');
 
@@ -26,7 +26,7 @@ module.exports = {
     },
     async login({ body }, res) {
         //find one user by username or email
-        const user = await User.findOne({ $or: [{ username: body.username }, { email: body.email }] });
+        const user = await User.findOne({ username: body.username });
         if (!user) {
             return res.status(400).json({ message: "Can't find this user" });
         }
@@ -41,13 +41,14 @@ module.exports = {
     },
     async addCat({ user, body }, res) {
         try {
-            const catToUser = await User.findOneAndUpdate(
+            const createCat = await Cat.create(body);
+
+            await User.findOneAndUpdate(
                 { _id: user._id },
-                { $addToSet: { cats: body } },
+                { $addToSet: { cats: createCat.id } },
                 { new: true, runValidators: true }
             );
-            return res.json(catToUser);
-
+            res.json(createCat)
         } catch (err) {
             console.log(err);
             return res.status(400).json(err);
