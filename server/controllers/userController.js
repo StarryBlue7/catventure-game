@@ -6,12 +6,12 @@ module.exports = {
 
     async getUser({ user = null, params }, res) {
         //find user by id or username
-        const user = await User.findOne({ $or: [{ _id: user ? user._id : params.id }, { username: params.username }], });
+        const findUser = await User.findOne({ $or: [{ _id: user ? user._id : params.id }, { username: params.username }], });
 
-        if (!user) {
+        if (!findUser) {
             return res.status(400).json({ message: 'Cannot find user' });
         }
-        res.json(foundUser);
+        res.json(findUser);
     },
     // create single user
     async createUser({ body }, res) {
