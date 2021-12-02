@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Button, Modal, Tab } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
+import LoginForm from './forms/LoginForm';
+import SignUpForm from './forms/SignupForm';
 
 let user =  {
     name: "User"
@@ -27,7 +29,7 @@ function Navigation() {
                 {Auth.loggedIn() ? (
                     <>
                         <p className="m-0">Welcome, {user.name}!</p>
-                        <Button className="btn-sm btn-danger">Logout</Button>
+                        <Button onClick={Auth.logout} className="btn-sm btn-danger">Logout</Button>
                     </>
                 ) : (
                     <><Button onClick={() => setLoginShow(true)} className="btn-sm btn-success">Login</Button></>
@@ -52,28 +54,26 @@ function Navigation() {
                 <Tab.Container defaultActiveKey='login'>
                     <Modal.Header closeButton>
                         <Modal.Title id='signup-modal'>
-                        <Nav variant='pills'>
-                            <Nav.Item>
-                            <Nav.Link eventKey='login'>Login</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                            <Nav.Link eventKey='signup'>Sign Up</Nav.Link>
-                            </Nav.Item>
-                        </Nav>
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Tab.Content>
-                    <Tab.Pane eventKey='login'>
-                        login
-                        {/* <LoginForm handleModalClose={() => setLoginShow(false)} /> */}
-                    </Tab.Pane>
-                    <Tab.Pane eventKey='signup'>
-                        signup
-                        {/* <SignUpForm handleModalClose={() => setLoginShow(false)} /> */}
-                    </Tab.Pane>
-                    </Tab.Content>
-                </Modal.Body>
+                            <Nav variant='pills'>
+                                <Nav.Item>
+                                    <Nav.Link eventKey='login'>Login</Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link eventKey='signup'>Sign Up</Nav.Link>
+                                </Nav.Item>
+                            </Nav>
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Tab.Content>
+                            <Tab.Pane eventKey='login'>
+                                <LoginForm handleModalClose={() => setLoginShow(false)} />
+                            </Tab.Pane>
+                            <Tab.Pane eventKey='signup'>
+                                <SignUpForm handleModalClose={() => setLoginShow(false)} />
+                            </Tab.Pane>
+                        </Tab.Content>
+                    </Modal.Body>
                 </Tab.Container>
             </Modal>
         </>

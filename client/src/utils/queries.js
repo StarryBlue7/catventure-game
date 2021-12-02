@@ -21,7 +21,7 @@ export const createUser = (userData) => {
 }
 //log in a user
 export const loginUser = (userData) => {
-    return fetch('', {
+    return fetch('/api/users/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
