@@ -5,7 +5,7 @@ import Footer from './Footer';
 // Main page
 function Main() {
     return (
-        <div className="row">
+        <div className="col-10 row">
             <Sidebar />
             <main className="col-9">
                 Pages

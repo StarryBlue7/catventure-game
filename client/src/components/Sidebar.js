@@ -3,7 +3,7 @@ import React from 'react';
 // Sidebar
 function Sidebar() {
     return (
-        <aside>
+        <aside className="col-3">
             Sidebar
         </aside>
     );
