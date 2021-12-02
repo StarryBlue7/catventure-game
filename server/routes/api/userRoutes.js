@@ -6,6 +6,7 @@ const {
     getUser,
     login,
     addCat,
+    getAllUser
 
 } = require('../../controllers/userController');
 
@@ -16,9 +17,11 @@ router.route('/').post(createUser).put(authMiddleware);
 
 router.route('/login').post(login);
 
-router.route('/user').get(authMiddleware, getUser);
-
 router.route('/addcat').post(addCat);
+
+router.route('/all').get(getAllUser);
+
+router.route('/:id').get(getUser);
 
 
 

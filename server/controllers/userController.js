@@ -14,6 +14,16 @@ module.exports = {
         }
         res.json(findUser);
     },
+    async getAllUser(req, res) {
+        //find user by id or username
+        //bring cats that are assigned to that model
+        const findUsers = await User.find({});
+
+        if (!findUsers) {
+            return res.status(400).json({ message: 'Cannot find users' });
+        }
+        res.json(findUsers);
+    },
     // create single user
     async createUser({ body }, res) {
         const user = await User.create(body);
@@ -25,7 +35,7 @@ module.exports = {
         res.json({ token, user });
     },
     async login({ body }, res) {
-        //find one user by username or email
+        //find one user by username or
         const user = await User.findOne({ username: body.username });
         if (!user) {
             return res.status(400).json({ message: "Can't find this user" });
@@ -39,10 +49,13 @@ module.exports = {
         const token = signToken(user);
         res.json({ token, user });
     },
+    // async logout({body}, res) {
+    //     const user = await 
+    // }
     async addCat({ user, body }, res) {
         try {
             const createCat = await Cat.create(body);
-
+            console.log(createCat);
             await User.findOneAndUpdate(
                 { _id: user._id },
                 { $addToSet: { cats: createCat.id } },
