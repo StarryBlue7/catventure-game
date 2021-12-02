@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose')
 const bcrypt = require('bcrypt');
-
+const Cat = require('./Cat')
 
 const userSchema = new Schema({
     // username
@@ -22,7 +22,7 @@ const userSchema = new Schema({
         required: true,
     },
     // Cats?
-
+    cats: [Cat],
 });
 
 // hashing
