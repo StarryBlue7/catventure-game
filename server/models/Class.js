@@ -14,7 +14,6 @@ const classSchema = new Schema({
         type: String,
     }
 
-
 });
 
 const Class = model('Class', classSchema);
