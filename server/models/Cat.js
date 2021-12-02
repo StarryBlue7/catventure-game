@@ -1,17 +1,40 @@
-const { Schema } = require('mongoose')
+const { Schema, model } = require('mongoose')
+
 
 const catSchema = new Schema({
     //name?
-
+    name: {
+        type: String,
+        required: true,
+        unique: true,
+    },
     //role?
-
-    //image?
-
-    //description? 
-
+    class: {
+        type: Schema.Types.ObjectId,
+        ref: "Class"
+    },
+    //level?
+    level: {
+        type: Number,
+    },
     //power/abilities or something
+    power: {
+        type: Number,
+    },
+    //xp
+    experience: {
+        type: Number,
+    },
+    //maximum hitpoints
+    maxHP: {
+        type: Number,
+    },
+    //current hitpoints
+    currentHP: {
+        type: Number,
+    },
+});
 
-    // Owners?
-})
+const Cat = model('Cat', catSchema);
 
-module.exports = catSchema
+module.exports = Cat;
