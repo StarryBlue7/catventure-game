@@ -1,6 +1,6 @@
 // (FYI) routes are naked until we build our api
 
-// get logged in user info
+// get logged in user info based on token
 export const getUser = (token) => {
     return fetch('', {
         headers: {
@@ -19,7 +19,7 @@ export const createUser = (userData) => {
         body: JSON.stringify(userData),
     })
 }
-
+//log in a user
 export const loginUser = (userData) => {
     return fetch('', {
         method: 'POST',
