@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Cat } = require('../models');
 
 const { signToken } = require('../utils/auth');
 
@@ -6,6 +6,7 @@ module.exports = {
 
     async getUser({ user = null, params }, res) {
         //find user by id or username
+        //bring cats that are assigned to that model
         const findUser = await User.findOne({ $or: [{ _id: user ? user._id : params.id }, { username: params.username }], });
 
         if (!findUser) {
@@ -25,7 +26,7 @@ module.exports = {
     },
     async login({ body }, res) {
         //find one user by username or email
-        const user = await User.findOne({ $or: [{ username: body.username }, { email: body.email }] });
+        const user = await User.findOne({ username: body.username });
         if (!user) {
             return res.status(400).json({ message: "Can't find this user" });
         }
@@ -37,5 +38,20 @@ module.exports = {
         }
         const token = signToken(user);
         res.json({ token, user });
+    },
+    async addCat({ user, body }, res) {
+        try {
+            const createCat = await Cat.create(body);
+
+            await User.findOneAndUpdate(
+                { _id: user._id },
+                { $addToSet: { cats: createCat.id } },
+                { new: true, runValidators: true }
+            );
+            res.json(createCat)
+        } catch (err) {
+            console.log(err);
+            return res.status(400).json(err);
+        }
     }
 }
