@@ -41,12 +41,12 @@ export const addCat = (catData, token) => {
   });
 };
 
-// // remove saved book data for a logged in user
-// export const deleteBook = (bookId, token) => {
-//   return fetch(`/api/users/books/${bookId}`, {
-//     method: 'DELETE',
-//     headers: {
-//       authorization: `Bearer ${token}`,
-//     },
-//   });
-// };
+export const removeCat = (catId, token) => {
+  return fetch(`/api/users/cats/${catId}`, {
+    method: 'DELETE',
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+};
+

@@ -6,7 +6,8 @@ const {
     getUser,
     login,
     addCat,
-    getAllUser
+    getAllUser,
+    removeCat
 
 } = require('../../controllers/userController');
 
@@ -21,6 +22,7 @@ router.route('/all').get(getAllUser);
 
 router.route('/me').get(getUser);
 
+router.route('/cats/:catId').delete(authMiddleware, removeCat);
 
 
 module.exports = router;
