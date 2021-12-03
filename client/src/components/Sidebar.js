@@ -1,11 +1,11 @@
 import React from 'react';
-
+import Aside from './gameUI/AsideCard'
 // Sidebar
 function Sidebar() {
     return (
-        <aside className="col-3">
+        <Aside className="col-3">
             Sidebar
-        </aside>
+        </Aside>
     );
 }
 
