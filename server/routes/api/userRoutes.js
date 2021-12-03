@@ -21,7 +21,7 @@ router.route('/addcat').post(addCat);
 
 router.route('/all').get(getAllUser);
 
-router.route('/:id').get(getUser);
+router.route('/me').get(getUser);
 
 
 

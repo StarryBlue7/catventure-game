@@ -6,7 +6,6 @@ const catSchema = new Schema({
     name: {
         type: String,
         required: true,
-        unique: true,
     },
     //role?
     // class: {

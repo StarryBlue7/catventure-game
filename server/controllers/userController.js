@@ -55,16 +55,18 @@ module.exports = {
     async addCat({ user, body }, res) {
         try {
             const createCat = await Cat.create(body);
-            console.log(createCat);
-            await User.findOneAndUpdate(
+            console.log(user);
+            const userUpdate = await User.findOneAndUpdate(
                 { _id: user._id },
-                { $addToSet: { cats: createCat.id } },
+                { $addToSet: { cats: createCat._id } },
                 { new: true, runValidators: true }
             );
-            res.json(createCat)
+            res.json(userUpdate)
         } catch (err) {
             console.log(err);
             return res.status(400).json(err);
         }
     }
 }
+
+
