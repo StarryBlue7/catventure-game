@@ -7,24 +7,54 @@ import { addCat } from '../../utils/API';
 import CatCard from '../gameUI/CatCard';
 import Classes from '../../data/classes.json'
 
+function assignJob() {
+    let jobRoll = Math.floor(Math.random()*3);
+    switch(jobRoll) {
+        case 1:
+            return "Mage";
+        case 2:
+            return "Rogue";
+        default:
+            return "Warrior";
+    }
+}
+
+// the RNGesus function
+function randomGen(baseValue, spread) {
+
+    return Math.abs(baseValue - spread + Math.floor(Math.random()*(spread*2+1)))
+}
+
+function assignPower(job) {
+    
+}
+
+class NewCat {
+    constructor(power, maxHP, job) {
+        this.power = power;
+        this.maxHP = maxHP;
+        this.job = job || assignJob();
+    }
+}
+
 const tempCats = [
     {
         name: "Maya",
-        power: 8,
+        power: Classes.Warrior.basePower,
         maxHP: 20,
-        class: 1,
+        job: 1,
     },
     {
         name: "Farley",
         power: 5,
         maxHP: 12,
-        class: 2,
+        job: 2,
     },
     {
         name: "Cassie",
         power: 6,
         maxHP: 18,
-        class: 3,
+        job: 3,
     },
 ];
 
@@ -57,7 +87,7 @@ const Tavern = () => {
             <p>Welcome to the tavern meow, we've got some adventurers here looking for a quest</p>
             <div>
                 {tempCats.map((cat, i) => (
-                    <CatCard cat={cat} key={i} isTavern={true} />
+                    <CatCard recruitCat={recruitCat} cat={cat} key={i} isTavern={true} />
                 ))}
             </div>
             <Button as={Link} to="/village">Back to the village</Button>

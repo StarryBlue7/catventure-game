@@ -43,9 +43,9 @@ function CatCard(props) {
         <>
             <div className="cat-card">
                 {!props.isTavern ? (<p>{props.cat.name}</p>) : (<></>)}
-                <img src={getClassImg(props.cat.class)} alt="animated cat" />
+                <img src={getClassImg(props.cat.job)} alt="animated cat" />
                 <div className="hp-bar"><div></div></div>
-                <p>{getClassName(props.cat.class)}</p>
+                <p>{getClassName(props.cat.job)}</p>
                 <p>HP: {props.cat.maxHP}/{props.cat.maxHP}</p>
                 <p>Lvl: {!props.isTavern ? props.cat.level : 1}</p>
                 <p>Power: {props.cat.power}</p>
