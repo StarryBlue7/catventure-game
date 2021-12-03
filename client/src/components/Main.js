@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Switch, Route } from 'react-router-dom';
 import Auth from '../utils/auth';
 import { getMe } from '../utils/API';
 import Sidebar from './Sidebar';
@@ -46,22 +46,20 @@ function Main() {
     // }, [userDataLength]);
 
     return (
-        <Router>
-            <div className="col-10 row">
-                <Sidebar />
-                <main className="col-9">
-                    <Switch>
-                        <Route exact path="/" component={Home} />
-                        <Route exact path="/tavern" component={Tavern} />
-                        <Route exact path="/village" component={Village} />
-                        <Route exact path="/party" component={Party} />
-                        <Route exact path="/forest" component={Forest} />
-                        <Route exact path="/cave" component={Cave} />
-                    </Switch>
-                    <Footer />
-                </main>
-            </div>
-        </Router>
+        <div className="col-10 row">
+            <Sidebar />
+            <main className="col-9">
+                <Switch>
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/tavern" component={Tavern} />
+                    <Route exact path="/village" component={Village} />
+                    <Route exact path="/party" component={Party} />
+                    <Route exact path="/forest" component={Forest} />
+                    <Route exact path="/cave" component={Cave} />
+                </Switch>
+                <Footer />
+            </main>
+        </div>
     );
 }
 
