@@ -30,8 +30,9 @@ export const loginUser = (userData) => {
 
 // save book data for a logged in user
 export const addCat = (catData, token) => {
-  return fetch('/api/users/addcat', {
-    method: 'POST',
+  console.log(catData);
+  return fetch('/api/users/', {
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       authorization: `Bearer ${token}`,

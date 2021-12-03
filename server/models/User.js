@@ -1,6 +1,8 @@
 const { Schema, model } = require('mongoose')
 const bcrypt = require('bcrypt');
 
+const catSchema = require('./Cat');
+
 
 const userSchema = new Schema({
     // username
@@ -15,13 +17,14 @@ const userSchema = new Schema({
         required: true,
     },
     // Cats?
-    cats: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Cat"
-        }
-    ]
-});
+    cats: [catSchema],
+},
+    {
+        toJSON: {
+            virtuals: true,
+        },
+    }
+);
 
 // hashing
 userSchema.pre('save', async function (next) {
@@ -39,9 +42,9 @@ userSchema.methods.isCorrectPassword = async function (password) {
 };
 
 // when we query a user, we'll also get another field called `bookCount` with the number of saved books we have
-// userSchema.virtual('cats').get(function () {
-//     return this.cats.length;
-// });
+userSchema.virtual('catCount').get(function () {
+    return this.cats.length;
+});
 
 const User = model('User', userSchema);
 

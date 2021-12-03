@@ -13,11 +13,9 @@ const {
 const { authMiddleware } = require('../../utils/auth');
 
 // not sure on routes yet, we will decide
-router.route('/').post(createUser).put(authMiddleware);
+router.route('/').post(createUser).put(authMiddleware, addCat);
 
 router.route('/login').post(login);
-
-router.route('/addcat').post(authMiddleware, addCat);
 
 router.route('/all').get(getAllUser);
 
