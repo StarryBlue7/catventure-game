@@ -8,7 +8,7 @@ const {
 } = require('../../controllers/catController');
 
 
-router.route('/cats').get(getAllCats);
+router.route('/').get(getAllCats);
 
 router.route('/singlecat').get(getSingleCat);
 

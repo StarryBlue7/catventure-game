@@ -3,7 +3,7 @@ const { Cat } = require('../models');
 module.exports = {
     // get route
     async getAllCats({ }, res) {
-        const allCats = await Cat.findAll();
+        const allCats = await Cat.find();
 
         if (!allCats) {
             return res.status(400).json({ message: 'There is no cats!' });
