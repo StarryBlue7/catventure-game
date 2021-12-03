@@ -7,12 +7,9 @@ const catSchema = new Schema({
         type: String,
         required: true,
     },
-    //role?
-    // class: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Class"
-    // },
-    //level?
+    class: {
+        type: String
+    },
     level: {
         type: Number,
         default: 1,

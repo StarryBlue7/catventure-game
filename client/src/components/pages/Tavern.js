@@ -5,6 +5,7 @@ import { Button } from 'react-bootstrap';
 import Auth from '../../utils/auth';
 import { addCat } from '../../utils/API';
 import CatCard from '../gameUI/CatCard';
+import Classes from '../../data/classes.json'
 
 const tempCats = [
     {
@@ -56,11 +57,11 @@ const Tavern = () => {
             <p>Welcome to the tavern meow, we've got some adventurers here looking for a quest</p>
             <div>
                 {tempCats.map((cat, i) => (
-                    <CatCard cat = {cat} key = {i} isTavern = {true} />
+                    <CatCard cat={cat} key={i} isTavern={true} />
                 ))}
             </div>
             <Button as={Link} to="/village">Back to the village</Button>
-            <Button onClick={() => recruitCat(tempCats[0])}>Recruit {tempCats[0].name}!</Button>
+            <Button onClick={() => recruitCat(tempCats[0])}>Recruit {Classes.Warrior.statName}!</Button>
         </section>
     )
 }

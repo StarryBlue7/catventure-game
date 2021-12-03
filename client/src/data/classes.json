@@ -1,0 +1,15 @@
+{
+    "Warrior": {
+        "basePower": 8,
+        "baseHitpoints": 20,
+        "statName": "Strength"
+    },
+    "Mage": {
+        "basePower": 5,
+        "baseHitpoints": 12
+    },
+    "Archer": {
+        "basePower": 6,
+        "baseHitpoints": 18
+    }
+}
