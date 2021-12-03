@@ -1,4 +1,5 @@
 import React from 'react';
+import {Button} from 'react-bootstrap';
 
 function Home() {
     return (
@@ -6,8 +7,7 @@ function Home() {
             <h2>
                 Home Sweet Home
             </h2>
-            <div>Go on Adventure</div>
-            <div></div>
+            <Button to="/village">Go on Adventure</Button>
         </section>
     )
 }

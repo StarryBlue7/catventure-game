@@ -1,51 +1,61 @@
 import React, {useEffect, useState} from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Auth from '../utils/auth';
 import { getMe } from '../utils/API';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
+import Home from './pages/Home';
+import Village from './pages/Village';
+import Tavern from './pages/Tavern';
 
 
 
 // Main page
 function Main() {
 
-    const [userData, setUserData] = useState({});
+    // const [userData, setUserData] = useState({});
 
-    const userDataLength = Object.keys(userData).length;
+    // const userDataLength = Object.keys(userData).length;
 
-    useEffect(() => {
-        const getUserData = async () => {
-        try {
-            const token = Auth.loggedIn() ? Auth.getToken() : null;
+    // useEffect(() => {
+    //     const getUserData = async () => {
+    //     try {
+    //         const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-            if (!token) {
-            return false;
-            }
+    //         if (!token) {
+    //         return false;
+    //         }
 
-            const response = await getMe(token);
+    //         const response = await getMe(token);
 
-            if (!response.ok) {
-            throw new Error('something went wrong!');
-            }
+    //         if (!response.ok) {
+    //         throw new Error('something went wrong!');
+    //         }
 
-            const user = await response.json();
-            setUserData(user);
-        } catch (err) {
-            console.error(err);
-        }
-        };
+    //         const user = await response.json();
+    //         setUserData(user);
+    //     } catch (err) {
+    //         console.error(err);
+    //     }
+    //     };
 
-        getUserData();
-    }, [userDataLength]);
+    //     getUserData();
+    // }, [userDataLength]);
 
     return (
-        <div className="col-10 row">
-            <Sidebar />
-            <main className="col-9">
-                Pages
-                <Footer />
-            </main>
-        </div>
+        <Router>
+            <div className="col-10 row">
+                <Sidebar />
+                <main className="col-9">
+                    <Switch>
+                        <Route exact path="/" component={Home} />
+                        <Route exact path="/tavern" component={Tavern} />
+                        <Route exact path="/village" component={Village} />
+                    </Switch>
+                    <Footer />
+                </main>
+            </div>
+        </Router>
     );
 }
 
