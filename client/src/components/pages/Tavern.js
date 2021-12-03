@@ -26,7 +26,7 @@ function randomGen(baseValue, spread) {
 
 class NewCat {
     constructor(job) {
-        this.job = job
+        this.class = job
         this.power = randomGen(Jobs[job].basePower, 2);
         this.maxHP = randomGen(Jobs[job].baseHitpoints, 4)
     }

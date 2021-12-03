@@ -19,15 +19,15 @@ function CatCard(props) {
 
     const [namingModal, setNamingModal] = useState(false);
 
-    function getClassName(gameClass){
-        if(gameClass === 1){
-            return "Warrior";
-        } else if(gameClass === 2){
-            return "Ranger";
-        } else {
-            return "Mage";
-        }
-    }
+    // function getClassName(gameClass){
+    //     if(gameClass === 1){
+    //         return "Warrior";
+    //     } else if(gameClass === 2){
+    //         return "Ranger";
+    //     } else {
+    //         return "Mage";
+    //     }
+    // }
 
     function getClassImg(gameClass){
         if(gameClass === 1){
@@ -45,12 +45,12 @@ function CatCard(props) {
                 {!props.isTavern ? (<p>{props.cat.name}</p>) : (<></>)}
                 <img src={getClassImg(props.cat.job)} alt="animated cat" />
                 <div className="hp-bar"><div></div></div>
-                <p>{getClassName(props.cat.job)}</p>
+                <p>{props.cat.job}</p>
                 <p>HP: {props.cat.maxHP}/{props.cat.maxHP}</p>
                 <p>Lvl: {!props.isTavern ? props.cat.level : 1}</p>
                 <p>Power: {props.cat.power}</p>
                 {props.isTavern ? (
-                    <Button>Add to Party</Button>
+                    <Button onClick={() => props.recruitCat(props.cat)}>Add to Party</Button>
                 ) 
                 : (
                     <Button>Remove</Button>
