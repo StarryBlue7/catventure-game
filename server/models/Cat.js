@@ -15,6 +15,7 @@ const catSchema = new Schema({
     //level?
     level: {
         type: Number,
+        default: 1,
     },
     //power/abilities or something
     power: {
@@ -23,6 +24,7 @@ const catSchema = new Schema({
     //xp
     experience: {
         type: Number,
+        default: 0,
     },
     //maximum hitpoints
     maxHP: {
@@ -31,6 +33,7 @@ const catSchema = new Schema({
     //current hitpoints
     currentHP: {
         type: Number,
+        default: 1,
     },
 });
 
