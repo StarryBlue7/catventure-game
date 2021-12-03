@@ -2,17 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
-
-const Tavern = () => {
-
+function Cave() {
     return (
         <section>
-            <h2>Cat Tavern</h2>
-            <p>Welcome to the tavern meow, we've got some adventurers here looking for a quest</p>
+            <h2>Dark Cave</h2>
+            <p>My Team searched the depths of the dark cave and increased their feline abilities</p>
             <Button as={Link} to="/village">Back to the village</Button>
         </section>
     )
-
 }
 
-export default Tavern;
+export default Cave;
