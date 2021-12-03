@@ -1,48 +1,22 @@
-//
-// const [userData, setUserData] = useState({});
+import React from 'react';
 
+const AsideCard = (props) => {
 
-import React, { useState, useEffect } from 'react';
-import { getMe } from '../../utils/API';
-import Auth from '../../utils/auth';
-
-
-const Aside = () => {
-
-    const [userData, setUserData] = useState({});
-
-    const userDataLength = Object.keys(userData).length;
-
-    useEffect(() => {
-        const getUserData = async () => {
-            try {
-                const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-                if (!token) {
-                    return false;
-                }
-
-                const response = await getMe(token);
-
-                if (!response.ok) {
-                    throw new Error('something went wrong!');
-                }
-
-                const user = await response.json();
-                setUserData(user);
-            } catch (err) {
-                console.error(err);
-            }
-        };
-
-        getUserData();
-    }, [userDataLength]);
 
     return (
-        <h2>placeholder</h2>
+        <section>
+            <h2>Your party</h2>
+            <p>{props.cat.name}</p>
+            <p>{props.cat.class}</p>
+            <p>{props.cat.level}</p>
+            <p>{props.cat.power}</p>
+            <p>{props.cat.experience}</p>
+            <p>{props.cat.maxHP}</p>
+            <p>{props.cat.currentHP}</p>
+        </section>
     )
 }
 
 
 
-export default Aside;
+export default AsideCard;
