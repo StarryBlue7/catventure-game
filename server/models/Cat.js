@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose')
+const { Schema } = require('mongoose')
 
 
 const catSchema = new Schema({
@@ -37,6 +37,5 @@ const catSchema = new Schema({
     },
 });
 
-const Cat = model('Cat', catSchema);
 
-module.exports = Cat;
+module.exports = catSchema;

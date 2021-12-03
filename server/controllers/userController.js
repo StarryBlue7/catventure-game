@@ -52,22 +52,36 @@ module.exports = {
     // async logout({body}, res) {
     //     const user = await 
     // }
+    // async addCat({ user, body }, res) {
+    //     try {
+    //         // const createCat = await Cat.create(body);
+    //         console.log(user);
+    //         const userUpdate = await User.findOneAndUpdate(
+    //             { _id: user._id },
+    //             { $addToSet: { cats: body } },
+    //             { new: true, runValidators: true }
+    //         );
+    //         res.json(userUpdate)
+    //         // res.json(createCat)
+    //     } catch (err) {
+    //         console.log(err);
+    //         return res.status(400).json(err);
+    //     }
+    // }
     async addCat({ user, body }, res) {
+        console.log(user);
         try {
-            // const createCat = await Cat.create(body);
-            console.log(user);
-            const userUpdate = await User.findOneAndUpdate(
+            const updatedUser = await User.findOneAndUpdate(
                 { _id: user._id },
                 { $addToSet: { cats: body } },
                 { new: true, runValidators: true }
             );
-            res.json(userUpdate)
-            // res.json(createCat)
+            return res.json(updatedUser);
         } catch (err) {
             console.log(err);
             return res.status(400).json(err);
         }
-    }
+    },
 }
 
 

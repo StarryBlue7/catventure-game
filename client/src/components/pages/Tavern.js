@@ -49,7 +49,7 @@ const Tavern = () => {
             <h2>Cat Tavern</h2>
             <p>Welcome to the tavern meow, we've got some adventurers here looking for a quest</p>
             <Button as={Link} to="/village">Back to the village</Button>
-            <Button onClick={() => recruitCat(tempCats[0].name)}>Recruit {tempCats[0].name}!</Button>
+            <Button onClick={() => recruitCat(tempCats[0])}>Recruit {tempCats[0].name}!</Button>
         </section>
     )
 }
