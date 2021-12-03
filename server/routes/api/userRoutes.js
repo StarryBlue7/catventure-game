@@ -17,7 +17,7 @@ router.route('/').post(createUser).put(authMiddleware);
 
 router.route('/login').post(login);
 
-router.route('/addcat').post(addCat);
+router.route('/addcat').post(authMiddleware, addCat);
 
 router.route('/all').get(getAllUser);
 
