@@ -24,8 +24,9 @@ function CatCard(props) {
     const handleFormSubmit = async(event) => {
         event.preventDefault();
         const cat = props.cat;
-        cat.name = catFormData;
+        cat.name = catFormData.catName;
         console.log(cat);
+        props.recruitCat(cat);
     }
 
     const [namingModal, setNamingModal] = useState(false);
@@ -54,7 +55,7 @@ function CatCard(props) {
                 <p>Lvl: {!props.isTavern ? props.cat.level : 1}</p>
                 <p>{Jobs[props.cat.class].statName}: {props.cat.power}</p>
                 {props.isTavern ? (
-                    <Button onClick={namingModalOpen}>Add to Party</Button>
+                    <Button onClick={namingModalOpen}>Recruit this cat</Button>
                 ) 
                 : (
                     <Button>Remove</Button>
@@ -75,16 +76,18 @@ function CatCard(props) {
                                 required
                             />
                         </Form.Group>
+                        <Button
+                            disabled={!catFormData.catName}
+                            variant="primary"
+                            type="submit"
+                            onClick={namingModalClose}>
+                            Add to my Party!
+                        </Button>
+                        <Button variant="secondary" onClick={namingModalClose}>
+                            Close
+                        </Button>
                     </Form>      
                 </Modal.Body>
-                <Modal.Footer>
-                <Button variant="secondary" onClick={namingModalClose}>
-                    Close
-                </Button>
-                <Button variant="primary" onClick={namingModalClose}>
-                        
-                </Button>
-                </Modal.Footer>
             </Modal>
         </>
     )
