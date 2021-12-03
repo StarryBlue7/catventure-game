@@ -49,25 +49,7 @@ module.exports = {
         const token = signToken(user);
         res.json({ token, user });
     },
-    // async logout({body}, res) {
-    //     const user = await 
-    // }
-    // async addCat({ user, body }, res) {
-    //     try {
-    //         // const createCat = await Cat.create(body);
-    //         console.log(user);
-    //         const userUpdate = await User.findOneAndUpdate(
-    //             { _id: user._id },
-    //             { $addToSet: { cats: body } },
-    //             { new: true, runValidators: true }
-    //         );
-    //         res.json(userUpdate)
-    //         // res.json(createCat)
-    //     } catch (err) {
-    //         console.log(err);
-    //         return res.status(400).json(err);
-    //     }
-    // }
+    //add cat to user
     async addCat({ user, body }, res) {
         console.log(user);
         try {
@@ -81,6 +63,18 @@ module.exports = {
             console.log(err);
             return res.status(400).json(err);
         }
+    },
+    //remove cat from user
+    async removeCat({ user, params }, res) {
+        const removedCat = await User.findOneAndUpdate(
+            { _id: user._id },
+            { $pull: { cats: { catId: params.catId } } },
+            { new: true }
+        );
+        if (!removedCat) {
+            return res.status(404).json({ message: "Could not remove your cat!" });
+        }
+        return res.json(removedCat);
     },
 }
 

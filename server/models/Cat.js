@@ -10,6 +10,7 @@ const catSchema = new Schema({
     class: {
         type: String
     },
+    // level
     level: {
         type: Number,
         default: 1,

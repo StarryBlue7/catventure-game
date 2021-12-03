@@ -1,7 +1,8 @@
 const { Cat } = require('../models');
 
 module.exports = {
-    // get route
+
+    // this is just data for testing
     async getAllCats({ }, res) {
         const allCats = await Cat.find();
 
@@ -19,5 +20,5 @@ module.exports = {
         res.json(singleCat);
     },
 
-    //add cat to user
+
 }
