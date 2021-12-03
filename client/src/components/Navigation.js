@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav, Container, Button, Modal, Tab } from 'react-bootstrap';
+import { Navbar, Nav, Button, Modal, Tab } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
 import LoginForm from './forms/LoginForm';
 import SignUpForm from './forms/SignupForm';
 
+// Placeholder username, should be passed in through props
 let user =  {
     name: "User"
 }
@@ -17,40 +18,30 @@ function Navigation() {
 
     return (
         <>
-            <Navbar expand="lg" className="w-100 d-flex justify-content-between px-0">
+            <Navbar expand="lg" className="w-100 d-flex justify-content-between align-items-end px-0">
                 <Nav>
-                    <Nav.Link to='/'>Home</Nav.Link> {/* as={Link} */}
+                    <Nav.Link as={Link} to='/'>Home</Nav.Link>
                     {Auth.loggedIn() ? (
-                        <Nav.Link to='/village'>Adventure</Nav.Link>
+                        <Nav.Link as={Link} to='/village'>Adventure</Nav.Link>
                     ) : (
                         <></>
                     )}
                 </Nav>
                 {Auth.loggedIn() ? (
-                    <>
+                    <Nav className="gap-10">
                         <p className="m-0">Welcome, {user.name}!</p>
                         <Button onClick={Auth.logout} className="btn-sm btn-danger">Logout</Button>
-                    </>
+                    </Nav>
                 ) : (
                     <><Button onClick={() => setLoginShow(true)} className="btn-sm btn-success">Login</Button></>
                 )}
             </Navbar>
-            {/* // <nav className="col-12 d-flex flex-row justify-content-between px-0">
-            //     <ul id="nav-buttons" className="nav d-flex flex-row justify-content-end align-items-center gap-10">
-            //         <li className="nav-item">Home</li>
-            //         <li className="nav-item">Adventure</li>
-            //     </ul>
-            //     <div id="user-box" className="d-flex flex-row justify-content-end align-items-center gap-10">
-            //         <p className="m-0">Welcome, {user.name}!</p>
-            //         <button className="btn btn-sm btn-danger">Logout</button>
-            //     </div>
-            // </nav> */}
             <Modal
                 size='lg'
                 show={loginShow}
                 onHide={() => setLoginShow(false)}
                 aria-labelledby='signup-modal'>
-                {/* tab container to do either signup or login component */}
+                {/* Tabbed form to show either signup or login component */}
                 <Tab.Container defaultActiveKey='login'>
                     <Modal.Header closeButton>
                         <Modal.Title id='signup-modal'>
