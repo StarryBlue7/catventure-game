@@ -9,6 +9,7 @@ import Village from './pages/Village';
 import Tavern from './pages/Tavern';
 import Party from './pages/Party';
 import Forest from './pages/Forest';
+import Cave from './pages/Cave';
 
 
 
@@ -55,6 +56,7 @@ function Main() {
                         <Route exact path="/village" component={Village} />
                         <Route exact path="/party" component={Party} />
                         <Route exact path="/forest" component={Forest} />
+                        <Route exact path="/cave" component={Cave} />
                     </Switch>
                     <Footer />
                 </main>

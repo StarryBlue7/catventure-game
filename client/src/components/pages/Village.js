@@ -8,7 +8,7 @@ function Village() {
             <h2>Cat Village</h2>
             <Button as={Link} to="/tavern">Go to the Tavern</Button>
             <Button as={Link} to="/forest">Go to Deadly Forest</Button>
-            <Button>Go to Dark Cave</Button>
+            <Button as={Link} to="/cave">Go to Dark Cave</Button>
         </section>
     )
 }
