@@ -1,48 +1,23 @@
-//
-// const [userData, setUserData] = useState({});
+
+import React from 'react';
 
 
-import React, { useState, useEffect } from 'react';
-import { getMe } from '../../utils/API';
-import Auth from '../../utils/auth';
 
+const AsideCard = () => {
 
-const Aside = () => {
-
-    const [userData, setUserData] = useState({});
-
-    const userDataLength = Object.keys(userData).length;
-
-    useEffect(() => {
-        const getUserData = async () => {
-            try {
-                const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-                if (!token) {
-                    return false;
-                }
-
-                const response = await getMe(token);
-
-                if (!response.ok) {
-                    throw new Error('something went wrong!');
-                }
-
-                const user = await response.json();
-                setUserData(user);
-            } catch (err) {
-                console.error(err);
-            }
-        };
-
-        getUserData();
-    }, [userDataLength]);
 
     return (
-        <h2>placeholder</h2>
+        <section>
+            <h2>Your Party</h2>
+            {/* <div>
+            {user.map((cats, i) => (
+                
+            ))}
+            </div> */}
+        </section>
     )
 }
 
 
 
-export default Aside;
+export default AsideCard;
