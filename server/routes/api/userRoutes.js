@@ -13,15 +13,15 @@ const {
 
 const { authMiddleware } = require('../../utils/auth');
 
-// not sure on routes yet, we will decide
+// create user
 router.route('/').post(createUser).put(authMiddleware, addCat);
-
+// login user
 router.route('/login').post(login);
-
+// get all the users
 router.route('/all').get(getAllUser);
-
+// get logged in user
 router.route('/me').get(getUser);
-
+// remove cat by id from users cat array
 router.route('/cats/:catId').delete(authMiddleware, removeCat);
 
 
