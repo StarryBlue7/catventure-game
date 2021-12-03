@@ -1,7 +1,7 @@
 import React from 'react';
 import AsideCard from './gameUI/AsideCard'
 
-
+//temp dats to test props
 const fakeUser = {
     username: "George",
     password: "duck",
@@ -19,6 +19,7 @@ const fakeUser = {
 
 }
 // Sidebar
+//userData will be used when we are able to addcat to user
 function Sidebar({ userData }) {
     return (
         <aside className="col-3">
