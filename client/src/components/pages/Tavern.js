@@ -68,7 +68,11 @@ const Tavern = () => {
             <p>Welcome to the tavern meow, we've got some adventurers here looking for a quest</p>
             <div>
                 {tavernCats.map((cat, i) => (
-                    <CatCard recruitCat={recruitCat} cat={cat} key={i} isTavern={true} />
+                    <CatCard 
+                        recruitCat={recruitCat} 
+                        cat={cat} 
+                        key={i} 
+                        isTavern={true} />
                 ))}
             </div>
             <Button as={Link} to="/village">Back to the village</Button>
