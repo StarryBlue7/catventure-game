@@ -21,6 +21,7 @@ const tempCats = [
     },
 ];
 
+
 const Tavern = () => {
     // Add cat to user roster
     const recruitCat = async (newCat) => {
