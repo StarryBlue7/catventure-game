@@ -1,0 +1,17 @@
+{
+    "Warrior": {
+        "basePower": 6,
+        "baseHitpoints": 20,
+        "statName": "Strength"
+    },
+    "Mage": {
+        "basePower": 10,
+        "baseHitpoints": 14,
+        "statName": "Arcane"
+    },
+    "Rogue": {
+        "basePower": 7,
+        "baseHitpoints": 18,
+        "statName": "Dexterity"
+    }
+}
