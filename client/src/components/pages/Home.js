@@ -20,9 +20,10 @@ function Home() {
             </div>
             <div>
                 <Button onClick={() => setAction('idle')}>Idle</Button>
+                <Button onClick={() => setAction('attack')}>Attack</Button>
                 {/* <Button onClick={() => setAction('heal')}>Healing</Button>
                 <Button onClick={() => setAction('die')}>Die</Button>
-                <Button onClick={() => setAction('attack')}>Attack</Button>
+                
                 <Button onClick={() => setAction('damaged')}>Damaged</Button> */}
             </div>
             <div>
