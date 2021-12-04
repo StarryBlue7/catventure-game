@@ -9,6 +9,7 @@ const {
     getAllUser,
     removeCat,
     updateTreasure,
+    updateCat,
 
 } = require('../../controllers/userController');
 
@@ -24,8 +25,10 @@ router.route('/all').get(getAllUser);
 router.route('/me').get(authMiddleware, getUser);
 // remove cat by id from users cat array
 router.route('/cats/:_id').delete(authMiddleware, removeCat);
-
+//update date on user model treasure has been claimed
 router.route('/:_id').put(authMiddleware, updateTreasure);
+// update cat's stat
+router.route('/cats/update/:_id').put(authMiddleware, updateCat);
 
 
 module.exports = router;

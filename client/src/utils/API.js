@@ -61,3 +61,13 @@ export const lastTreasure = (userId, token) => {
   });
 };
 
+export const updateCat = (catId, token) => {
+  return fetch(`/api/users/update/${catId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+    },
+  })
+}
+
