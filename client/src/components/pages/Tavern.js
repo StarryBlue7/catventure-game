@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-
+import {lastHeal, updateCat} from '../../utils/API'
 import Auth from '../../utils/auth';
 import { addCat } from '../../utils/API';
 import CatCard from '../gameUI/CatCard';
@@ -17,16 +17,6 @@ function assignJob() {
         default:
             return "Warrior";
     }
-}
-
-// This function triggers slightly too early but works fine
-const healCats = (userCats) => {
-    const fedCats = userCats.cats;
-    console.log(userCats)
-    console.log(fedCats)
-    fedCats.map((cat) => {
-        return cat.currentHP = cat.maxHP;
-    })
 }
 
 // the RNGesus function
@@ -49,7 +39,6 @@ const tavernCats = [
 ];
 
 const Tavern = ({userData}) => {
-    console.log(userData.cats[0])
     // Add cat to user roster
     const recruitCat = async (newCat) => {
         // Get user token
@@ -72,16 +61,49 @@ const Tavern = ({userData}) => {
         }
     };
 
-    // const healCats = (userCats) => {
-    //     const fedCats = userCats.cats;
-    //     console.log(userCats)
-    //     console.log(fedCats)
-    //     fedCats.map((cat) => {
-    //         return cat.currentHP = cat.maxHP;
-    //     })
-    //     // console.log(userCats)
-    //     // console.log(fedCats)
-    // }
+    const healCats = async (userCats) => {
+        const fedCats = userCats.cats;
+        console.log(userCats)
+        console.log(fedCats)
+        fedCats.map((cat) => {
+            return cat.currentHP = cat.maxHP;
+        })
+
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+        if (!token) {
+            return false;
+        }
+
+        try{
+            const response = await lastHeal(userCats, token)
+            const responseCats = await updateCat(fedCats, token)
+
+            if(!response.ok) {
+                throw new Error('something went wrong!');
+            }
+            const updatedHeal = await response.json();
+            const updatedCat = await responseCats.json();
+
+            console.log(updatedHeal)
+            console.log(updatedCat)
+        } catch(err) {
+            console.error(err);
+        }   
+    }
+
+    const isLockout = () => {
+        const previousMeal = new Date(new Date().setDate(new Date().getDate() - 1))
+        const usersDay = new Date(userData.lastHeal);
+
+        console.log(previousMeal)
+        console.log(usersDay)
+
+        if (usersDay > previousMeal) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     return (
         <section>
@@ -98,7 +120,9 @@ const Tavern = ({userData}) => {
             </div>
             <h3>Today's food</h3>
             <div>Deluxe Tuna and Chicken Pâté</div>
-            <Button onClick={() => healCats(userData)}>Eat to recover HP</Button>
+            <Button 
+                onClick={() => healCats(userData)}
+                disabled={isLockout()} >Eat to recover HP</Button>
             <Button as={Link} to="/village">Back to the village</Button>
         </section>
     )
