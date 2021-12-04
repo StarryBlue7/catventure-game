@@ -7,16 +7,20 @@ import { Button, Modal } from 'react-bootstrap';
 //use userdata to get cat id, 
 
 
-
-
 function Cave({ userData }) {
     const [showTreasure, setShowTreasure] = useState(false);
 
-
+    // console.log(userData)
 
     function randomTreasure() {
 
         let randomCat = Math.floor(Math.random() * userData.cats.length);
+
+        var UTC = new Date().getHours() + 1;
+        console.log(UTC);
+        if (UTC > 5 && UTC < 10) {
+            //MAYBE USE ternary operator inside button to render when disabled for these hours
+        }
 
         const bonuses = [
             {
@@ -42,6 +46,7 @@ function Cave({ userData }) {
         console.log(bonuses[random].message)
         setShowTreasure(bonuses[random].message)
         return bonuses[random].message;
+
 
     }
 
