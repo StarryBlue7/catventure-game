@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
+import { lastTreasure } from '../../utils/API';
+import Auth from '../../utils/auth';
+
 
 
 //functions that call user api findOneAndUpdate and updates the stat based on the roll
@@ -11,16 +14,9 @@ function Cave({ userData }) {
     const [showTreasure, setShowTreasure] = useState(false);
 
     // console.log(userData)
-
-    function randomTreasure() {
+    const updateTreasure = async (userId) => {
 
         let randomCat = Math.floor(Math.random() * userData.cats.length);
-
-        var UTC = new Date().getHours() + 1;
-        console.log(UTC);
-        if (UTC > 5 && UTC < 10) {
-            //MAYBE USE ternary operator inside button to render when disabled for these hours
-        }
 
         const bonuses = [
             {
@@ -43,12 +39,32 @@ function Cave({ userData }) {
 
         let random = Math.floor(Math.random() * bonuses.length);
 
-        console.log(bonuses[random].message)
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+        if (!token) {
+            return false;
+        }
+
+        try {
+            const response = await lastTreasure(userId, token)
+            // console.log(response);
+
+            if (!response.ok) {
+                throw new Error('something went wrong!');
+            }
+            const updatedTreasure = await response.json();
+            console.log(updatedTreasure)
+            // Add update user data
+        } catch (err) {
+            console.error(err);
+        }
+        // console.log(bonuses[random].message)
         setShowTreasure(bonuses[random].message)
+
         return bonuses[random].message;
 
-
     }
+
 
     return (
         <section>
@@ -60,7 +76,7 @@ function Cave({ userData }) {
                     {showTreasure}
                 </Modal.Body>
             </Modal>
-            <Button onClick={() => randomTreasure()}>Open Treasure</Button>
+            <Button onClick={() => updateTreasure()}>Open Treasure</Button>
             <Button as={Link} to="/village">Back to the village</Button>
         </section >
     )

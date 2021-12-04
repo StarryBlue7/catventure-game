@@ -7,7 +7,8 @@ const {
     login,
     addCat,
     getAllUser,
-    removeCat
+    removeCat,
+    updateTreasure,
 
 } = require('../../controllers/userController');
 
@@ -23,6 +24,8 @@ router.route('/all').get(getAllUser);
 router.route('/me').get(authMiddleware, getUser);
 // remove cat by id from users cat array
 router.route('/cats/:_id').delete(authMiddleware, removeCat);
+
+router.route('/:_id').put(authMiddleware, updateTreasure);
 
 
 module.exports = router;
