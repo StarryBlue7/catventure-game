@@ -23,7 +23,6 @@ function Main() {
         const getUserData = async () => {
             try {
                 const token = Auth.loggedIn() ? Auth.getToken() : null;
-                // console.log(token)
                 if (!token) {
                     return false;
                 }
@@ -45,7 +44,6 @@ function Main() {
 
         getUserData();
     }, [userDataLength]);
-    console.log(userData);
     return (
         <div className="col-10 row">
             <Sidebar userData={userData} />
@@ -54,7 +52,9 @@ function Main() {
                     <Route exact path="/" component={Home} />
                     <Route exact path="/tavern" component={Tavern} />
                     <Route exact path="/village" component={Village} />
-                    <Route exact path="/party" component={Party} />
+                    <Route exact path="/party" >
+                        <Party userData={userData} />
+                    </Route>
                     <Route exact path="/forest" component={Forest} />
                     <Route exact path="/cave" component={Cave} />
                 </Switch>
