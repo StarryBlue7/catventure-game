@@ -62,9 +62,13 @@ const Tavern = ({userData}) => {
         }
     };
 
-    function healCats(userCats){
-        console.log(userCats.cats)
-        console.log(userCats.cats)
+    const healCats = (userCats) => {
+        const fedCats = userCats.cats;
+        console.log(fedCats)
+        // fedCats.map((cat) => {
+        //     return cat.currentHP = cat.maxHP;
+        // })
+        console.log(fedCats)
     }
 
     return (
@@ -82,7 +86,7 @@ const Tavern = ({userData}) => {
             </div>
             <h3>Today's food</h3>
             <div>Deluxe Tuna and Chicken Pâté</div>
-            <Button onClick={() => healCats(userData)} disabled={!userData.cats.length}>Eat to recover HP</Button>
+            <Button onClick={() => healCats(userData)}>Eat to recover HP</Button>
             <Button as={Link} to="/village">Back to the village</Button>
         </section>
     )
