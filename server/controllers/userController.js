@@ -76,6 +76,16 @@ module.exports = {
         }
         return res.json(removedCat);
     },
+    async updateCat({ user, params }, res) {
+        const updatedCat = await User.findOneAndUpdate(
+            { _id: user._id },
+            { $update: { cats: { _id: params._id } } },
+            { new: true }
+        );
+        if (!updatedCat) {
+            return res.status(404).json({ message: "Could not boost your cat!" });
+        }
+        return res.json(updatedCat);
+    }
 }
-
 
