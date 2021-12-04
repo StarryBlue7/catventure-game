@@ -29,9 +29,8 @@ export const loginUser = (userData) => {
   });
 };
 
-// save book data for a logged in user
+// save cat data for a logged in user
 export const addCat = (catData, token) => {
-  console.log(catData);
   return fetch('/api/users/', {
     method: 'PUT',
     headers: {
@@ -46,6 +45,7 @@ export const removeCat = (catId, token) => {
   return fetch(`/api/users/cats/${catId}`, {
     method: 'DELETE',
     headers: {
+      'Content-Type': 'application/json',
       authorization: `Bearer ${token}`,
     },
   });
