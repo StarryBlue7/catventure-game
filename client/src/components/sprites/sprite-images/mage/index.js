@@ -12,7 +12,7 @@ const MageSprites = {
         fps: 6,
         noLoop: false
     },
-    heal: {
+    special: {
         sprite: heal,
         width: 96,
         height: 2016/12,
