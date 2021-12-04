@@ -20,9 +20,9 @@ function Navigation() {
         <>
             <Navbar expand="lg" className="w-100 d-flex justify-content-between align-items-end px-0">
                 <Nav>
-                    <Nav.Link as={Link} to='/'>Home</Nav.Link>
+                    <Button as={Link} to="/" onClick={() => window.location.href='/'}>Home</Button>
                     {Auth.loggedIn() ? (
-                        <Nav.Link as={Link} to='/village'>Adventure</Nav.Link>
+                        <Button as={Link} to="/village" onClick={() => window.location.href='/village'}>Adventure</Button>
                     ) : (
                         <></>
                     )}

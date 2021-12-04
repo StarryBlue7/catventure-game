@@ -17,7 +17,11 @@ import Cave from './pages/Cave';
 function Main() {
     const [userData, setUserData] = useState({});
 
-    const userDataLength = Object.keys(userData).length;
+    // const catsArr = userData.cats
+
+    // const userDataLength = Object.keys(userData).length;
+    // console.log(userData.cats.length)
+
 
     useEffect(() => {
         const getUserData = async () => {
@@ -28,11 +32,13 @@ function Main() {
                 }
 
                 const response = await getMe(token);
+                // setUserData(response.user.cats)
                 if (!response.ok) {
                     throw new Error('something went wrong!');
                 }
 
                 const user = await response.json();
+
                 setUserData(user);
 
             } catch (err) {
@@ -41,7 +47,8 @@ function Main() {
         };
 
         getUserData();
-    }, [userDataLength]);
+    }, [userData]);
+
     return (
         <div className="col-10 row">
             <Sidebar userData={userData} />

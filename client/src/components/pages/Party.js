@@ -1,37 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-
-// function to remove cat from party
-
-// const handleremoveCat = async (catId) => {
-//     const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-//     if (!token) {
-//         return false;
-//     }
-
-//     try {
-//         const response = await removeCat(catId, token)
-
-//         if (!response.ok) {
-//             throw new Error('something went wrong!');
-//         }
-//         const updatedUser = await response.json();
-//         setUserData(updatedUser);
-//     } catch (err) {
-//         console.error(err);
-//     }
-// };
+import CatCard from '../gameUI/CatCard';
 
 function Party({userData}) {
-    console.log(userData)
+    // console.log(userData)
+    const userCats = userData.cats;
+    // console.log(userCats)
     return (
         <section>
             <h2>My Team</h2>
-            <div>Cat 1</div>
-            <div>Cat 2</div>
-            <div>Cat 3</div>
+            <div>
+                {Object.keys(userData).length ? userCats.map((cat, i) => (
+                    <CatCard 
+                    cat={cat} 
+                    key={i}
+                    isTavern={false}
+                     />
+                )) : <></>}
+            </div>
             <Button as={Link} to="/">Back</Button>
         </section>
     )
