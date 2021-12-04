@@ -3,14 +3,14 @@ import { Button, Modal, Form } from 'react-bootstrap';
 import Jobs from '../../data/jobs.json';
 import Auth from '../../utils/auth';
 import {removeCat} from '../../utils/API';
+import Sprites from '../sprites/Sprites'
 
 
 // replace these with the proper imports
-const warriorImage = '';
-const rangerImage = '';
-const mageImage = '';
 
 function CatCard(props) {
+
+    const [action, setAction] = useState('idle')
 
     const [catFormData, setCatFormData] = useState({catName: ''})
 
@@ -31,16 +31,6 @@ function CatCard(props) {
 
     const namingModalClose = () => setNamingModal(false);
     const namingModalOpen = () => setNamingModal(true);
-
-    function getClassImg(gameClass){
-        if(gameClass === 1){
-            return warriorImage;
-        } else if(gameClass === 2){
-            return rangerImage;
-        } else {
-            return mageImage;
-        }
-    }
 
         // function to remove cat from party
 
@@ -67,7 +57,7 @@ function CatCard(props) {
         <>
             <div className="cat-card">
                 {!props.isTavern ? (<p>{props.cat.name}</p>) : (<></>)}
-                <img src={getClassImg(props.cat.class)} alt="animated cat" />
+                {/* <Sprites job={props.cat.class} action={action} setAction={setAction} /> */}
                 <div className="hp-bar"><div></div></div>
                 <p>{props.cat.class}</p>
                 <p>HP: {props.cat.currentHP ? props.cat.currentHP : props.cat.maxHP}/{props.cat.maxHP}</p>

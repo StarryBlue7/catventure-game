@@ -1,16 +1,16 @@
 import React from 'react';
+import Sprites from '../sprites/Sprites'
 
 const AsideCard = (props) => {
 
     return (
-        <section>
+        <div>
             <p>{props.cat.name}</p>
+            <p>Lvl: {props.cat.level}</p>
+            {/* <Sprites job={props.cat.class} action={action} setAction={setAction} /> */}
+            <p>HP: {props.cat.currentHP}/{props.cat.maxHP}</p>
             <p>{props.cat.class}</p>
-            <p>{props.cat.power}</p>
-            <p>{props.cat.level}</p>
-            <p>{props.cat.experience}</p>
-            <p>{props.cat.currentHP}/{props.cat.maxHP}</p>
-        </section>
+        </div>
     )
 }
 
