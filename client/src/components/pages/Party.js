@@ -11,13 +11,13 @@ function Party({userData}) {
         <section>
             <h2>My Team</h2>
             <div>
-                {Object.keys(userData).length ? userCats.map((cat, i) => (
+                {userCats.map((cat, i) => (
                     <CatCard 
                     cat={cat} 
                     key={i}
                     isTavern={false}
                      />
-                )) : <></>}
+                ))}
             </div>
             <Button as={Link} to="/">Back</Button>
         </section>
