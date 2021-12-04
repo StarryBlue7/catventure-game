@@ -28,13 +28,11 @@ function Main() {
                 }
 
                 const response = await getMe(token);
-                console.log(response)
                 if (!response.ok) {
                     throw new Error('something went wrong!');
                 }
 
                 const user = await response.json();
-                console.log("duck")
                 setUserData(user);
 
             } catch (err) {
@@ -49,14 +47,24 @@ function Main() {
             <Sidebar userData={userData} />
             <main className="col-9">
                 <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route exact path="/tavern" component={Tavern} />
-                    <Route exact path="/village" component={Village} />
-                    <Route exact path="/party" >
+                    <Route exact path="/" >
+                        <Home userData={userData} />
+                    </Route>
+                    <Route exact path="/tavern" >
+                        <Tavern userData={userData} />
+                    </Route>
+                    <Route exact path="/village">
+                        <Village />
+                    </Route>
+                    <Route exact path="/party">
                         <Party userData={userData} />
                     </Route>
-                    <Route exact path="/forest" component={Forest} />
-                    <Route exact path="/cave" component={Cave} />
+                    <Route exact path="/forest">
+                        <Forest userData={userData} />
+                    </Route>
+                    <Route exact path="/cave">
+                        <Cave userData={userData} />
+                    </Route>
                 </Switch>
                 <Footer />
             </main>
