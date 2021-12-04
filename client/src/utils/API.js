@@ -52,7 +52,17 @@ export const removeCat = (catId, token) => {
 };
 
 export const lastTreasure = (userId, token) => {
-  return fetch(`/api/users/${userId}`, {
+  return fetch(`/api/users/treasure/${userId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const lastHeal = (userId, token) => {
+  return fetch(`/api/users/heal/${userId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

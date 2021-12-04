@@ -99,5 +99,19 @@ module.exports = {
             return res.status(404).json({ message: "Could not set your lastTreasure" });
         }
         return res.json(lastTreasure)
+    },
+
+    async updateHeal({ user }, res) {
+        const now = new Date();
+        console.log(now)
+        const lastHeal = await User.findOneAndUpdate(
+            { _id: user._id },
+            { $set: { lastHeal: now } },
+            { new: true }
+        );
+        if (!lastHeal) {
+            return res.status(404).json({ message: "Could not set your lastHeal" });
+        }
+        return res.json(lastHeal)
     }
 }
