@@ -76,16 +76,29 @@ module.exports = {
         }
         return res.json(removedCat);
     },
-    async updateCat({ user, params }, res) {
+    async updateCat({ user, body }, res) {
+        // console.log("fsdfsdf")
         const updatedCat = await User.findOneAndUpdate(
             { _id: user._id },
-            { $update: { cats: { _id: params._id } } },
+            { $set: { cats: body } },
             { new: true }
         );
         if (!updatedCat) {
             return res.status(404).json({ message: "Could not boost your cat!" });
         }
         return res.json(updatedCat);
+    },
+    async updateTreasure({ user }, res) {
+        const now = new Date();
+        console.log(now)
+        const lastTreasure = await User.findOneAndUpdate(
+            { _id: user._id },
+            { $set: { lastTreasure: now } },
+            { new: true }
+        );
+        if (!lastTreasure) {
+            return res.status(404).json({ message: "Could not set your lastTreasure" });
+        }
+        return res.json(lastTreasure)
     }
 }
-

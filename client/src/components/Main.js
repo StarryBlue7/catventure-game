@@ -54,24 +54,28 @@ function Main() {
             <Sidebar userData={userData} />
             <main className="col-9">
                 <Switch>
-                    <Route exact path="/" >
-                        <Home userData={userData} />
-                    </Route>
-                    <Route exact path="/tavern" >
-                        <Tavern userData={userData} />
-                    </Route>
-                    <Route exact path="/village">
-                        <Village />
-                    </Route>
-                    <Route exact path="/party">
-                        <Party userData={userData} />
-                    </Route>
-                    <Route exact path="/forest">
-                        <Forest userData={userData} />
-                    </Route>
-                    <Route exact path="/cave">
-                        <Cave userData={userData} />
-                    </Route>
+                    {Object.keys(userData).length ? (
+                        <>
+                            <Route exact path="/" >
+                                <Home userData={userData} />
+                            </Route>
+                            <Route exact path="/tavern" >
+                                <Tavern userData={userData} />
+                            </Route>
+                            <Route exact path="/village">
+                                <Village />
+                            </Route>
+                            <Route exact path="/party">
+                                <Party userData={userData} />
+                            </Route>
+                            <Route exact path="/forest">
+                                <Forest userData={userData} />
+                            </Route>
+                            <Route exact path="/cave">
+                                <Cave userData={userData} />
+                            </Route>
+                        </>) : 
+                        (<></>)}  
                 </Switch>
                 <Footer />
             </main>

@@ -51,3 +51,24 @@ export const removeCat = (catId, token) => {
   });
 };
 
+export const lastTreasure = (userId, token) => {
+  return fetch(`/api/users/${userId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const updateCat = (catData, token) => {
+  return fetch(`/api/users/cats/update/`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(catData)
+  })
+}
+
