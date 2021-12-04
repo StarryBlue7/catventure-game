@@ -16,7 +16,7 @@ function Cave({ userData }) {
     // console.log(userData)
     const updateTreasure = async (userId) => {
 
-        // let randomCat = Math.floor(Math.random() * userData.cats.length);
+
 
         // const bonuses = [
         //     {
@@ -39,13 +39,36 @@ function Cave({ userData }) {
 
         const boostedCats = userData.cats;
 
-        boostedCats[0].level++;
+        let randomCat = Math.floor(Math.random() * boostedCats.length);
+        let boostAmount = Math.ceil(Math.random() * 3)
+
+        let randomBoost = Math.floor(Math.random() * 4)
+
+        let randomStat;
+
+        switch (randomBoost) {
+            case 0:
+                randomStat = "level";
+                break;
+            case 1:
+                randomStat = "power";
+                break;
+            case 2:
+                randomStat = "maxHP";
+                break;
+            default:
+                randomStat = "experience";
+                break;
+
+        }
+
+        boostedCats[randomCat][randomStat] = boostedCats[randomCat][randomStat] + boostAmount;
 
         // let random = Math.floor(Math.random() * bonuses.length);
 
         const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-        setShowTreasure(boostedCats[0].level)
+        setShowTreasure(`${boostedCats[randomCat].name} gained ${boostAmount} ${randomStat}!!!`)
 
         if (!token) {
             return false;
