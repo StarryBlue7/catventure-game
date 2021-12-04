@@ -92,13 +92,13 @@ const Tavern = ({userData}) => {
     }
 
     const isLockout = () => {
-        const previousMeal = new Date(new Date().setDate(new Date().getDate() - 1))
+        const lockoutTime = new Date(new Date().setMinutes(new Date().getMinutes() -30))
         const usersDay = new Date(userData.lastHeal);
 
-        console.log(previousMeal)
+        console.log(lockoutTime)
         console.log(usersDay)
 
-        if (usersDay > previousMeal) {
+        if (usersDay > lockoutTime) {
             return true;
         } else {
             return false;
