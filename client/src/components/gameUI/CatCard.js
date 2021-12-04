@@ -11,9 +11,6 @@ function CatCard(props) {
 
     // I also need the removeCat function
 
-    // when user chooses a name and clicks button, run this
-    // () => props.recruitCat(props.cat)
-
     const [catFormData, setCatFormData] = useState({catName: ''})
 
     const handleInputChange = (event) => {
