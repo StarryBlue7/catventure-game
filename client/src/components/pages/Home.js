@@ -23,10 +23,11 @@ function Home() {
                 <Button onClick={() => setAction('attack')}>Attack</Button>
                 <Button onClick={() => setAction('special')}>Special</Button>
                 <Button onClick={() => setAction('die')}>Die</Button>
+                <Button onClick={() => setAction('damaged')}>Damaged</Button>
                 {/* 
                 
                 
-                <Button onClick={() => setAction('damaged')}>Damaged</Button> */}
+                 */}
             </div>
             <div>
                 <Button as={Link} to="/village">Go on Adventure</Button>

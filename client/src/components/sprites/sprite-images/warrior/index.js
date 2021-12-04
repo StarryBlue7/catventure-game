@@ -2,7 +2,7 @@ import die from './warrior_die.png';
 import defend from './warrior_defend.png';
 import idle from './warrior_idle.png';
 import attack from './warrior_attack.png';
-// import damaged from './mage_damaged.png';
+import damaged from './warrior_damaged.png';
 
 const WarriorSprites = {
     idle: {
@@ -33,13 +33,14 @@ const WarriorSprites = {
         fps: 8,
         noLoop: false
     },
-//     damaged: {
-//         sprite: damaged,
-//         width: 88,
-//         height: 312/3,
-//         fps: 4,
-//         noLoop: true
-//     }
+    damaged: {
+        sprite: damaged,
+        width: 56,
+        height: 312/3,
+        fps: 4,
+        noLoop: true,
+        toIdle: true
+    }
 }
 
 export default WarriorSprites;
