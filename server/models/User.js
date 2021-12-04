@@ -16,6 +16,13 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    lastTreasure: {
+        type: Date,
+
+    },
+    lastHeal: {
+        type: Date
+    },
     // Cats?
     cats: [catSchema],
 },
@@ -41,7 +48,7 @@ userSchema.methods.isCorrectPassword = async function (password) {
     return bcrypt.compare(password, this.password);
 };
 
-// when we query a user, we'll also get another field called `bookCount` with the number of saved books we have
+//amount of cats per user
 userSchema.virtual('catCount').get(function () {
     return this.cats.length;
 });
