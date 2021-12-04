@@ -39,7 +39,8 @@ const MageSprites = {
         width: 88,
         height: 312/3,
         fps: 4,
-        noLoop: true
+        noLoop: true,
+        toIdle: true
     }
 }
 
