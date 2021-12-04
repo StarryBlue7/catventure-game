@@ -1,5 +1,5 @@
 // import die from './mage_die.png';
-// import heal from './mage_heal.png';
+import defend from './warrior_defend.png';
 import idle from './warrior_idle.png';
 import attack from './warrior_attack.png';
 // import damaged from './mage_damaged.png';
@@ -12,14 +12,13 @@ const WarriorSprites = {
         fps: 6,
         noLoop: false
     },
-//     heal: {
-//         sprite: heal,
-//         width: 96,
-//         height: 2016/12,
-//         fps: 6,
-//         noLoop: true,
-//         toIdle: true
-//     },
+    special: {
+        sprite: defend,
+        width: 288,
+        height: 520/5,
+        fps: 6,
+        noLoop: true
+    },
 //     die: {
 //         sprite: die,
 //         width: 64,
