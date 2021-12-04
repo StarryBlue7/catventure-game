@@ -19,6 +19,16 @@ function assignJob() {
     }
 }
 
+// This function triggers slightly too early but works fine
+const healCats = (userCats) => {
+    const fedCats = userCats.cats;
+    console.log(userCats)
+    console.log(fedCats)
+    fedCats.map((cat) => {
+        return cat.currentHP = cat.maxHP;
+    })
+}
+
 // the RNGesus function
 function randomGen(baseValue, spread) {
     return Math.abs(baseValue - spread + Math.floor(Math.random()*(spread*2+1)))
@@ -39,7 +49,7 @@ const tavernCats = [
 ];
 
 const Tavern = ({userData}) => {
-
+    console.log(userData.cats[0])
     // Add cat to user roster
     const recruitCat = async (newCat) => {
         // Get user token
@@ -62,14 +72,16 @@ const Tavern = ({userData}) => {
         }
     };
 
-    const healCats = (userCats) => {
-        const fedCats = userCats.cats;
-        console.log(fedCats)
-        // fedCats.map((cat) => {
-        //     return cat.currentHP = cat.maxHP;
-        // })
-        console.log(fedCats)
-    }
+    // const healCats = (userCats) => {
+    //     const fedCats = userCats.cats;
+    //     console.log(userCats)
+    //     console.log(fedCats)
+    //     fedCats.map((cat) => {
+    //         return cat.currentHP = cat.maxHP;
+    //     })
+    //     // console.log(userCats)
+    //     // console.log(fedCats)
+    // }
 
     return (
         <section>
