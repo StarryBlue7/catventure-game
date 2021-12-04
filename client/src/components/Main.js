@@ -23,19 +23,21 @@ function Main() {
         const getUserData = async () => {
             try {
                 const token = Auth.loggedIn() ? Auth.getToken() : null;
-
+                // console.log(token)
                 if (!token) {
                     return false;
                 }
 
                 const response = await getMe(token);
-
+                console.log(response)
                 if (!response.ok) {
                     throw new Error('something went wrong!');
                 }
 
                 const user = await response.json();
+                console.log("duck")
                 setUserData(user);
+
             } catch (err) {
                 console.error(err);
             }
