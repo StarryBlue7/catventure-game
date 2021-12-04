@@ -31,7 +31,6 @@ export const loginUser = (userData) => {
 
 // save cat data for a logged in user
 export const addCat = (catData, token) => {
-  console.log(catData);
   return fetch('/api/users/', {
     method: 'PUT',
     headers: {
