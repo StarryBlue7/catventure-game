@@ -34,6 +34,13 @@ const animations = {
             fps: 8,
             noLoop: false
         },
+        damaged: {
+            sprite: MageSprites.damaged,
+            width: 88,
+            height: 312/3,
+            fps: 4,
+            noLoop: true
+        },
     }
 }
 
