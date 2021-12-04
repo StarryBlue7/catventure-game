@@ -28,7 +28,7 @@ router.route('/cats/:_id').delete(authMiddleware, removeCat);
 //update date on user model treasure has been claimed
 router.route('/:_id').put(authMiddleware, updateTreasure);
 // update cat's stat
-router.route('/cats/update/:_id').put(authMiddleware, updateCat);
+router.route('/cats/update').put(authMiddleware, updateCat);
 
 
 module.exports = router;

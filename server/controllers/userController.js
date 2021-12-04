@@ -76,10 +76,11 @@ module.exports = {
         }
         return res.json(removedCat);
     },
-    async updateCat({ user, params }, res) {
+    async updateCat({ user, body }, res) {
+        // console.log("fsdfsdf")
         const updatedCat = await User.findOneAndUpdate(
             { _id: user._id },
-            { $update: { cats: { _id: params._id } } },
+            { $set: { cats: body } },
             { new: true }
         );
         if (!updatedCat) {
