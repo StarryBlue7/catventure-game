@@ -22,7 +22,6 @@ function Main() {
     // const userDataLength = Object.keys(userData).length;
     // console.log(userData.cats.length)
 
-    // console.log(userData.cats)
 
     useEffect(() => {
         const getUserData = async () => {
@@ -49,6 +48,7 @@ function Main() {
 
         getUserData();
     }, [userData]);
+
     return (
         <div className="col-10 row">
             <Sidebar userData={userData} />
