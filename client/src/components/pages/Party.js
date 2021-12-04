@@ -4,20 +4,20 @@ import { Button } from 'react-bootstrap';
 import CatCard from '../gameUI/CatCard';
 
 function Party({userData}) {
-    console.log(userData)
+    // console.log(userData)
     const userCats = userData.cats;
-    console.log(userCats)
+    // console.log(userCats)
     return (
         <section>
             <h2>My Team</h2>
             <div>
-                {userCats.map((cat, i) => (
+                {Object.keys(userData).length ? userCats.map((cat, i) => (
                     <CatCard 
                     cat={cat} 
                     key={i}
                     isTavern={false}
                      />
-                ))}
+                )) : <></>}
             </div>
             <Button as={Link} to="/">Back</Button>
         </section>
