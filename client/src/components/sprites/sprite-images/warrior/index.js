@@ -1,4 +1,4 @@
-// import die from './mage_die.png';
+import die from './warrior_die.png';
 import defend from './warrior_defend.png';
 import idle from './warrior_idle.png';
 import attack from './warrior_attack.png';
@@ -19,13 +19,13 @@ const WarriorSprites = {
         fps: 6,
         noLoop: true
     },
-//     die: {
-//         sprite: die,
-//         width: 64,
-//         height: 1040/10,
-//         fps: 8,
-//         noLoop: true
-//     },
+    die: {
+        sprite: die,
+        width: 96,
+        height: 624/6,
+        fps: 8,
+        noLoop: true
+    },
     attack: {
         sprite: attack,
         width: 132,
