@@ -22,7 +22,7 @@ router.route('/all').get(getAllUser);
 // get logged in user
 router.route('/me').get(authMiddleware, getUser);
 // remove cat by id from users cat array
-router.route('/cats/:catId').delete(authMiddleware, removeCat);
+router.route('/cats/:_id').delete(authMiddleware, removeCat);
 
 
 module.exports = router;

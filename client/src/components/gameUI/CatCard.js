@@ -1,6 +1,9 @@
 import React, { useState} from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
-import Jobs from '../../data/jobs.json'
+import Jobs from '../../data/jobs.json';
+import Auth from '../../utils/auth';
+import {removeCat} from '../../utils/API';
+
 
 // replace these with the proper imports
 const warriorImage = '';
@@ -41,6 +44,27 @@ function CatCard(props) {
         }
     }
 
+        // function to remove cat from party
+
+    const handleremoveCat = async (catId) => {
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+        if (!token) {
+            return false;
+        }
+
+        try {
+            const response = await removeCat(catId, token)
+            console.log(response)
+            if (!response.ok) {
+                throw new Error('something went wrong!');
+            }
+            const updatedUser = await response.json();
+            console.log(updatedUser)
+        } catch (err) {
+            console.error(err);
+        }
+    };
     return (
         <>
             <div className="cat-card">
@@ -48,14 +72,14 @@ function CatCard(props) {
                 <img src={getClassImg(props.cat.class)} alt="animated cat" />
                 <div className="hp-bar"><div></div></div>
                 <p>{props.cat.class}</p>
-                <p>HP: {props.cat.maxHP}/{props.cat.maxHP}</p>
+                <p>HP: {props.cat.currentHP ? props.cat.currentHP : props.cat.maxHP}/{props.cat.maxHP}</p>
                 <p>Lvl: {!props.isTavern ? props.cat.level : 1}</p>
                 <p>{Jobs[props.cat.class].statName}: {props.cat.power}</p>
                 {props.isTavern ? (
                     <Button onClick={namingModalOpen}>Recruit this cat</Button>
                 ) 
                 : (
-                    <Button>Remove</Button>
+                    <Button onClick={() => handleremoveCat(props.cat._id)}>Remove</Button>
                 )}
             </div>
             <Modal show={namingModal} onHide={namingModalClose}>
