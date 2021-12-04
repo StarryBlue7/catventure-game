@@ -38,8 +38,6 @@ const tavernCats = [
     new NewCat(assignJob()),
 ];
 
-console.log(tavernCats);
-
 const Tavern = () => {
     // Add cat to user roster
     const recruitCat = async (newCat) => {

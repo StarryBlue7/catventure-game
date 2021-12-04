@@ -2,7 +2,6 @@ import React from 'react';
 
 const AsideCard = (props) => {
 
-
     return (
         <section>
             <p>{props.cat.name}</p>
