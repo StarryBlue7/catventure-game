@@ -38,7 +38,8 @@ const tavernCats = [
     new NewCat(assignJob()),
 ];
 
-const Tavern = () => {
+const Tavern = ({userData}) => {
+
     // Add cat to user roster
     const recruitCat = async (newCat) => {
         // Get user token
@@ -60,6 +61,12 @@ const Tavern = () => {
             console.error(err);
         }
     };
+
+    function healCats(userCats){
+        console.log(userCats.cats)
+        console.log(userCats.cats)
+    }
+
     return (
         <section>
             <h2>Cat Tavern</h2>
@@ -73,8 +80,10 @@ const Tavern = () => {
                         isTavern={true} />
                 ))}
             </div>
+            <h3>Today's food</h3>
+            <div>Deluxe Tuna and Chicken Pâté</div>
+            <Button onClick={() => healCats(userData)} disabled={!userData.cats.length}>Eat to recover HP</Button>
             <Button as={Link} to="/village">Back to the village</Button>
-            <Button onClick={() => recruitCat(tavernCats[0])}>Recruit!</Button>
         </section>
     )
 }

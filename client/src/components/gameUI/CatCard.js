@@ -12,8 +12,6 @@ const mageImage = '';
 
 function CatCard(props) {
 
-    // I also need the removeCat function
-
     const [catFormData, setCatFormData] = useState({catName: ''})
 
     const handleInputChange = (event) => {
