@@ -1,21 +1,19 @@
 import React from 'react';
 import { SpriteAnimator } from 'react-sprite-animator';
 
-import mageIdle from './sprite-images/mage/mage_idle.png';
-import mageHeal from './sprite-images/mage/mage_heal.png';
-import mageDie from './sprite-images/mage/mage_die.png';
+import MageSprites from './sprite-images/mage'
 
 const animations = {
     Mage: {
         idle: {
-            sprite: mageIdle,
+            sprite: MageSprites.idle,
             width: 80,
             height: 624/6,
             fps: 6,
             noLoop: false
         },
         heal: {
-            sprite: mageHeal,
+            sprite: MageSprites.heal,
             width: 96,
             height: 2016/12,
             fps: 6,
@@ -23,11 +21,18 @@ const animations = {
             toIdle: true
         },
         die: {
-            sprite: mageDie,
+            sprite: MageSprites.die,
             width: 64,
             height: 1040/10,
             fps: 8,
             noLoop: true
+        },
+        attack: {
+            sprite: MageSprites.attack,
+            width: 196,
+            height: 520/5,
+            fps: 8,
+            noLoop: false
         },
     }
 }
