@@ -45,7 +45,7 @@ function Main() {
 
         getUserData();
     }, [userDataLength]);
-
+    console.log(userData);
     return (
         <div className="col-10 row">
             <Sidebar userData={userData} />

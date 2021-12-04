@@ -20,7 +20,7 @@ router.route('/login').post(login);
 // get all the users
 router.route('/all').get(getAllUser);
 // get logged in user
-router.route('/me').get(getUser);
+router.route('/me').get(authMiddleware, getUser);
 // remove cat by id from users cat array
 router.route('/cats/:catId').delete(authMiddleware, removeCat);
 

@@ -21,15 +21,15 @@ import AsideCard from './gameUI/AsideCard'
 // Sidebar
 //userData will be used when we are able to addcat to user
 function Sidebar({ userData }) {
-    // console.log(userData)
+    const userCats = userData.cats;
     return (
 
         <aside className="col-3">
-            <h2>wow</h2>
-            {/* {userData ? (userData.cats.map((cat, i) => (
+            <h2>Your Party</h2>
+            {userCats ? (userCats.map((cat, i) => (
                 <AsideCard cat={cat} key={i} />)
             )) : (<></>)
-            } */}
+            }
 
 
         </aside >
