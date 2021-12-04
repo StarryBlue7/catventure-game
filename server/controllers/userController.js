@@ -68,7 +68,7 @@ module.exports = {
     async removeCat({ user, params }, res) {
         const removedCat = await User.findOneAndUpdate(
             { _id: user._id },
-            { $pull: { cats: { catId: params.catId } } },
+            { $pull: { cats: { _id: params._id } } },
             { new: true }
         );
         if (!removedCat) {
