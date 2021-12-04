@@ -16,7 +16,7 @@ function Home() {
                 Home Sweet Home
             </h2>
             <div>
-                <Sprites job={catData.class} action={action} />
+                <Sprites job={catData.class} action={action} setAction={setAction} />
             </div>
             <div>
                 <Button onClick={() => setAction('idle')}>Idle</Button>

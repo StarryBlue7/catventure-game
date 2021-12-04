@@ -11,15 +11,16 @@ const animations = {
             sprite: mageIdle,
             width: 80,
             height: 624/6,
-            fps: 8,
+            fps: 6,
             noLoop: false
         },
         heal: {
             sprite: mageHeal,
             width: 96,
-            height: 2008/12,
-            fps: 8,
-            noLoop: true
+            height: 2016/12,
+            fps: 6,
+            noLoop: true,
+            toIdle: true
         },
         die: {
             sprite: mageDie,
@@ -31,16 +32,17 @@ const animations = {
     }
 }
 
-function Sprites({ job, action }) {
+function Sprites({ job, action, setAction }) {
+    const animation = animations[job][action];
     return (<SpriteAnimator
-        sprite={animations[job][action].sprite}
-        width={animations[job][action].width}
-        height={Math.ceil(animations[job][action].height)}
+        sprite={animation.sprite}
+        width={animation.width}
+        height={animation.height}
         direction={"vertical"}
         shouldAnimate={true}
-        fps={animations[job][action].fps}
-        stopLastFrame={animations[job][action].noLoop}
-        onEnd={animations[job][action].end}
+        fps={animation.fps}
+        stopLastFrame={animation.noLoop}
+        onEnd={animation.toIdle ? (() => setAction('idle')) : (() => {})}
     />)
 }
 
