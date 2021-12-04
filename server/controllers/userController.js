@@ -77,7 +77,6 @@ module.exports = {
         return res.json(removedCat);
     },
     async updateCat({ user, body }, res) {
-        // console.log("fsdfsdf")
         const updatedCat = await User.findOneAndUpdate(
             { _id: user._id },
             { $set: { cats: body } },

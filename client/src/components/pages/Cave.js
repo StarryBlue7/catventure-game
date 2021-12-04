@@ -5,37 +5,10 @@ import { lastTreasure, updateCat } from '../../utils/API';
 import Auth from '../../utils/auth';
 
 
-
-//functions that call user api findOneAndUpdate and updates the stat based on the roll
-//use userdata to get cat id, 
-
-
 function Cave({ userData }) {
     const [showTreasure, setShowTreasure] = useState(false);
 
-    // console.log(userData)
     const updateTreasure = async (userId) => {
-
-
-
-        // const bonuses = [
-        //     {
-        //         body: userData.cats[randomCat].experience++,
-        //         message: `${userData.cats[randomCat].name} gained 1 experience!`
-        //     },
-        //     {
-        //         body: userData.cats[randomCat].maxHP++,
-        //         message: `${userData.cats[randomCat].name} gained 1 hitpoints!`
-        //     },
-        //     {
-        //         body: userData.cats[randomCat].power++,
-        //         message: `${userData.cats[randomCat].name} gained 1 power!`
-        //     },
-        //     {
-        //         body: userData.cats[randomCat].level++,
-        //         message: `${userData.cats[randomCat].name} gained an entire level!!!`
-        //     },
-        // ]
 
         const boostedCats = userData.cats;
 
@@ -64,8 +37,6 @@ function Cave({ userData }) {
 
         boostedCats[randomCat][randomStat] = boostedCats[randomCat][randomStat] + boostAmount;
 
-        // let random = Math.floor(Math.random() * bonuses.length);
-
         const token = Auth.loggedIn() ? Auth.getToken() : null;
 
         setShowTreasure(`${boostedCats[randomCat].name} gained ${boostAmount} ${randomStat}!!!`)
@@ -75,12 +46,9 @@ function Cave({ userData }) {
         }
 
         try {
-            // const catsArr = userData.cats;
 
             const response = await lastTreasure(userId, token)
-
             const response2 = await updateCat(boostedCats, token)
-            console.log(response2);
 
             if (!response.ok) {
                 throw new Error('something went wrong!');
@@ -90,17 +58,22 @@ function Cave({ userData }) {
 
             console.log(updatedTreasure)
             console.log("catupdate", updatedCat)
-            // Add update user data
+
         } catch (err) {
             console.error(err);
         }
-
-        // return bonuses[random];
-        // console.log(bonuses[random].message)
-
-
     }
 
+    const isLockout = () => {
+        const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
+        const usersDay = new Date(userData.lastTreasure);
+
+        if (usersDay > yesterday) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     return (
         <section>
@@ -112,16 +85,14 @@ function Cave({ userData }) {
                     {showTreasure}
                 </Modal.Body>
             </Modal>
-            <Button onClick={() => updateTreasure()}>Open Treasure</Button>
+            <Button
+                disabled={isLockout()}
+                onClick={() => updateTreasure()}>
+                Open Treasure
+            </Button>
             <Button as={Link} to="/village">Back to the village</Button>
         </section >
     )
 }
-// somewhere you go once a day to do something
 
-//button you click on that does something, random cat etc.., increase stats
-
-// add to user model, timegated, do it with User attr, "gotCaveTreasure, check user gotCaveTreasure,
-
-//if within 20hrs, disabled, if longer than allow click, set time again"
 export default Cave;
