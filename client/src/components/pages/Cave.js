@@ -65,7 +65,7 @@ function Cave({ userData }) {
     }
 
     const isLockout = () => {
-        const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
+        const yesterday = new Date(new Date().setHours(new Date().getHours() -20 ))
         const usersDay = new Date(userData.lastTreasure);
 
         if (usersDay > yesterday) {
