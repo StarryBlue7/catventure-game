@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Row } from 'react-bootstrap';
 import Auth from '../utils/auth';
 import { getMe } from '../utils/API';
+
+import Header from './Header';
 import Sidebar from './Sidebar';
 import Home from './pages/Home';
 import Village from './pages/Village';
@@ -22,7 +25,6 @@ function Main() {
                 if (!token) {
                     return false;
                 }
-
                 const response = await getMe(token);
                 // setUserData(response.user.cats)
                 if (!response.ok) {
@@ -30,7 +32,6 @@ function Main() {
                 }
 
                 const user = await response.json();
-
                 setUserData(user);
 
             } catch (err) {
@@ -42,38 +43,41 @@ function Main() {
     }, [userData]);
 
     return (
-        <div className="w-100 row mx-0">
-            <Sidebar userData={userData} />
-            <main className="col-9 px-0">
-                <Switch>
-                    <Route exact path="/" >
-                        <Home userData={userData || false} />
-                    </Route>
-                    {Object.keys(userData).length ? (
-                        <>
-                            <Route exact path="/tavern" >
-                                <Tavern userData={userData} />
+        <Router>
+            <Header userData={userData} />
+            <Row className="w-100 row mx-0">
+                <Sidebar userData={userData} />
+                    <main className="col-9 px-0">
+                        <Switch>
+                            <Route exact path="/" >
+                                <Home userData={userData || false} />
                             </Route>
-                            <Route exact path="/village">
-                                <Village />
-                            </Route>
-                            <Route exact path="/party">
-                                <Party userData={userData} />
-                            </Route>
-                            <Route exact path="/forest">
-                                <Forest userData={userData} />
-                            </Route>
-                            <Route exact path="/cave">
-                                <Cave userData={userData} />
-                            </Route>
-                        </>
-                        ) : (
-                        <></>
-                        )
-                    }  
-                </Switch>
-            </main>
-        </div>
+                            {Object.keys(userData).length ? (
+                                <>
+                                    <Route exact path="/tavern" >
+                                        <Tavern userData={userData} />
+                                    </Route>
+                                    <Route exact path="/village">
+                                        <Village />
+                                    </Route>
+                                    <Route exact path="/party">
+                                        <Party userData={userData} />
+                                    </Route>
+                                    <Route exact path="/forest">
+                                        <Forest userData={userData} />
+                                    </Route>
+                                    <Route exact path="/cave">
+                                        <Cave userData={userData} />
+                                    </Route>
+                                </>
+                            ) : (
+                                <></>
+                            )}  
+                        </Switch>
+                    </main>
+                </Row>
+            <Footer />
+        </Router>
     );
 }
 
