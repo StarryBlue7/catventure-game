@@ -34,8 +34,8 @@ import { Button } from 'react-bootstrap';
 
 // Global data structures
 
-// turnOrder is an array keeps track of the turn order
-// battlePositions is an object that holds the position at each key and either an enemy or cat object as it's value
+// turnOrder is an array with each id in the order.
+// battlePositions is an object that holds the position (1, 2, 3 etc...) at each key and either an enemy or cat object as it's value
 
 // **Pseudocode**
 
@@ -57,12 +57,10 @@ import { Button } from 'react-bootstrap';
 // 13. Use filter to find the matching cat object or enemy object,
 // 14. on the battlePositions object, create a key equal to j and the value equal to that cat or enemy object
 
-// After preBattle, battlePositions object will have a key of 1 with a value of the object in position 1, etc...
+// After preBattle, battlePositions object will have a key of 1 with a value of the Cat/Enemy object in position 1, etc...
 // and the turnOrder will be an array with each enemy or cat ID.
 
 // checkStatus function: (when called, checks the currentHP of every cat and every enemy; determines if there is a winner)
-
-//  1. 
 
 // battleTurn function
 
