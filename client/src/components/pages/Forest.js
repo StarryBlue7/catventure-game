@@ -1,6 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button, Col } from 'react-bootstrap';
+import forest from '../../images/forest.png';
+
+const styles = {
+    page: { 
+        color: 'white', 
+        width: "100%", 
+        height: "100%" 
+    },
+    background: {
+        position: "absolute",
+        zIndex: -1,
+        width: "100%"
+    }
+}
 
 // Pseudocode for the pseudocode
 
@@ -70,11 +84,12 @@ import { Button } from 'react-bootstrap';
 
 function Forest() {
     return (
-        <section>
-            <h2>Deadly Forest</h2>
+        <Col className={"location px-0 d-flex flex-column align-items-center"} style={styles.page}>
+            <img src={forest} alt={"Forest"} style={styles.background} />
+            <h2>The Deadly Forest</h2>
             <div>Battle!</div>
             <Button as={Link} to="/village">Back</Button>
-        </section>
+        </Col>
     )
 }
 
