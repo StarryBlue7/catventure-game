@@ -6,6 +6,17 @@ import Auth from '../../utils/auth';
 import { addCat } from '../../utils/API';
 import CatCard from '../gameUI/CatCard';
 import Jobs from '../../data/jobs.json'
+import tavern from '../../images/tavern.jpg';
+
+const styles = {
+    background: { 
+        color: 'white', 
+        backgroundImage: `url(${tavern})`, 
+        backgroundPosition: "center bottom",
+        width: "100%", 
+        height: "100%" 
+    }
+}
 
 // randomly assigns the job/class of the constructed Cat
 function assignJob() {
@@ -124,10 +135,10 @@ const Tavern = ({ userData }) => {
     }
 
     return (
-        <section>
+        <section style={styles.background}>
             <h2>Cat Tavern</h2>
             <p>Welcome to the tavern meow, we've got some adventurers here looking for a quest</p>
-            <div>
+            <div className={"d-flex flex-row wrap"}>
                 {tavernCats.map((cat, i) => (
                     <CatCard
                         recruitCat={recruitCat}

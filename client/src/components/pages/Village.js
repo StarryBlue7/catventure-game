@@ -2,11 +2,23 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
+import village from '../../images/village.png';
+
+const styles = {
+    background: { 
+        color: 'white', 
+        backgroundImage: `url(${village})`, 
+        backgroundPosition: "center bottom",
+        width: "100%", 
+        height: "100%" 
+    }
+}
+
 function Village() {
 
     // main hub of the Catventures world
     return (
-        <section>
+        <section style={styles.background}>
             <h2>Cat Village</h2>
             <Button as={Link} to="/tavern">Go to the Tavern</Button>
             <Button as={Link} to="/forest">Go to Deadly Forest</Button>

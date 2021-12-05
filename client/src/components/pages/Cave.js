@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Container, Modal } from 'react-bootstrap';
 import { lastTreasure, updateCat } from '../../utils/API';
 import Auth from '../../utils/auth';
 
+import cave from '../../images/cave.png';
 
+const styles = {
+    background: { 
+        color: 'white', 
+        backgroundImage: `url(${cave})`, 
+        backgroundPosition: "center bottom",
+        width: "100%", 
+        height: "100%" 
+    }
+}
 
 function Cave({ userData }) {
 
@@ -37,7 +47,6 @@ function Cave({ userData }) {
             default:
                 randomStat = "experience";
                 break;
-
         }
 
         boostedCats[randomCat][randomStat] = boostedCats[randomCat][randomStat] + boostAmount;
@@ -80,10 +89,10 @@ function Cave({ userData }) {
     }
 
     return (
-        <section>
+        <Container style={styles.background}>
             <h2>Dark Cave</h2>
             <p>My Team searched the depths of the dark cave and increased their feline abilities</p>
-            <p> Look through the cave to find and click on the treasure!</p>
+            <p>Look through the cave to find and click on the treasure!</p>
             <Modal show={showTreasure} onHide={() => setShowTreasure(false)}>
                 <Modal.Body closeButton>
                     {showTreasure}
@@ -95,7 +104,7 @@ function Cave({ userData }) {
                 Open Treasure
             </Button>
             <Button as={Link} to="/village">Back to the village</Button>
-        </section >
+        </Container>
     )
 }
 
