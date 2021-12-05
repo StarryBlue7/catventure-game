@@ -86,6 +86,14 @@ const Tavern = ({ userData }) => {
     }
     addTavernCatToDB(tavernCats);
 
+    const checkTavernCats = async () => {
+        if (userData.currentTavernCats.length > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     const healCats = async (userCats) => {
         const fedCats = userCats.cats;
         console.log(userCats)
@@ -139,13 +147,13 @@ const Tavern = ({ userData }) => {
         }
 
     }
-
+    const currentCats = userData.currentTavernCats
     return (
         <section>
             <h2>Cat Tavern</h2>
             <p>Welcome to the tavern meow, we've got some adventurers here looking for a quest</p>
             <div>
-                {tavernCats.map((cat, i) => (
+                {!checkTavernCats() ? (tavernCats.map((cat, i) => (
                     <CatCard
                         recruitCat={recruitCat}
                         cat={cat}
@@ -153,7 +161,15 @@ const Tavern = ({ userData }) => {
                         key={i}
                         isTavern={true}
                         recruitLockout={recruitLockout()} />
-                ))}
+                ))) : (currentCats.map((cat, i) => (
+                    <CatCard
+                        recruitCat={recruitCat}
+                        cat={cat}
+                        userData={userData}
+                        key={i}
+                        isTavern={true}
+                        recruitLockout={recruitLockout()} />
+                )))}
             </div>
             <h3>Today's food</h3>
             <div>Deluxe Tuna and Chicken Pâté</div>
