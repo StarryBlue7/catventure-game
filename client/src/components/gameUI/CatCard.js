@@ -1,8 +1,8 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import Jobs from '../../data/jobs.json';
 import Auth from '../../utils/auth';
-import {removeCat} from '../../utils/API';
+import { removeCat } from '../../utils/API';
 import Sprites from '../sprites/Sprites'
 
 
@@ -13,14 +13,14 @@ function CatCard(props) {
     const [action, setAction] = useState('idle')
 
     //useState for the naming of the cat
-    const [catFormData, setCatFormData] = useState({catName: ''})
+    const [catFormData, setCatFormData] = useState({ catName: '' })
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        setCatFormData({...catFormData, [name]: value})
+        setCatFormData({ ...catFormData, [name]: value })
     }
 
-    const handleFormSubmit = async(event) => {
+    const handleFormSubmit = async (event) => {
         event.preventDefault();
         const cat = props.cat;
         cat.name = catFormData.catName;
@@ -54,6 +54,7 @@ function CatCard(props) {
             console.error(err);
         }
     };
+
     return (
         <>
             <div className="cat-card">
@@ -65,15 +66,15 @@ function CatCard(props) {
                 <p>Lvl: {!props.isTavern ? props.cat.level : 1}</p>
                 <p>{Jobs[props.cat.class].statName}: {props.cat.power}</p>
                 {props.isTavern ? (
-                    <Button 
+                    <Button
                         onClick={namingModalOpen}
                         disabled={props.recruitLockout}>Recruit this cat</Button>
-                ) 
-                : (
-                    <Button 
-                        onClick={() => handleremoveCat(props.cat._id)}
-                        disabled={props.isLastCat}>Remove</Button>
-                )}
+                )
+                    : (
+                        <Button
+                            onClick={() => handleremoveCat(props.cat._id)}
+                            disabled={props.isLastCat}>Remove</Button>
+                    )}
             </div>
             <Modal show={namingModal} onHide={namingModalClose}>
                 <Modal.Body>
@@ -100,7 +101,7 @@ function CatCard(props) {
                         <Button variant="secondary" onClick={namingModalClose}>
                             Close
                         </Button>
-                    </Form>      
+                    </Form>
                 </Modal.Body>
             </Modal>
         </>

@@ -5,6 +5,7 @@ import { lastTreasure, updateCat } from '../../utils/API';
 import Auth from '../../utils/auth';
 
 
+
 function Cave({ userData }) {
     const [showTreasure, setShowTreasure] = useState(false);
 
@@ -65,7 +66,7 @@ function Cave({ userData }) {
     }
 
     const isLockout = () => {
-        const yesterday = new Date(new Date().setHours(new Date().getHours() -20 ))
+        const yesterday = new Date(new Date().setHours(new Date().getHours() - 20))
         const usersDay = new Date(userData.lastTreasure);
 
         if (usersDay > yesterday) {
