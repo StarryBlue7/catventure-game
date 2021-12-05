@@ -17,6 +17,4 @@ const AsideCard = (props) => {
     )
 }
 
-
-
 export default AsideCard;
