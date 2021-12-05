@@ -11,6 +11,7 @@ const {
     updateTreasure,
     updateCat,
     updateHeal,
+    updateRecruit,
 
 } = require('../../controllers/userController');
 
@@ -30,6 +31,8 @@ router.route('/cats/:_id').delete(authMiddleware, removeCat);
 router.route('/treasure/:_id').put(authMiddleware, updateTreasure);
 //update date on user model heal has been used
 router.route('/heal/:_id').put(authMiddleware, updateHeal);
+//update date on user model when a recruit happens
+router.route('/recruit/:_id').put(authMiddleware, updateRecruit);
 // update cat's stat
 router.route('/cats/update').put(authMiddleware, updateCat);
 

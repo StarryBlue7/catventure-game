@@ -64,7 +64,9 @@ function CatCard(props) {
                 <p>Lvl: {!props.isTavern ? props.cat.level : 1}</p>
                 <p>{Jobs[props.cat.class].statName}: {props.cat.power}</p>
                 {props.isTavern ? (
-                    <Button onClick={namingModalOpen}>Recruit this cat</Button>
+                    <Button 
+                        onClick={namingModalOpen}
+                        disabled={props.recruitLockout}>Recruit this cat</Button>
                 ) 
                 : (
                     <Button onClick={() => handleremoveCat(props.cat._id)}>Remove</Button>
