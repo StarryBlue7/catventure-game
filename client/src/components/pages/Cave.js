@@ -54,16 +54,12 @@ function Cave({ userData }) {
         try {
 
             const response = await lastTreasure(userId, token)
-            const response2 = await updateCat(boostedCats, token)
+            const responseCats = await updateCat(boostedCats, token)
 
-            if (!response.ok) {
+            if (!response.ok || !responseCats.ok) {
                 throw new Error('something went wrong!');
             }
-            const updatedTreasure = await response.json();
-            const updatedCat = await response2.json();
 
-            console.log(updatedTreasure)
-            console.log("catupdate", updatedCat)
 
         } catch (err) {
             console.error(err);

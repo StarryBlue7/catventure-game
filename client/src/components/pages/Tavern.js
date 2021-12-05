@@ -7,6 +7,7 @@ import { addCat } from '../../utils/API';
 import CatCard from '../gameUI/CatCard';
 import Jobs from '../../data/jobs.json'
 
+// randomly assigns the job/class of the constructed Cat
 function assignJob() {
     let jobRoll = Math.floor(Math.random() * 3);
     switch (jobRoll) {
@@ -52,7 +53,7 @@ const Tavern = ({ userData }) => {
         }
 
         try {
-
+            // two API calls, one to set the recruit lockout, one to add a cat
             const response = await lastRecruit(userData, token);
             const responseAddCat = await addCat(newCat, token);
 
@@ -80,15 +81,14 @@ const Tavern = ({ userData }) => {
         }
 
         try {
-            //2 API requests, one to initiate the user's lockout, the other to update the cats in the database
+            //two API calls, one to set the lockout, the other to update the cats in the database
             const response = await lastHeal(userCats, token)
             const responseCats = await updateCat(fedCats, token)
 
-            if (!response.ok) {
+            if (!response.ok || !responseCats.ok) {
                 throw new Error('something went wrong!');
             }
-            const updatedHeal = await response.json();
-            const updatedCat = await responseCats.json();
+
 
         } catch (err) {
             console.error(err);
