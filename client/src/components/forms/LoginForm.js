@@ -6,6 +6,8 @@ import { loginUser } from '../../utils/API';
 import Auth from '../../utils/auth';
 
 const LoginForm = () => {
+
+  //useStates for the form data, validation and alerts
   const [userFormData, setUserFormData] = useState({ username: '', password: '' });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -46,6 +48,7 @@ const LoginForm = () => {
     });
   };
 
+  //Works just like the signup form
   return (
     <>
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>

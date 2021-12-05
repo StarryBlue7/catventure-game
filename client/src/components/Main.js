@@ -17,12 +17,7 @@ import Cave from './pages/Cave';
 function Main() {
     const [userData, setUserData] = useState({});
 
-    // const catsArr = userData.cats
-
-    // const userDataLength = Object.keys(userData).length;
-    // console.log(userData.cats.length)
-
-
+    // Keeps the user data updated
     useEffect(() => {
         const getUserData = async () => {
             try {

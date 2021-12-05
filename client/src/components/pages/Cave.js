@@ -7,8 +7,12 @@ import Auth from '../../utils/auth';
 
 
 function Cave({ userData }) {
+
+    // useState for treasure Modal
     const [showTreasure, setShowTreasure] = useState(false);
 
+    // Rolls a random treasure for the user, sets the treasure lockout and makes API call
+    // to update database with a PUT request
     const updateTreasure = async (userId) => {
 
         const boostedCats = userData.cats;
@@ -40,6 +44,7 @@ function Cave({ userData }) {
 
         const token = Auth.loggedIn() ? Auth.getToken() : null;
 
+        //activate state
         setShowTreasure(`${boostedCats[randomCat].name} gained ${boostAmount} ${randomStat}!!!`)
 
         if (!token) {
@@ -65,6 +70,8 @@ function Cave({ userData }) {
         }
     }
 
+    // Looks at the userdata and figures out if they are in a lockout or not
+    // if they are, disable the button
     const isLockout = () => {
         const yesterday = new Date(new Date().setHours(new Date().getHours() - 20))
         const usersDay = new Date(userData.lastTreasure);

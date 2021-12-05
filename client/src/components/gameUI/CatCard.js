@@ -20,6 +20,7 @@ function CatCard(props) {
         setCatFormData({ ...catFormData, [name]: value })
     }
 
+    //when user chooses a name, call the recruitCat method which was defined in Tavern component
     const handleFormSubmit = async (event) => {
         event.preventDefault();
         const cat = props.cat;
@@ -44,12 +45,10 @@ function CatCard(props) {
 
         try {
             const response = await removeCat(catId, token)
-            console.log(response)
             if (!response.ok) {
                 throw new Error('something went wrong!');
             }
             const updatedUser = await response.json();
-            console.log(updatedUser)
         } catch (err) {
             console.error(err);
         }
