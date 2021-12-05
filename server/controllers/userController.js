@@ -77,9 +77,17 @@ module.exports = {
         return res.json(removedCat);
     },
     async updateCat({ user, body }, res) {
+        const newBody = body.map((cat) => {
+            while(cat.experience >= 10){
+                cat.level = cat.level + 1;
+                cat.experience = cat.experience - 10;
+                
+            }
+            return cat;
+        })
         const updatedCat = await User.findOneAndUpdate(
             { _id: user._id },
-            { $set: { cats: body } },
+            { $set: { cats: newBody } },
             { new: true }
         );
         if (!updatedCat) {

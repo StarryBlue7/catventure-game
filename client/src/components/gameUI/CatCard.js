@@ -51,7 +51,7 @@ function CatCard(props) {
             console.error(err);
         }
 
-        
+
     };
 
     return (
@@ -63,6 +63,7 @@ function CatCard(props) {
                 <p>{props.cat.class}</p>
                 <p>HP: {props.cat.currentHP ? props.cat.currentHP : props.cat.maxHP}/{props.cat.maxHP}</p>
                 <p>Lvl: {!props.isTavern ? props.cat.level : 1}</p>
+                {!props.isTavern ? (<></>) : (<p>Exp: {props.cat.experience}/10</p>)}
                 <p>{Jobs[props.cat.class].statName}: {props.cat.power}</p>
                 {props.isTavern ? (
                     <Button
