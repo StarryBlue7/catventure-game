@@ -54,11 +54,11 @@ function Main() {
             <Sidebar userData={userData} />
             <main className="col-9">
                 <Switch>
+                    <Route exact path="/" >
+                        <Home userData={userData || false} />
+                    </Route>
                     {Object.keys(userData).length ? (
                         <>
-                            <Route exact path="/" >
-                                <Home userData={userData} />
-                            </Route>
                             <Route exact path="/tavern" >
                                 <Tavern userData={userData} />
                             </Route>
@@ -74,8 +74,11 @@ function Main() {
                             <Route exact path="/cave">
                                 <Cave userData={userData} />
                             </Route>
-                        </>) : 
-                        (<></>)}  
+                        </>
+                        ) : (
+                        <></>
+                        )
+                    }  
                 </Switch>
                 <Footer />
             </main>

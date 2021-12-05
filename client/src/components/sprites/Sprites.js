@@ -13,12 +13,13 @@ const animations = {
 }
 
 // Animated sprites
-function Sprites({ job, action, setAction }) {
+function Sprites({ job, action, setAction, scale }) {
     const animation = animations[job][action];
     return (<SpriteAnimator
         sprite={animation.sprite}
         width={animation.width}
         height={animation.height}
+        scale={scale || 1}
         direction={"vertical"}
         shouldAnimate={true}
         fps={animation.fps}
