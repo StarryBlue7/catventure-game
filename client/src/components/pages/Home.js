@@ -3,11 +3,22 @@ import { Link } from 'react-router-dom';
 import { Row, Button } from 'react-bootstrap';
 
 import Sprites from '../sprites/Sprites';
+import splash from '../../images/splash.png';
+
+const styles = {
+    background: { 
+        color: 'white', 
+        backgroundImage: `url(${splash})`, 
+        backgroundPosition: "center bottom",
+        width: "100%", 
+        height: "100%" 
+    }
+}
 
 function Home() {
     const [action, setAction] = useState('idle')
     return (
-        <section>
+        <section className={styles.background}>
             <Row className={"d-flex flex-row gap-10 justify-content-center"}>
                 <h2>Embark upon your very own Catventure!</h2>
             </Row>
