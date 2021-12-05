@@ -6,6 +6,7 @@ import Auth from '../../utils/auth';
 import { addCat } from '../../utils/API';
 import CatCard from '../gameUI/CatCard';
 import Jobs from '../../data/jobs.json'
+import { randomGen } from '../../utils/RNG';
 import tavern from '../../images/tavern.jpg';
 
 const styles = {
@@ -32,11 +33,6 @@ function assignJob() {
         default:
             return "Warrior";
     }
-}
-
-// the RNGesus function, returns a random number between the ba
-function randomGen(baseValue, spread) {
-    return Math.abs(baseValue - spread + Math.floor(Math.random() * (spread * 2 + 1)))
 }
 
 // Class constructor which 'rolls' a new cat using baseStats and  on the jobs.json file
