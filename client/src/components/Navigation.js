@@ -17,7 +17,10 @@ function Navigation({userData}) {
                 <Nav>
                     <Button as={Link} to="/" onClick={() => window.location.href='/'}>Home</Button>
                     {Auth.loggedIn() ? (
-                        <Button as={Link} to="/village" onClick={() => window.location.href='/village'}>Adventure</Button>
+                        <>
+                            <Button as={Link} to="/party" onClick={() => window.location.href='/party'}>Party</Button>
+                            <Button as={Link} to="/village" onClick={() => window.location.href='/village'}>Adventure</Button>
+                        </>
                     ) : (
                         <></>
                     )}
