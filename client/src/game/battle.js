@@ -77,13 +77,42 @@ function turnOrder(positions) {
     return turnOrder;
 }
 
+// Shift to next turn
+function nextTurn(turns) {
+    turns.push(turns.shift())
+    return turns;  
+}
+
+// Enemy turn
+function enemyTurn(id) {
+    console.log('Enemy turn', id);
+}
+
+// Player turn
+function playerTurn(_id) {
+    console.log('Player turn', _id);
+}
+
+// Check if either party or all enemies dead
+function battleContinues(party, enemies) {
+    return true;
+}
+
+// Battle
 function battle(party) {
+    // Setup battlefield
     const enemies = generateEnemies(randomEnemyCount(), partyTotals(party));
-    console.log(enemies);
     const positions = battlePositions(party, enemies);
-    console.log(positions);
-    const turns = turnOrder(positions);
-    console.log(turns);
+    let turns = turnOrder(positions);
+    
+    while (battleContinues()) {
+        if (positions[turns[0]] < 0) {
+            enemyTurn(positions[turns[0]]);
+        } else {
+            playerTurn(positions[turns[0]]);
+        }
+        nextTurn(turns)
+    }
 }
 
 const party = [
