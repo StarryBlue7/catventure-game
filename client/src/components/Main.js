@@ -3,15 +3,12 @@ import { BrowserRouter as Switch, Route } from 'react-router-dom';
 import Auth from '../utils/auth';
 import { getMe } from '../utils/API';
 import Sidebar from './Sidebar';
-import Footer from './Footer';
 import Home from './pages/Home';
 import Village from './pages/Village';
 import Tavern from './pages/Tavern';
 import Party from './pages/Party';
 import Forest from './pages/Forest';
 import Cave from './pages/Cave';
-
-
 
 // Main page
 function Main() {
@@ -45,9 +42,9 @@ function Main() {
     }, [userData]);
 
     return (
-        <div className="col-10 row">
+        <div className="w-100 row mx-0">
             <Sidebar userData={userData} />
-            <main className="col-9">
+            <main className="col-9 px-0">
                 <Switch>
                     <Route exact path="/" >
                         <Home userData={userData || false} />
@@ -75,7 +72,6 @@ function Main() {
                         )
                     }  
                 </Switch>
-                <Footer />
             </main>
         </div>
     );
