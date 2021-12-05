@@ -1,5 +1,5 @@
 // import die from './mage_die.png';
-// import heal from './mage_heal.png';
+import arrow from './rogue_arrow.png';
 import idle from './rogue_idle.png';
 import attack from './rogue_attack.png';
 // import damaged from './mage_damaged.png';
@@ -13,14 +13,13 @@ const RogueSprites = {
         fps: 6,
         noLoop: false
     },
-    // special: {
-    //     sprite: heal,
-    //     width: 96,
-    //     height: 2016/12,
-    //     fps: 6,
-    //     noLoop: true,
-    //     toIdle: true
-    // },
+    special: {
+        sprite: arrow,
+        width: 212,
+        height: 1216/8,
+        fps: 4,
+        noLoop: false
+    },
     // die: {
     //     sprite: die,
     //     width: 64,
