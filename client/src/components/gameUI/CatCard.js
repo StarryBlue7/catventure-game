@@ -8,8 +8,6 @@ import Sprites from '../sprites/Sprites'
 
 function CatCard(props) {
 
-    console.log(props.isLastCat);
-
     const [action, setAction] = useState('idle')
 
     //useState for the naming of the cat
@@ -20,6 +18,7 @@ function CatCard(props) {
         setCatFormData({ ...catFormData, [name]: value })
     }
 
+    //when user chooses a name, call the recruitCat method which was defined in Tavern component
     const handleFormSubmit = async (event) => {
         event.preventDefault();
         const cat = props.cat;
@@ -44,22 +43,22 @@ function CatCard(props) {
 
         try {
             const response = await removeCat(catId, token)
-            console.log(response)
             if (!response.ok) {
                 throw new Error('something went wrong!');
             }
             const updatedUser = await response.json();
-            console.log(updatedUser)
         } catch (err) {
             console.error(err);
         }
+
+        
     };
 
     return (
         <>
             <div className="cat-card">
                 {!props.isTavern ? (<p>{props.cat.name}</p>) : (<></>)}
-                {/* <Sprites job={props.cat.class} action={action} setAction={setAction} /> */}
+                <Sprites job={props.cat.class} action={action} setAction={setAction} />
                 <div className="hp-bar"><div></div></div>
                 <p>{props.cat.class}</p>
                 <p>HP: {props.cat.currentHP ? props.cat.currentHP : props.cat.maxHP}/{props.cat.maxHP}</p>

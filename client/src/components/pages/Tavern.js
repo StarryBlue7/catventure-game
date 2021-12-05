@@ -7,6 +7,7 @@ import { addCat } from '../../utils/API';
 import CatCard from '../gameUI/CatCard';
 import Jobs from '../../data/jobs.json'
 
+// randomly assigns the job/class of the constructed Cat
 function assignJob() {
     let jobRoll = Math.floor(Math.random() * 3);
     switch (jobRoll) {
@@ -19,11 +20,12 @@ function assignJob() {
     }
 }
 
-// the RNGesus function
+// the RNGesus function, returns a random number between the ba
 function randomGen(baseValue, spread) {
     return Math.abs(baseValue - spread + Math.floor(Math.random() * (spread * 2 + 1)))
 }
 
+// Class constructor which 'rolls' a new cat using baseStats and  on the jobs.json file
 class NewCat {
     constructor(job) {
         this.class = job
@@ -32,6 +34,7 @@ class NewCat {
     }
 }
 
+// Creates an array of cats for the user to recruit
 const tavernCats = [
     new NewCat(assignJob()),
     new NewCat(assignJob()),
@@ -39,7 +42,8 @@ const tavernCats = [
 ];
 
 const Tavern = ({ userData }) => {
-    // Add cat to user roster
+    // When user selects name (on the CatCard), make a PUT request to database
+    // and add a cat to the user's array of cats
     const recruitCat = async (newCat) => {
         // Get user token
         const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -48,8 +52,10 @@ const Tavern = ({ userData }) => {
             return false;
         }
 
-        try {
+        newCat.currentHP = newCat.maxHP;
 
+        try {
+            // two API calls, one to set the recruit lockout, one to add a cat
             const response = await lastRecruit(userData, token);
             const responseAddCat = await addCat(newCat, token);
 
@@ -62,10 +68,11 @@ const Tavern = ({ userData }) => {
         }
     };
 
+    // function which gets called when user clicks on the heal cats button
     const healCats = async (userCats) => {
         const fedCats = userCats.cats;
-        console.log(userCats)
-        console.log(fedCats)
+
+        // sets the user's cats' currentHP to their maxHP (full restore)
         fedCats.map((cat) => {
             return cat.currentHP = cat.maxHP;
         })
@@ -76,22 +83,21 @@ const Tavern = ({ userData }) => {
         }
 
         try {
+            //two API calls, one to set the lockout, the other to update the cats in the database
             const response = await lastHeal(userCats, token)
             const responseCats = await updateCat(fedCats, token)
 
-            if (!response.ok) {
+            if (!response.ok || !responseCats.ok) {
                 throw new Error('something went wrong!');
             }
-            const updatedHeal = await response.json();
-            const updatedCat = await responseCats.json();
 
-            console.log(updatedHeal)
-            console.log(updatedCat)
+
         } catch (err) {
             console.error(err);
         }
     }
 
+    // Looks at the user's lockout timestamp and disables the button if it hasn't been long enough
     const healLockout = () => {
         const lockoutTime = new Date(new Date().setMinutes(new Date().getMinutes() - 30))
         const usersDay = new Date(userData.lastHeal);
@@ -103,9 +109,10 @@ const Tavern = ({ userData }) => {
         }
     }
 
+    // Disables the recruit cat button if either the user already has 3 cats or if the recruit lockout is still in effect
     const recruitLockout = () => {
 
-        const lockoutTime = new Date(new Date().setHours(new Date().getHours() - 20))
+        const lockoutTime = new Date(new Date().setHours(new Date().getHours() - 0))
         const usersDay = new Date(userData.lastRecruit);
 
         if (usersDay > lockoutTime || userData.cats.length >= 3) {
