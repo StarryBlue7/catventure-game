@@ -6,7 +6,6 @@ import { getMe } from '../utils/API';
 
 import Header from './Header';
 import Sidebar from './Sidebar';
-import Footer from './Footer';
 import Home from './pages/Home';
 import Village from './pages/Village';
 import Tavern from './pages/Tavern';
