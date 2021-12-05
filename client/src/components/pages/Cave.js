@@ -18,9 +18,9 @@ function Cave({ userData }) {
         const boostedCats = userData.cats;
 
         let randomCat = Math.floor(Math.random() * boostedCats.length);
-        let boostAmount = Math.ceil(Math.random() * 3)
+        let boostAmount = 15 //Math.ceil(Math.random() * 3)
 
-        let randomBoost = Math.floor(Math.random() * 4)
+        let randomBoost = 3 //Math.floor(Math.random() * 4)
 
         let randomStat;
 
@@ -69,7 +69,7 @@ function Cave({ userData }) {
     // Looks at the userdata and figures out if they are in a lockout or not
     // if they are, disable the button
     const isLockout = () => {
-        const yesterday = new Date(new Date().setHours(new Date().getHours() - 20))
+        const yesterday = new Date(new Date().setHours(new Date().getHours() - 0))
         const usersDay = new Date(userData.lastTreasure);
 
         if (usersDay > yesterday) {
