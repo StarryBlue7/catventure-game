@@ -6,13 +6,8 @@ import Auth from '../utils/auth';
 import LoginForm from './forms/LoginForm';
 import SignUpForm from './forms/SignupForm';
 
-// Placeholder username, should be passed in through props
-let user =  {
-    name: "User"
-}
-
 // Navbar
-function Navigation() {
+function Navigation({userData}) {
     // Login/signup modal state toggle
     const [loginShow, setLoginShow] = useState(false);
 
@@ -29,7 +24,7 @@ function Navigation() {
                 </Nav>
                 {Auth.loggedIn() ? (
                     <Nav className="gap-10">
-                        <p className="m-0">Welcome, {user.name}!</p>
+                        {userData.username ? (<p className="m-0">Welcome, {userData.username}!</p>) : (<></>)}
                         <Button onClick={Auth.logout} className="btn-sm btn-danger">Logout</Button>
                     </Nav>
                 ) : (
