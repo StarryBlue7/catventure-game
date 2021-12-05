@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Row } from 'react-bootstrap';
 import Auth from '../utils/auth';
 import { getMe } from '../utils/API';
+
+import Header from './Header';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
 import Home from './pages/Home';
@@ -11,18 +14,11 @@ import Party from './pages/Party';
 import Forest from './pages/Forest';
 import Cave from './pages/Cave';
 
-
-
 // Main page
 function Main() {
     const [userData, setUserData] = useState({});
 
-    // const catsArr = userData.cats
-
-    // const userDataLength = Object.keys(userData).length;
-    // console.log(userData.cats.length)
-
-
+    // Keeps the user data updated
     useEffect(() => {
         const getUserData = async () => {
             try {
@@ -30,7 +26,6 @@ function Main() {
                 if (!token) {
                     return false;
                 }
-
                 const response = await getMe(token);
                 // setUserData(response.user.cats)
                 if (!response.ok) {
@@ -38,7 +33,6 @@ function Main() {
                 }
 
                 const user = await response.json();
-
                 setUserData(user);
 
             } catch (err) {
@@ -50,39 +44,41 @@ function Main() {
     }, [userData]);
 
     return (
-        <div className="col-10 row">
-            <Sidebar userData={userData} />
-            <main className="col-9">
-                <Switch>
-                    <Route exact path="/" >
-                        <Home userData={userData || false} />
-                    </Route>
-                    {Object.keys(userData).length ? (
-                        <>
-                            <Route exact path="/tavern" >
-                                <Tavern userData={userData} />
+        <Router>
+            <Header userData={userData} />
+            <Row className="w-100 row mx-0">
+                <Sidebar userData={userData} />
+                    <main className="col-9 px-0">
+                        <Switch>
+                            <Route exact path="/" >
+                                <Home userData={userData || false} />
                             </Route>
-                            <Route exact path="/village">
-                                <Village />
-                            </Route>
-                            <Route exact path="/party">
-                                <Party userData={userData} />
-                            </Route>
-                            <Route exact path="/forest">
-                                <Forest userData={userData} />
-                            </Route>
-                            <Route exact path="/cave">
-                                <Cave userData={userData} />
-                            </Route>
-                        </>
-                        ) : (
-                        <></>
-                        )
-                    }  
-                </Switch>
-                <Footer />
-            </main>
-        </div>
+                            {Object.keys(userData).length ? (
+                                <>
+                                    <Route exact path="/tavern" >
+                                        <Tavern userData={userData} />
+                                    </Route>
+                                    <Route exact path="/village">
+                                        <Village />
+                                    </Route>
+                                    <Route exact path="/party">
+                                        <Party userData={userData} />
+                                    </Route>
+                                    <Route exact path="/forest">
+                                        <Forest userData={userData} />
+                                    </Route>
+                                    <Route exact path="/cave">
+                                        <Cave userData={userData} />
+                                    </Route>
+                                </>
+                            ) : (
+                                <></>
+                            )}  
+                        </Switch>
+                    </main>
+                </Row>
+            <Footer />
+        </Router>
     );
 }
 

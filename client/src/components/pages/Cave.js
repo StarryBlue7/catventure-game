@@ -1,22 +1,39 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Col, Modal } from 'react-bootstrap';
 import { lastTreasure, updateCat } from '../../utils/API';
 import Auth from '../../utils/auth';
 
+import cave from '../../images/cave.png';
 
+const styles = {
+    page: { 
+        color: "white", 
+        width: "100%", 
+        height: "100%"
+    },
+    background: {
+        position: "absolute",
+        zIndex: -1,
+        width: "100%"
+    }
+}
 
 function Cave({ userData }) {
+
+    // useState for treasure Modal
     const [showTreasure, setShowTreasure] = useState(false);
 
+    // Rolls a random treasure for the user, sets the treasure lockout and makes API call
+    // to update database with a PUT request
     const updateTreasure = async (userId) => {
 
         const boostedCats = userData.cats;
 
         let randomCat = Math.floor(Math.random() * boostedCats.length);
-        let boostAmount = Math.ceil(Math.random() * 3)
+        let boostAmount = 15 //Math.ceil(Math.random() * 3)
 
-        let randomBoost = Math.floor(Math.random() * 4)
+        let randomBoost = 3 //Math.floor(Math.random() * 4)
 
         let randomStat;
 
@@ -33,13 +50,13 @@ function Cave({ userData }) {
             default:
                 randomStat = "experience";
                 break;
-
         }
 
         boostedCats[randomCat][randomStat] = boostedCats[randomCat][randomStat] + boostAmount;
 
         const token = Auth.loggedIn() ? Auth.getToken() : null;
 
+        //activate state
         setShowTreasure(`${boostedCats[randomCat].name} gained ${boostAmount} ${randomStat}!!!`)
 
         if (!token) {
@@ -49,24 +66,22 @@ function Cave({ userData }) {
         try {
 
             const response = await lastTreasure(userId, token)
-            const response2 = await updateCat(boostedCats, token)
+            const responseCats = await updateCat(boostedCats, token)
 
-            if (!response.ok) {
+            if (!response.ok || !responseCats.ok) {
                 throw new Error('something went wrong!');
             }
-            const updatedTreasure = await response.json();
-            const updatedCat = await response2.json();
 
-            console.log(updatedTreasure)
-            console.log("catupdate", updatedCat)
 
         } catch (err) {
             console.error(err);
         }
     }
 
+    // Looks at the userdata and figures out if they are in a lockout or not
+    // if they are, disable the button
     const isLockout = () => {
-        const yesterday = new Date(new Date().setHours(new Date().getHours() - 20))
+        const yesterday = new Date(new Date().setHours(new Date().getHours() - 0))
         const usersDay = new Date(userData.lastTreasure);
 
         if (usersDay > yesterday) {
@@ -77,22 +92,27 @@ function Cave({ userData }) {
     }
 
     return (
-        <section>
+        <Col className={"location px-0 d-flex flex-column align-items-center"} style={styles.page}>
+            <img src={cave} alt={"Cave"} style={styles.background} />
             <h2>Dark Cave</h2>
-            <p>My Team searched the depths of the dark cave and increased their feline abilities</p>
-            <p> Look through the cave to find and click on the treasure!</p>
+            <p>The party searched the depths of the dark cave to uncover ancient relics for increasing their feline abilities</p>
+            {isLockout() ? (<p>No treasures left to find. Come back later!</p>) : (
+                <>
+                    <p>Look through the cave to find and click on the treasure!</p>
+                    <Button
+                        disabled={isLockout()}
+                        onClick={() => updateTreasure()}>
+                        Open Treasure
+                    </Button>
+                </>)
+            }
+            <Button as={Link} to="/village">Back to the Village</Button>
             <Modal show={showTreasure} onHide={() => setShowTreasure(false)}>
                 <Modal.Body closeButton>
                     {showTreasure}
                 </Modal.Body>
             </Modal>
-            <Button
-                disabled={isLockout()}
-                onClick={() => updateTreasure()}>
-                Open Treasure
-            </Button>
-            <Button as={Link} to="/village">Back to the village</Button>
-        </section >
+        </Col>
     )
 }
 
