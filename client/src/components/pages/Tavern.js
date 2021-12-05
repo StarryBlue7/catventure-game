@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import {lastHeal, updateCat} from '../../utils/API'
+import {lastHeal, lastRecruit, updateCat} from '../../utils/API'
 import Auth from '../../utils/auth';
 import { addCat } from '../../utils/API';
 import CatCard from '../gameUI/CatCard';
@@ -49,13 +49,14 @@ const Tavern = ({userData}) => {
         }
 
         try {
-            const response = await addCat(newCat, token);
 
-            if (!response.ok) {
+            const response = await lastRecruit(userData, token);
+            const responseAddCat = await addCat(newCat, token);
+
+            if (!responseAddCat.ok || !response) {
                 throw new Error('something went wrong!');
             }
-
-            // Add update user data
+            
         } catch (err) {
             console.error(err);
         }
@@ -91,12 +92,20 @@ const Tavern = ({userData}) => {
         }   
     }
 
-    const isLockout = () => {
+    const healLockout = () => {
         const lockoutTime = new Date(new Date().setMinutes(new Date().getMinutes() -30))
         const usersDay = new Date(userData.lastHeal);
 
-        console.log(lockoutTime)
-        console.log(usersDay)
+        if (usersDay > lockoutTime) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    const recruitLockout = () => {
+        const lockoutTime = new Date(new Date().setHours(new Date().getHours() -20 ))
+        const usersDay = new Date(userData.lastRecruit);
 
         if (usersDay > lockoutTime) {
             return true;
@@ -113,16 +122,18 @@ const Tavern = ({userData}) => {
                 {tavernCats.map((cat, i) => (
                     <CatCard 
                         recruitCat={recruitCat} 
-                        cat={cat} 
+                        cat={cat}
+                        userData={userData} 
                         key={i} 
-                        isTavern={true} />
+                        isTavern={true}
+                        recruitLockout={recruitLockout()} />
                 ))}
             </div>
             <h3>Today's food</h3>
             <div>Deluxe Tuna and Chicken Pâté</div>
             <Button 
                 onClick={() => healCats(userData)}
-                disabled={isLockout()} >Eat to recover HP</Button>
+                disabled={healLockout()} >Eat to recover HP</Button>
             <Button as={Link} to="/village">Back to the village</Button>
         </section>
     )

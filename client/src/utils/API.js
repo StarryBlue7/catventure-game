@@ -71,6 +71,16 @@ export const lastHeal = (userId, token) => {
   });
 };
 
+export const lastRecruit = (userId, token) => {
+  return fetch(`/api/users/recruit/${userId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 export const updateCat = (catData, token) => {
   return fetch(`/api/users/cats/update/`, {
     method: 'PUT',
@@ -81,4 +91,3 @@ export const updateCat = (catData, token) => {
     body: JSON.stringify(catData)
   })
 }
-

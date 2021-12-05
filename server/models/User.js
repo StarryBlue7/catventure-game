@@ -14,14 +14,20 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    
     lastTreasure: {
         type: Date,
 
     },
+
     lastHeal: {
         type: Date
     },
-    // Cats?
+
+    lastRecruit: {
+        type: Date
+    },
+
     cats: [catSchema],
 },
     {

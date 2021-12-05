@@ -89,7 +89,6 @@ module.exports = {
     },
     async updateTreasure({ user }, res) {
         const now = new Date();
-        console.log(now)
         const lastTreasure = await User.findOneAndUpdate(
             { _id: user._id },
             { $set: { lastTreasure: now } },
@@ -103,7 +102,6 @@ module.exports = {
 
     async updateHeal({ user }, res) {
         const now = new Date();
-        console.log(now)
         const lastHeal = await User.findOneAndUpdate(
             { _id: user._id },
             { $set: { lastHeal: now } },
@@ -113,5 +111,18 @@ module.exports = {
             return res.status(404).json({ message: "Could not set your lastHeal" });
         }
         return res.json(lastHeal)
+    },
+
+    async updateRecruit({ user }, res) {
+        const now = new Date();
+        const lastRecruit = await User.findOneAndUpdate(
+            { _id: user._id },
+            { $set: { lastRecruit: now } },
+            { new: true }
+        );
+        if (!lastRecruit) {
+            return res.status(404).json({ message: "Could not set your lastRecruit" });
+        }
+        return res.json(lastRecruit)
     }
 }
