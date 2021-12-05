@@ -4,11 +4,12 @@ import { SpriteAnimator } from 'react-sprite-animator';
 // Import sprite configurations
 import MageSprites from './sprite-images/mage';
 import WarriorSprites from './sprite-images/warrior';
+import RogueSprites from './sprite-images/rogue';
 
 const animations = {
     Mage: MageSprites,
     Warrior: WarriorSprites,
-    Rogue: {}
+    Rogue: RogueSprites
 }
 
 // Animated sprites

@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 import Sprites from '../sprites/Sprites';
 
 const catData = {
-    class: "Warrior",
+    class: "Rogue",
 }
 
 function Home() {
@@ -21,11 +21,12 @@ function Home() {
             <div>
                 <Button onClick={() => setAction('idle')}>Idle</Button>
                 <Button onClick={() => setAction('attack')}>Attack</Button>
+                
+                {/* 
+                
                 <Button onClick={() => setAction('special')}>Special</Button>
                 <Button onClick={() => setAction('die')}>Die</Button>
                 <Button onClick={() => setAction('damaged')}>Damaged</Button>
-                {/* 
-                
                 
                  */}
             </div>
