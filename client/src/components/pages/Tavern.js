@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import { lastHeal, lastRecruit, updateCat } from '../../utils/API'
+import { lastHeal, lastRecruit, updateCat, addTavernCat } from '../../utils/API'
 import Auth from '../../utils/auth';
 import { addCat } from '../../utils/API';
 import CatCard from '../gameUI/CatCard';
@@ -51,16 +51,40 @@ const Tavern = ({ userData }) => {
         try {
 
             const response = await lastRecruit(userData, token);
+
             const responseAddCat = await addCat(newCat, token);
+
 
             if (!responseAddCat.ok || !response) {
                 throw new Error('something went wrong!');
             }
 
+            console.log(userData)
         } catch (err) {
             console.error(err);
         }
     };
+
+    const addTavernCatToDB = async (tavernCats) => {
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+        if (!token) {
+            return false;
+        }
+        try {
+            const response = await addTavernCat(tavernCats, token);
+            if (!response.ok) {
+                throw new Error('something went wrong!');
+            }
+
+            const catResp = await response.json();
+            console.log(catResp)
+            console.log(userData)
+        } catch (err) {
+            console.error(err);
+        }
+    }
+    addTavernCatToDB(tavernCats);
 
     const healCats = async (userCats) => {
         const fedCats = userCats.cats;

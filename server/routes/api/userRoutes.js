@@ -12,6 +12,7 @@ const {
     updateCat,
     updateHeal,
     updateRecruit,
+    addTavernCat,
 
 } = require('../../controllers/userController');
 
@@ -35,6 +36,8 @@ router.route('/heal/:_id').put(authMiddleware, updateHeal);
 router.route('/recruit/:_id').put(authMiddleware, updateRecruit);
 // update cat's stat
 router.route('/cats/update').put(authMiddleware, updateCat);
+// add cat to current generated cat array
+router.route('/addTavern').put(authMiddleware, addTavernCat)
 
 
 module.exports = router;

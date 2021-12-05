@@ -90,4 +90,15 @@ export const updateCat = (catData, token) => {
     },
     body: JSON.stringify(catData)
   })
-}
+};
+
+export const addTavernCat = (catData, token) => {
+  return fetch('/api/users/addTavern', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(catData),
+  });
+};

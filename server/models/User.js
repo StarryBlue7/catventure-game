@@ -14,7 +14,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    
+
     lastTreasure: {
         type: Date,
 
@@ -28,6 +28,11 @@ const userSchema = new Schema({
         type: Date
     },
 
+    currentTavernCats: [{
+        class: String,
+        power: Number,
+        maxHP: Number,
+    }],
     cats: [catSchema],
 },
     {

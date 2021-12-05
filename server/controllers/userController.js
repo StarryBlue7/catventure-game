@@ -124,5 +124,19 @@ module.exports = {
             return res.status(404).json({ message: "Could not set your lastRecruit" });
         }
         return res.json(lastRecruit)
+    },
+    async addTavernCat({ user, body }, res) {
+        console.log(user);
+        try {
+            const updatedUser = await User.findOneAndUpdate(
+                { _id: user._id },
+                { $set: { currentTavernCats: body } },
+                { new: true, runValidators: true }
+            );
+            return res.json(updatedUser);
+        } catch (err) {
+            console.log(err);
+            return res.status(400).json(err);
+        }
     }
 }
