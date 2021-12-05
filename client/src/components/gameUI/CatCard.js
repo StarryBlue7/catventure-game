@@ -6,12 +6,13 @@ import {removeCat} from '../../utils/API';
 import Sprites from '../sprites/Sprites'
 
 
-// replace these with the proper imports
-
 function CatCard(props) {
+
+    console.log(props.isLastCat);
 
     const [action, setAction] = useState('idle')
 
+    //useState for the naming of the cat
     const [catFormData, setCatFormData] = useState({catName: ''})
 
     const handleInputChange = (event) => {
@@ -27,13 +28,13 @@ function CatCard(props) {
         props.recruitCat(cat);
     }
 
+    //useState for the modal
     const [namingModal, setNamingModal] = useState(false);
 
     const namingModalClose = () => setNamingModal(false);
     const namingModalOpen = () => setNamingModal(true);
 
-        // function to remove cat from party
-
+    // function to remove cat from party
     const handleremoveCat = async (catId) => {
         const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -69,7 +70,9 @@ function CatCard(props) {
                         disabled={props.recruitLockout}>Recruit this cat</Button>
                 ) 
                 : (
-                    <Button onClick={() => handleremoveCat(props.cat._id)}>Remove</Button>
+                    <Button 
+                        onClick={() => handleremoveCat(props.cat._id)}
+                        disabled={props.isLastCat}>Remove</Button>
                 )}
             </div>
             <Modal show={namingModal} onHide={namingModalClose}>
