@@ -11,7 +11,7 @@ const AsideCard = (props) => {
             <p>{props.cat.class}</p>
             <p>HP: {props.cat.currentHP}/{props.cat.maxHP}</p>
             <p>Lvl: {props.cat.level}</p>
-            <p>Exp: {props.cat.experience}</p>
+            <p>Exp: {props.cat.experience}/20</p>
             <p>{Jobs[props.cat.class].statName}: {props.cat.power}</p>
         </div>
     )
