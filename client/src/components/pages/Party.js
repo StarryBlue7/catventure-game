@@ -4,9 +4,16 @@ import { Button } from 'react-bootstrap';
 import CatCard from '../gameUI/CatCard';
 
 function Party({userData}) {
-    // console.log(userData)
+
     const userCats = userData.cats;
-    // console.log(userCats)
+
+    function isLastCat(catArray){
+        if(catArray.length < 2){
+            return true;
+        } else{
+            return false;
+        }
+    }
     return (
         <section>
             <h2>My Team</h2>
@@ -16,6 +23,7 @@ function Party({userData}) {
                     cat={cat} 
                     key={i}
                     isTavern={false}
+                    isLastCat={isLastCat(userCats)}
                      />
                 ))}
             </div>
