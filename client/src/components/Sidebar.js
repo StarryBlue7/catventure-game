@@ -3,8 +3,8 @@ import AsideCard from './gameUI/AsideCard'
 
 const styles = {
     yourParty: {
-        marginTop: "10px",
-        marginLeft: "10px"
+        margin: "10px",
+        marginBottom: '15px'
     }
 }
 

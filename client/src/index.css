@@ -7,8 +7,13 @@ h1, h2, h3 {
   font-family: var(--title-font);
 }
 
-p, header a {
+p, div, header a {
   font-family: var(--main-font);
+}
+
+p {
+  padding: 0;
+  margin: 0;
 }
 .logo {
   width: 500px;
@@ -32,9 +37,9 @@ body {
 }
 
 .custom-card {
-  margin-left: 1%;
+  margin: 5px 5px 10px 1%;
   background-color: rgba(255,255,255,0.5);
-  padding: 10px 15px 1px 15px;
+  padding: 0px 15px 0px 15px;
   display: flex;
   align-items: center;
   flex-direction: column;
