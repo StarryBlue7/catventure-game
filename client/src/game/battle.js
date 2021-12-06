@@ -98,27 +98,35 @@ function battleContinues(party, enemies) {
     return true;
 }
 
-// Battle
-function battle(party) {
-    // Setup battlefield
-    const enemies = generateEnemies(randomEnemyCount(), partyTotals(party));
-    const positions = battlePositions(party, enemies);
-    let turns = turnOrder(positions);
-    
-    while (battleContinues()) {
-        if (positions[turns[0]] < 0) {
-            enemyTurn(positions[turns[0]]);
+function enemyTurns(battlefield, setBattlefield) {
+    const enemyTurns = setInterval(() => {
+        if (battleContinues() && battlefield.positions[battlefield.turns[0]] < 0) {
+            enemyTurn(battlefield.positions[battlefield.turns[0]]);
         } else {
-            playerTurn(positions[turns[0]]);
+            clearInterval(enemyTurns);
+            setBattlefield(battlefield);
+            console.log('Enemy turns ended, next turn for:', battlefield.positions[battlefield.turns[0]])
         }
-        nextTurn(turns)
-    }
+        nextTurn(battlefield.turns);
+    }, 1000);
 }
 
-const party = [
-    {_id: 789, name: 'Derek', class: 'Warrior', maxHP: 60, currentHP: 60, power: 15, level: 3, experience: 5},
-    {_id: 456, name: 'Emily', class: 'Rogue', maxHP: 40, currentHP: 30, power: 19, level: 4, experience: 2},
-    {_id: 123, name: 'Vince', class: 'Mage', maxHP: 30, currentHP: 25, power: 25, level: 3, experience: 1}
-]
+// Setup new battle
+function newBattle(party, setBattlefield) {
+    const enemies = generateEnemies(randomEnemyCount(), partyTotals(party));
+    const positions = battlePositions(party, enemies);
+    const turns = turnOrder(positions);
+    const newBattlefield = { enemies, positions, turns };
+    console.log(newBattlefield)
+    // Initial enemy turns
+    enemyTurns(newBattlefield, setBattlefield)   
+    console.log(newBattlefield)
+    // Set battlefield state for user turns
+    setBattlefield(newBattlefield);
+}
 
-battle(party)
+function isTurn(battlefield, _id) {
+    return battlefield.turns[0] === _id;
+}
+
+module.exports = { newBattle, nextTurn, playerTurn, battleContinues, enemyTurns, isTurn };
