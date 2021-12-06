@@ -46,9 +46,9 @@ function Main() {
     return (
         <Router>
             <Header userData={userData} />
-            <Row className="w-100 row mx-0">
+            <Row className="main-page w-100 row mx-0">
                 <Sidebar userData={userData} />
-                    <main className="col-10 px-0">
+                    <main className=" col-10 px-0">
                         <Switch>
                             <Route exact path="/" >
                                 <Home userData={userData || false} />
