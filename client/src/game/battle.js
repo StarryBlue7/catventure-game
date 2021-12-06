@@ -95,7 +95,7 @@ function enemyTurn(id) {
 }
 
 // Player turn
-function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow) {
+function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, setCurrentCat, setAllowAct) {
     console.log('Player turn');
     setMenuShow(false);
     let newBattlefield = {...battlefield};
@@ -105,7 +105,7 @@ function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow) {
     newBattlefield.turns = nextTurn(newBattlefield.turns);
     setBattlefield(newBattlefield);
     console.log(newBattlefield);
-    enemyTurns(newBattlefield, setBattlefield, setMenuShow)
+    enemyTurns(newBattlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct)
 }
 
 // Check if either party or all enemies dead
@@ -113,7 +113,8 @@ function battleContinues(battlefield) {
     return true;
 }
 
-function enemyTurns(battlefield, setBattlefield, setMenuShow) {
+// Cycle through and executes any enemy turns
+function enemyTurns(battlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct) {
     console.log('Initial battlefield', battlefield)
     let newBattlefield = {...battlefield};
     const takeEnemyTurns = setInterval(() => {
@@ -122,37 +123,27 @@ function enemyTurns(battlefield, setBattlefield, setMenuShow) {
             newBattlefield.turns = nextTurn(newBattlefield.turns);
         } else {
             clearInterval(takeEnemyTurns);
-            console.log('Enemy turns ended, next turn for:', newBattlefield.positions[newBattlefield.turns[0]].name)
+            console.log('Enemy turns ended, next turn for:', newBattlefield.positions[newBattlefield.turns[0]].name);
+            setCurrentCat(newBattlefield.positions[newBattlefield.turns[0]]);
+            setAllowAct(true);
             setMenuShow(true);
         }
         setBattlefield(newBattlefield)
         console.log('New battlefield', newBattlefield)
-        console.log('Set battlefield', battlefield)
-    }, 1000);
-    // while (battleContinues() && battlefield.positions[battlefield.turns[0]] < 0) {
-    //     enemyTurn(battlefield.positions[battlefield.turns[0]]);
-    //     nextTurn(battlefield.turns);
-    //     setBattlefield(battlefield)
-    // } 
+    }, 3000);
+
     setBattlefield(newBattlefield);
 }
 
 // Setup new battle
-function newBattle(party, setBattlefield, setMenuShow) {
+function newBattle(party, setBattlefield, setMenuShow, setCurrentCat, setAllowAct) {
     const enemies = generateEnemies(randomEnemyCount(), partyTotals(party));
     const positions = battlePositions(party, enemies);
     const turns = turnOrder(positions);
     const newBattlefield = { enemies, positions, turns, continue: true };
     console.log('Generated battlefield', newBattlefield)
     // Initial enemy turns
-    enemyTurns(newBattlefield, setBattlefield, setMenuShow)   
-    // console.log('After enemy turns', newBattlefield)
-    // Set battlefield state for user turns
-    // setBattlefield(newBattlefield);
-}
-
-function isTurn(battlefield, _id) {
-    return battlefield.turns[0] === _id;
+    enemyTurns(newBattlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct)
 }
 
 function endBattle(battlefield, setBattlefield) {
@@ -160,4 +151,4 @@ function endBattle(battlefield, setBattlefield) {
     setBattlefield(battlefield);
 }
 
-module.exports = { newBattle, nextTurn, playerTurn, battleContinues, enemyTurns, isTurn, endBattle };
+module.exports = { newBattle, nextTurn, playerTurn, battleContinues, enemyTurns, endBattle };
