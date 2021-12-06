@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Col, Modal, Row, ProgressBar } from 'react-bootstrap';
 
-import { Enemy, newBattle, playerTurn, battleContinues, endBattle } from '../../game/battle';
+import { Enemy, newBattle, playerTurn } from '../../game/battle';
 
 import Jobs from '../../data/jobs.json';
 import Sprites from '../sprites/Sprites';
@@ -13,15 +13,15 @@ const styles = {
     page: { 
         color: 'white', 
         width: "100%", 
-        height: "100%" 
+        height: "100%",
+        overflowX: "hidden"
     },
     background: {
         position: "absolute",
         zIndex: -1,
-        width: "100%"
+        height: "100%"
     },
     healthBars: {
-        zIndex: 2,
         width: 100
     }
 }
@@ -45,10 +45,10 @@ function Forest({ userData }) {
                         <Button disabled={!allowAct} onClick={() => setMenuShow(true)}>Choose Action</Button>
                         {battleParty.map((cat, i) => {
                             return (
-                                <>
+                                <div className={cat._id === currentCat._id ? "align-self-center" : ""}>
                                     <Sprites job={cat.class} action={'idle'} setAction={() => {}} scale={1} key={'ally' + i} />
                                     <ProgressBar style={styles.healthBars} variant={"success"} now={100 * (cat.currentHP / cat.maxHP)} key={'allyHP' + i} />
-                                </>
+                                </div>
                             )
                         })}
                     </Col>
@@ -57,10 +57,10 @@ function Forest({ userData }) {
                     <Col id="enemy-sprites" className={"d-flex flex-column align-items-end justify-content-center gap-10"}>
                         {battleEnemies.map((enemy, i) => {
                             return (
-                                <>
+                                <div>
                                     <EnemySprites img={enemy.img} scale={1} key={'enemy' + i} />
                                     <ProgressBar style={styles.healthBars} variant={"success"} variant="success" now={100 * (enemy.currentHP / enemy.maxHP)} key={'enemyHP' + i} />
-                                </>
+                                </div>
                             )
                         })}
                     </Col>
@@ -77,16 +77,18 @@ function Forest({ userData }) {
                     <Button 
                         onClick={() => {
                             setAllowAct(false); 
+                            setTimeout(() => {setCurrentCat({name: ""})}, 2000);
                             playerTurn(battlefield, setBattlefield, false, setMenuShow, setCurrentCat, setAllowAct)
                         }}
                     >Attack</Button>
                     <Button 
                         onClick={() => {
                             setAllowAct(false); 
+                            setTimeout(() => {setCurrentCat({name: ""})}, 2000);
                             playerTurn(battlefield, setBattlefield, true, setMenuShow, setCurrentCat, setAllowAct)
                         }}
                     >"Special"</Button>
-                    <Button as={Link} to="/village">Escape</Button>
+                    <Button as={Link} to="/village">Run Away!</Button>
                 </Modal.Body>
             </Modal>
         </Col>
