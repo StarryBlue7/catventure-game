@@ -10,7 +10,9 @@ h1, h2, h3 {
 p, header a {
   font-family: var(--main-font);
 }
-
+.logo {
+  width: 500px;
+}
 .custom-button:hover, .custom-button:active {
   background-color: #00e25e;
 }
@@ -39,4 +41,25 @@ section{
 
 .gap-10 {
   gap: 10px
+}
+
+/* sets the header component on large desktop screens */
+@media only screen and (min-width: 990px){
+  .logo {
+    position: absolute;
+  }
+  
+  header {
+    height: 160px;
+  }
+  nav {
+    margin-top: 50px;
+  }
+
+}
+
+@media only screen and (max-width: 500px){
+  .logo{
+    width: 100%;
+  }
 }

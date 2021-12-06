@@ -12,14 +12,17 @@ const styles = {
         border: '1px solid orange',
         fontSize: '1.4em',
         marginLeft: '10px',
+        borderRadius: '8px'
     },
     welcome: {
-        fontSize: '1.4em'
+        fontSize: '1.6em',
+        fontFamily: 'Pacifico'
     },
     loginLogout: {
         fontFamily: "'Open Sans', sans-serif",
         fontSize: '1.2em',
-        color: 'black'
+        color: 'black',
+        borderRadius: '8px'
     }
 }
 
