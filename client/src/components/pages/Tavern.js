@@ -6,7 +6,7 @@ import Auth from '../../utils/auth';
 import { addCat } from '../../utils/API';
 import CatCard from '../gameUI/CatCard';
 import Jobs from '../../data/jobs.json'
-import { randomGen } from '../../utils/RNG';
+import randomGen from '../../utils/RNG';
 import tavern from '../../images/tavern.jpg';
 
 const styles = {
