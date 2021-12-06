@@ -1,3 +1,23 @@
+import { updateCat } from "../utils/API";
+import Auth from "../utils/auth";
+
+async function battleUpdate(catsArray) {
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
+        return false;
+    }
+    try {
+        const responseCats = await updateCat(catsArray, token)
+        if (!responseCats.ok) {
+            throw new Error('something went wrong!');
+        }
+    } catch (err) {
+        console.error(err);
+    }
+    return token;
+}
+
 // Randomizer
 function randomGen(baseValue, spread) {
     return Math.abs(baseValue - spread + Math.floor(Math.random() * (spread * 2 + 1)))
@@ -9,7 +29,7 @@ function randomEnemyCount() {
 }
 
 // Build enemy
-class Enemy {
+export class Enemy {
     constructor(maxHP, hpSpread, power, powerSpread, id, img) {
         this.maxHP = randomGen(maxHP, hpSpread);
         this.currentHP = this.maxHP;
@@ -20,8 +40,8 @@ class Enemy {
 }
 
 // Damage calculation
-function calcDamage(power, level = 1, multiplier = 1) {
-    const damage = Math.ceil(Math.log(power) * ((Math.random() * 3) + Math.log(level)) * multiplier);
+function calcDamage(power, level = 3, multiplier = 1) {
+    const damage = Math.ceil(Math.log(power) * ((Math.random() * level)) * multiplier);
     return damage
 }
 
@@ -92,21 +112,20 @@ function enemyTurn(battlefield) {
     const enemy = battlefield.enemies[battlefield.positions[enemyPosition] + battlefield.enemies.length];
     const targetIndex = Math.floor(Math.random() * battlefield.party.length);
     const target = battlefield.party[targetIndex];
+
     // Enemy action
     const damage = calcDamage(enemy.power, battlefield.multiplier);
     const newParty = [...battlefield.party];
-    console.log(newParty[targetIndex])
     newParty[targetIndex].currentHP = newParty[targetIndex].currentHP - damage;
-    console.log(newParty[targetIndex])
-    // API call
+
+    // API call to update db
+    battleUpdate(newParty);
 
     console.log(`Monster in position ${enemyPosition} attacks ${target.name} for ${damage}`)
-    
-    return battlefield;
 }
 
 // Player turn
-function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, setCurrentCat, setAllowAct) {
+export function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, setCurrentCat, setAllowAct) {
     console.log('Player turn');
     setMenuShow(false);
     let newBattlefield = {...battlefield};
@@ -151,7 +170,7 @@ function enemyTurns(battlefield, setBattlefield, setMenuShow, setCurrentCat, set
 }
 
 // Setup new battle
-function newBattle(party, setBattlefield, setMenuShow, setCurrentCat, setAllowAct) {
+export function newBattle(party, setBattlefield, setMenuShow, setCurrentCat, setAllowAct) {
     const enemies = generateEnemies(randomEnemyCount(), partyTotals(party));
     const positions = battlePositions(party, enemies);
     const turns = turnOrder(positions);
@@ -166,4 +185,4 @@ function endBattle(battlefield, setBattlefield) {
     setBattlefield(battlefield);
 }
 
-module.exports = { Enemy, newBattle, nextTurn, playerTurn, battleContinues, enemyTurns, endBattle };
+// module.exports = { Enemy, newBattle, nextTurn, playerTurn, battleContinues, enemyTurns, endBattle }
