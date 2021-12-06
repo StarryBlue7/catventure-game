@@ -57,10 +57,14 @@ function Forest({ userData }) {
                     <Col id="enemy-sprites" className={"d-flex flex-column align-items-end justify-content-center gap-10"}>
                         {battleEnemies.map((enemy, i) => {
                             return (
-                                <div>
-                                    <EnemySprites img={enemy.img} scale={1} key={'enemy' + i} />
-                                    <ProgressBar style={styles.healthBars} variant={"success"} variant="success" now={100 * (enemy.currentHP / enemy.maxHP)} key={'enemyHP' + i} />
-                                </div>
+                                <>
+                                    {enemy.currentHP > 0 ? (
+                                        <div>
+                                            <EnemySprites img={enemy.img} scale={1} key={'enemy' + i} />
+                                            <ProgressBar style={styles.healthBars} variant={"success"} now={100 * (enemy.currentHP / enemy.maxHP)} key={'enemyHP' + i} />
+                                        </div>
+                                    ) : (<></>)}
+                                </>
                             )
                         })}
                     </Col>
