@@ -2,16 +2,25 @@
     "Warrior": {
         "basePower": 6,
         "baseHitpoints": 20,
-        "statName": "Strength"
+        "statName": "Strength",
+        "description": "Warriors are brave and resilient defenders!",
+        "special": "Shield Wall",
+        "specialDescription": "Defend your party until your next turn."
     },
     "Mage": {
         "basePower": 10,
         "baseHitpoints": 14,
-        "statName": "Arcane"
+        "statName": "Arcane",
+        "description": "Mages wield powerful magicks to damage or heal!",
+        "special": "Healing Star",
+        "specialDescription": "Heal your party with restorative starlight."
     },
     "Rogue": {
         "basePower": 7,
         "baseHitpoints": 18,
-        "statName": "Dexterity"
+        "statName": "Dexterity",
+        "description": "Rogues are speedy fighters, capable of multi-attacks!",
+        "special": "Lightning Arrow",
+        "specialDescription": "Strike all enemies with electrified shots."
     }
 }

@@ -7,6 +7,7 @@ function Party({userData}) {
 
     const userCats = userData.cats;
 
+    // checks if the user has only one cat left (and prevent them from removing it)
     function isLastCat(catArray){
         if(catArray.length < 2){
             return true;
