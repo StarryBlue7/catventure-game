@@ -6,6 +6,23 @@ import Auth from '../utils/auth';
 import LoginForm from './forms/LoginForm';
 import SignUpForm from './forms/SignupForm';
 
+const styles = {
+    button: {
+        color: 'black',
+        border: '1px solid orange',
+        fontSize: '1.4em',
+        marginLeft: '10px',
+    },
+    welcome: {
+        fontSize: '1.4em'
+    },
+    loginLogout: {
+        fontFamily: "'Open Sans', sans-serif",
+        fontSize: '1.2em',
+        color: 'black'
+    }
+}
+
 // Navbar
 function Navigation({userData}) {
     // Login/signup modal state toggle
@@ -17,8 +34,8 @@ function Navigation({userData}) {
                 <Nav>
                     {Auth.loggedIn() ? (
                         <>
-                            <Button as={Link} to="/party" onClick={() => window.location.href='/party'}>Party</Button>
-                            <Button as={Link} to="/village" onClick={() => window.location.href='/village'}>Adventure</Button>
+                            <Button className="custom-button" as={Link} style={styles.button} to="/party" onClick={() => window.location.href='/party'}>Party</Button>
+                            <Button className="custom-button" as={Link} style={styles.button} to="/village" onClick={() => window.location.href='/village'}>Adventure</Button>
                         </>
                     ) : (
                         <></>
@@ -26,11 +43,11 @@ function Navigation({userData}) {
                 </Nav>
                 {Auth.loggedIn() ? (
                     <Nav className="gap-10">
-                        {userData.username ? (<p className="m-0">Welcome, {userData.username}!</p>) : (<></>)}
-                        <Button onClick={Auth.logout} className="btn-sm btn-danger">Logout</Button>
+                        {userData.username ? (<p className="m-0" style={styles.welcome}>Welcome, {userData.username}!</p>) : (<></>)}
+                        <Button onClick={Auth.logout} style={styles.loginLogout} className="btn-sm btn-danger">Logout</Button>
                     </Nav>
                 ) : (
-                    <><Button onClick={() => setLoginShow(true)} className="btn-sm btn-success">Login</Button></>
+                    <><Button onClick={() => setLoginShow(true)} style={styles.loginLogout} className="btn-sm btn-success">Login</Button></>
                 )}
             </Navbar>
             <Modal

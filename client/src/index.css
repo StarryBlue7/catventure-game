@@ -7,8 +7,16 @@ h1, h2, h3 {
   font-family: var(--title-font);
 }
 
-p {
+p, header a {
   font-family: var(--main-font);
+}
+
+.custom-button:hover, .custom-button:active {
+  background-color: #00e25e;
+}
+.custom-button {
+  background-color: #009c5b;
+  font-family: 'Open Sans', sans-serif
 }
 
 body {
