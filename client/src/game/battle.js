@@ -57,7 +57,7 @@ function generateEnemies(count, partyTotal) {
 function battlePositions(party, enemies) {
     let positions = [];
     party.forEach(cat => {
-        positions.push(cat._id);
+        positions.push(cat);
     });
     enemies.forEach(enemy => {
         positions.push(enemy.id);
@@ -95,8 +95,17 @@ function enemyTurn(id) {
 }
 
 // Player turn
-function playerTurn(battlefield, setBattlefield) {
+function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow) {
     console.log('Player turn');
+    setMenuShow(false);
+    let newBattlefield = {...battlefield};
+    isSpecial 
+        ? console.log(`${newBattlefield.positions[newBattlefield.turns[0]].name} uses their special!`) 
+        : console.log(`${newBattlefield.positions[newBattlefield.turns[0]].name} attacks!`);
+    newBattlefield.turns = nextTurn(newBattlefield.turns);
+    setBattlefield(newBattlefield);
+    console.log(newBattlefield);
+    enemyTurns(newBattlefield, setBattlefield, setMenuShow)
 }
 
 // Check if either party or all enemies dead
@@ -113,7 +122,7 @@ function enemyTurns(battlefield, setBattlefield, setMenuShow) {
             newBattlefield.turns = nextTurn(newBattlefield.turns);
         } else {
             clearInterval(takeEnemyTurns);
-            console.log('Enemy turns ended, next turn for:', newBattlefield.positions[newBattlefield.turns[0]])
+            console.log('Enemy turns ended, next turn for:', newBattlefield.positions[newBattlefield.turns[0]].name)
             setMenuShow(true);
         }
         setBattlefield(newBattlefield)
@@ -126,7 +135,6 @@ function enemyTurns(battlefield, setBattlefield, setMenuShow) {
     //     setBattlefield(battlefield)
     // } 
     setBattlefield(newBattlefield);
-    console.log('Enemy turns ended, next turn for:', newBattlefield.positions[newBattlefield.turns[0]])
 }
 
 // Setup new battle
