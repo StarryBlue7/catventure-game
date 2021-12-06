@@ -15,7 +15,6 @@ function Navigation({userData}) {
         <>
             <Navbar expand="lg" className="w-100 d-flex justify-content-between align-items-end px-0">
                 <Nav>
-                    <Button as={Link} to="/" onClick={() => window.location.href='/'}>Home</Button>
                     {Auth.loggedIn() ? (
                         <>
                             <Button as={Link} to="/party" onClick={() => window.location.href='/party'}>Party</Button>
