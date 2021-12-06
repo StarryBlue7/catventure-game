@@ -17,14 +17,12 @@ class Enemy {
         this.img = img;
         this.id = id
     }
-    // Calculate damage done as a function of RNG & power stat
-    calcDamage() {
-        return Math.ceil(Math.random * this.power);
-    }
-    // Prevent showing negative HPs
-    showHP() {
-        return this.currentHP >= 0 ? this.currentHP : 0;
-    }
+}
+
+// Damage calculation
+function calcDamage(power, level = 1, multiplier = 1) {
+    const damage = Math.ceil(Math.log(power) * ((Math.random() * 3) + Math.log(level)) * multiplier);
+    return damage
 }
 
 // Total player party's HP and Power stats
@@ -81,17 +79,30 @@ function turnOrder(positions) {
 function nextTurn(turns) {
     console.log('Next turn')
     let newTurns = [...turns];
-    console.log('Initial turns', newTurns)
     const moved = newTurns.shift();
     newTurns.push(moved);
-    console.log('Rotated turns', newTurns)
+    console.log('New turn order', newTurns)
     return newTurns;  
 }
 
 // Enemy turn
-function enemyTurn(id) {
-    console.log('Enemy turn', id);
+function enemyTurn(battlefield) {
+    console.log('Enemy turn with id:', battlefield.positions[battlefield.turns[0]]);
+    const enemyPosition = battlefield.turns[0];
+    const enemy = battlefield.enemies[battlefield.positions[enemyPosition] + battlefield.enemies.length];
+    const targetIndex = Math.floor(Math.random() * battlefield.party.length);
+    const target = battlefield.party[targetIndex];
+    // Enemy action
+    const damage = calcDamage(enemy.power, battlefield.multiplier);
+    const newParty = [...battlefield.party];
+    console.log(newParty[targetIndex])
+    newParty[targetIndex].currentHP = newParty[targetIndex].currentHP - damage;
+    console.log(newParty[targetIndex])
+    // API call
+
+    console.log(`Monster in position ${enemyPosition} attacks ${target.name} for ${damage}`)
     
+    return battlefield;
 }
 
 // Player turn
@@ -99,12 +110,16 @@ function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, setCurr
     console.log('Player turn');
     setMenuShow(false);
     let newBattlefield = {...battlefield};
+    // Use action
+
+    // API call
+
     isSpecial 
         ? console.log(`${newBattlefield.positions[newBattlefield.turns[0]].name} uses their special!`) 
         : console.log(`${newBattlefield.positions[newBattlefield.turns[0]].name} attacks!`);
     newBattlefield.turns = nextTurn(newBattlefield.turns);
     setBattlefield(newBattlefield);
-    console.log(newBattlefield);
+    console.log('After player turn:', newBattlefield);
     enemyTurns(newBattlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct)
 }
 
@@ -119,7 +134,7 @@ function enemyTurns(battlefield, setBattlefield, setMenuShow, setCurrentCat, set
     let newBattlefield = {...battlefield};
     const takeEnemyTurns = setInterval(() => {
         if (battleContinues() && newBattlefield.positions[newBattlefield.turns[0]] < 0) {
-            enemyTurn(newBattlefield.positions[newBattlefield.turns[0]]);
+            enemyTurn(newBattlefield);
             newBattlefield.turns = nextTurn(newBattlefield.turns);
         } else {
             clearInterval(takeEnemyTurns);
@@ -129,7 +144,7 @@ function enemyTurns(battlefield, setBattlefield, setMenuShow, setCurrentCat, set
             setMenuShow(true);
         }
         setBattlefield(newBattlefield)
-        console.log('New battlefield', newBattlefield)
+        console.log('After enemy turns:', newBattlefield)
     }, 3000);
 
     setBattlefield(newBattlefield);
@@ -140,7 +155,7 @@ function newBattle(party, setBattlefield, setMenuShow, setCurrentCat, setAllowAc
     const enemies = generateEnemies(randomEnemyCount(), partyTotals(party));
     const positions = battlePositions(party, enemies);
     const turns = turnOrder(positions);
-    const newBattlefield = { enemies, positions, turns, continue: true };
+    const newBattlefield = { party, enemies, positions, turns, continue: true };
     console.log('Generated battlefield', newBattlefield)
     // Initial enemy turns
     enemyTurns(newBattlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct)
@@ -151,4 +166,4 @@ function endBattle(battlefield, setBattlefield) {
     setBattlefield(battlefield);
 }
 
-module.exports = { newBattle, nextTurn, playerTurn, battleContinues, enemyTurns, endBattle };
+module.exports = { Enemy, newBattle, nextTurn, playerTurn, battleContinues, enemyTurns, endBattle };
