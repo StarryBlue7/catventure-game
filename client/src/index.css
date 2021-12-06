@@ -21,6 +21,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+aside{
+  font-size: 1.2em;
+}
+
+section{
+  font-size: 1.2em;
+}
+
 .gap-10 {
   gap: 10px
 }

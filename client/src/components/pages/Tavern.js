@@ -197,36 +197,38 @@ const Tavern = ({ userData }) => {
 
     }
     return (
-        <Col className={"location px-0 d-flex flex-column align-items-center"} style={styles.page}>
-            <img src={tavern} alt={"Tavern"} style={styles.background} />
-            <h2>Cat Tavern</h2>
-            <p>Welcome to the tavern meow, we've got some adventurers here looking for a quest</p>
-            <div>
-                {checkTavernCats() ? (currentCats.map((cat, i) => (
-                    <CatCard
-                        recruitCat={recruitCat}
-                        cat={cat}
-                        userData={userData}
-                        key={i}
-                        isTavern={true}
-                        recruitLockout={recruitLockout()} />
-                ))) : (tavernCats.map((cat, i) => (
-                    <CatCard
-                        recruitCat={recruitCat}
-                        cat={cat}
-                        userData={userData}
-                        key={i}
-                        isTavern={true}
-                        recruitLockout={recruitLockout()} />
-                )))}
-            </div>
-            <h3>Today's food</h3>
-            <div>Deluxe Tuna and Chicken Pâté</div>
-            <Button
-                onClick={() => healCats(userData)}
-                disabled={healLockout()} >Eat to recover HP</Button>
-            <Button as={Link} to="/village">Back to the village</Button>
-        </Col >
+        <section>
+            <Col className={"location px-0 d-flex flex-column align-items-center"} style={styles.page}>
+                <img src={tavern} alt={"Tavern"} style={styles.background} />
+                <h2>Cat Tavern</h2>
+                <p>Welcome to the tavern meow, we've got some adventurers here looking for a quest</p>
+                <div>
+                    {checkTavernCats() ? (currentCats.map((cat, i) => (
+                        <CatCard
+                            recruitCat={recruitCat}
+                            cat={cat}
+                            userData={userData}
+                            key={i}
+                            isTavern={true}
+                            recruitLockout={recruitLockout()} />
+                    ))) : (tavernCats.map((cat, i) => (
+                        <CatCard
+                            recruitCat={recruitCat}
+                            cat={cat}
+                            userData={userData}
+                            key={i}
+                            isTavern={true}
+                            recruitLockout={recruitLockout()} />
+                    )))}
+                </div>
+                <h3>Today's food</h3>
+                <div>Deluxe Tuna and Chicken Pâté</div>
+                <Button
+                    onClick={() => healCats(userData)}
+                    disabled={healLockout()} >Eat to recover HP</Button>
+                <Button as={Link} to="/village">Back to the village</Button>
+            </Col >
+        </section>
     )
 }
 
