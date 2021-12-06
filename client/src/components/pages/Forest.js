@@ -20,6 +20,10 @@ const styles = {
         zIndex: -1,
         width: "100%"
     },
+    healthBars: {
+        zIndex: 2,
+        width: 100
+    }
 }
 
 function Forest({ userData }) {
@@ -42,8 +46,8 @@ function Forest({ userData }) {
                         {battleParty.map((cat, i) => {
                             return (
                                 <>
-                                    <Sprites job={cat.class} action={'idle'} setAction={() => {}} scale={1} key={i} />
-                                    <ProgressBar variant="success" now={70} key={i} />
+                                    <Sprites job={cat.class} action={'idle'} setAction={() => {}} scale={1} key={'ally' + i} />
+                                    <ProgressBar style={styles.healthBars} variant={"success"} now={100 * (cat.currentHP / cat.maxHP)} key={'allyHP' + i} />
                                 </>
                             )
                         })}
@@ -54,8 +58,8 @@ function Forest({ userData }) {
                         {battleEnemies.map((enemy, i) => {
                             return (
                                 <>
-                                    <EnemySprites img={enemy.img} scale={1} key={i} />
-                                    <ProgressBar variant="success" now={70} key={i} />
+                                    <EnemySprites img={enemy.img} scale={1} key={'enemy' + i} />
+                                    <ProgressBar style={styles.healthBars} variant={"success"} variant="success" now={100 * (enemy.currentHP / enemy.maxHP)} key={'enemyHP' + i} />
                                 </>
                             )
                         })}
