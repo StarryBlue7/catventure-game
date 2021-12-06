@@ -92,27 +92,29 @@ function Cave({ userData }) {
     }
 
     return (
-        <Col className={"location px-0 d-flex flex-column align-items-center"} style={styles.page}>
-            <img src={cave} alt={"Cave"} style={styles.background} />
-            <h2>Dark Cave</h2>
-            <p>The party searched the depths of the dark cave to uncover ancient relics for increasing their feline abilities</p>
-            {isLockout() ? (<p>No treasures left to find. Come back later!</p>) : (
-                <>
-                    <p>Look through the cave to find and click on the treasure!</p>
-                    <Button
-                        disabled={isLockout()}
-                        onClick={() => updateTreasure()}>
-                        Open Treasure
-                    </Button>
-                </>)
-            }
-            <Button as={Link} to="/village">Back to the Village</Button>
-            <Modal show={showTreasure} onHide={() => setShowTreasure(false)}>
-                <Modal.Body closeButton>
-                    {showTreasure}
-                </Modal.Body>
-            </Modal>
-        </Col>
+        <section>
+            <Col className={"location px-0 d-flex flex-column align-items-center"} style={styles.page}>
+                <img src={cave} alt={"Cave"} style={styles.background} />
+                <h2>Dark Cave</h2>
+                <p>The party searched the depths of the dark cave to uncover ancient relics for increasing their feline abilities</p>
+                {isLockout() ? (<p>No treasures left to find. Come back later!</p>) : (
+                    <>
+                        <p>Look through the cave to find and click on the treasure!</p>
+                        <Button
+                            disabled={isLockout()}
+                            onClick={() => updateTreasure()}>
+                            Open Treasure
+                        </Button>
+                    </>)
+                }
+                <Button as={Link} to="/village">Back to the Village</Button>
+                <Modal show={showTreasure} onHide={() => setShowTreasure(false)}>
+                    <Modal.Body closeButton>
+                        {showTreasure}
+                    </Modal.Body>
+                </Modal>
+            </Col>
+        </section>
     )
 }
 

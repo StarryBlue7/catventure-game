@@ -6,7 +6,7 @@ function Sidebar({ userData }) {
     const userCats = userData.cats;
     return (
 
-        <aside className="col-3">
+        <aside className="col-2">
             <h2>Your Party</h2>
             {userCats ? (userCats.map((cat, i) => (
                 <AsideCard cat={cat} key={i} />)

@@ -31,10 +31,6 @@ function Home() {
                 <Sprites job={"Warrior"} action={action} setAction={setAction} scale={.5} />
                 <Sprites job={"Rogue"} action={action} setAction={setAction} scale={.5} />
             </Row>
-            <Row className={"d-flex flex-row gap-10 justify-content-center"}>
-                <Button as={Link} to="/village">Go on Adventure</Button>
-                <Button as={Link} to="/party">View Party Details</Button>
-            </Row>
         </Col>
     )
 }
