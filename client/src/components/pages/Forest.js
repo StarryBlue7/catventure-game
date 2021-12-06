@@ -1,12 +1,13 @@
 import forest from '../../images/forest.png';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Col, Modal, Row } from 'react-bootstrap';
+import { Button, Col, Modal, Row, ProgressBar } from 'react-bootstrap';
 
 import { Enemy, newBattle, playerTurn, battleContinues, endBattle } from '../../game/battle';
 
 import Jobs from '../../data/jobs.json';
 import Sprites from '../sprites/Sprites';
+import EnemySprites from '../sprites/EnemySprites';
 
 const styles = {
     page: { 
@@ -19,6 +20,10 @@ const styles = {
         zIndex: -1,
         width: "100%"
     },
+    healthBars: {
+        zIndex: 2,
+        width: 100
+    }
 }
 
 function Forest({ userData }) {
@@ -39,14 +44,24 @@ function Forest({ userData }) {
                     <Col id="party-sprites" className={"d-flex flex-column align-items-start justify-content-end gap-10"}>
                         <Button disabled={!allowAct} onClick={() => setMenuShow(true)}>Choose Action</Button>
                         {battleParty.map((cat, i) => {
-                            return <Sprites job={cat.class} action={'idle'} setAction={() => {}} scale={1} key={i} />
+                            return (
+                                <>
+                                    <Sprites job={cat.class} action={'idle'} setAction={() => {}} scale={1} key={'ally' + i} />
+                                    <ProgressBar style={styles.healthBars} variant={"success"} now={100 * (cat.currentHP / cat.maxHP)} key={'allyHP' + i} />
+                                </>
+                            )
                         })}
                     </Col>
                     <Col className={"d-flex flex-column align-items-center justify-content-center gap-10"}>
                     </Col>
-                    <Col id="enemy-sprites" className={"d-flex flex-column align-items-end justify-content-end gap-10"}>
-                        {battleParty.map((cat, i) => {
-                            return <Sprites job={cat.class} action={'idle'} setAction={() => {}} scale={1} key={i} />
+                    <Col id="enemy-sprites" className={"d-flex flex-column align-items-end justify-content-center gap-10"}>
+                        {battleEnemies.map((enemy, i) => {
+                            return (
+                                <>
+                                    <EnemySprites img={enemy.img} scale={1} key={'enemy' + i} />
+                                    <ProgressBar style={styles.healthBars} variant={"success"} variant="success" now={100 * (enemy.currentHP / enemy.maxHP)} key={'enemyHP' + i} />
+                                </>
+                            )
                         })}
                     </Col>
                 </Row>

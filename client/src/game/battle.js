@@ -68,7 +68,7 @@ function generateEnemies(count, partyTotal) {
 
     let enemies = [];
     for (let i = -1; i > - count - 1; i--) {
-        const randomImg = Math.floor(Math.random() * 5);
+        const randomImg = Math.floor(Math.random() * 3);
         enemies.push(new Enemy(baseHP, hpSpread, basePower, powerSpread, i, randomImg))
     }
     return enemies;
