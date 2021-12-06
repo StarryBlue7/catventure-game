@@ -1,7 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Col, Row } from 'react-bootstrap';
-import { lastHeal, lastRecruit, updateCat } from '../../utils/API'
+import {
+    lastHeal,
+    lastRecruit,
+    updateCat,
+    addTavernCat,
+    lockoutTavernCat,
+} from '../../utils/API'
 import Auth from '../../utils/auth';
 import { addCat } from '../../utils/API';
 import CatCard from '../gameUI/CatCard';
@@ -10,10 +16,10 @@ import { randomGen } from '../../utils/RNG';
 import tavern from '../../images/tavern.jpg';
 
 const styles = {
-    page: { 
-        color: 'white', 
-        width: "100%", 
-        height: "100%" 
+    page: {
+        color: 'white',
+        width: "100%",
+        height: "100%"
     },
     background: {
         position: "absolute",
@@ -67,18 +73,80 @@ const Tavern = ({ userData }) => {
         try {
             // two API calls, one to set the recruit lockout, one to add a cat
             const response = await lastRecruit(userData, token);
+
             const responseAddCat = await addCat(newCat, token);
+
 
             if (!responseAddCat.ok || !response) {
                 throw new Error('something went wrong!');
             }
 
+            // console.log(userData)
         } catch (err) {
             console.error(err);
         }
     };
 
-    // function which gets called when user clicks on the heal cats button
+
+    const addTavernCatToDB = async (tavernCats) => {
+
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+        if (!token) {
+            return false;
+        }
+        const responseTavernCats = await lockoutTavernCat(userData, token)
+
+        const lockoutTime = new Date(new Date().setHours(new Date().getHours() - 20))
+
+        const usersDay = new Date(userData.lockoutTavernCat);
+
+        console.log(tavernCats)
+        console.log(usersDay)
+        console.log(lockoutTime)
+
+        if (usersDay > lockoutTime) {
+            try {
+                console.log("duck")
+                const response = await addTavernCat(tavernCats, token);
+                if (!response.ok || !responseTavernCats) {
+                    throw new Error("duck")
+                }
+                const tavResp = await responseTavernCats.json();
+                console.log(tavResp)
+                const catResp = await response.json();
+                console.log(catResp)
+                console.log(userData)
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    }
+
+    addTavernCatToDB(tavernCats);
+
+    // console.log(userData)
+    // if i create user, go to tavern, tavernCats empty.
+    // if i comment in code, refresh, cats reload
+    // if i comment code back out, cats do not reload
+
+    //20 hr lockout
+
+    const checkTavernCats = () => {
+
+        const lockoutTime = new Date(new Date().setHours(new Date().getHours() - 20))
+        const usersDay = new Date(userData.lockoutTavernCat);
+
+        console.log(lockoutTime);
+        console.log(usersDay);
+
+        if (usersDay > lockoutTime) {
+            return true;
+
+        } else {
+            return false;
+        }
+    }
+
     const healCats = async (userCats) => {
         const fedCats = userCats.cats;
 
@@ -132,36 +200,40 @@ const Tavern = ({ userData }) => {
         }
 
     }
-
+    const currentCats = userData.currentTavernCats
+    console.log(currentCats)
+    console.log(checkTavernCats())
     return (
         <Col className={"location px-0 d-flex flex-column align-items-center"} style={styles.page}>
             <img src={tavern} alt={"Tavern"} style={styles.background} />
             <h2>Cat Tavern</h2>
             <p>Welcome to the tavern meow, we've got some adventurers here looking for a quest</p>
-            <Row>
-                <Col>
-                    <div className={"d-flex flex-row wrap"}>
-                        {tavernCats.map((cat, i) => (
-                            <CatCard
-                                recruitCat={recruitCat}
-                                cat={cat}
-                                userData={userData}
-                                key={i}
-                                isTavern={true}
-                                recruitLockout={recruitLockout()} />
-                        ))}
-                    </div>
-                </Col>
-                <Col>
-                    <h3>Today's food</h3>
-                    <div>Deluxe Tuna and Chicken Pâté</div>
-                    <Button
-                        onClick={() => healCats(userData)}
-                        disabled={healLockout()} >Eat to recover HP</Button>
-                    <Button as={Link} to="/village">Back to the village</Button>
-                </Col>
-            </Row>
-        </Col>
+            <div>
+                {!checkTavernCats() ? (currentCats.map((cat, i) => (
+                    <CatCard
+                        recruitCat={recruitCat}
+                        cat={cat}
+                        userData={userData}
+                        key={i}
+                        isTavern={true}
+                        recruitLockout={recruitLockout()} />
+                ))) : (tavernCats.map((cat, i) => (
+                    <CatCard
+                        recruitCat={recruitCat}
+                        cat={cat}
+                        userData={userData}
+                        key={i}
+                        isTavern={true}
+                        recruitLockout={recruitLockout()} />
+                )))}
+            </div>
+            <h3>Today's food</h3>
+            <div>Deluxe Tuna and Chicken Pâté</div>
+            <Button
+                onClick={() => healCats(userData)}
+                disabled={healLockout()} >Eat to recover HP</Button>
+            <Button as={Link} to="/village">Back to the village</Button>
+        </Col >
     )
 }
 
