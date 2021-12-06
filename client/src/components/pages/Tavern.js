@@ -58,6 +58,7 @@ const tavernCats = [
 ];
 
 const Tavern = ({ userData }) => {
+    const currentCats = userData.currentTavernCats;
     // When user selects name (on the CatCard), make a PUT request to database
     // and add a cat to the user's array of cats
     const recruitCat = async (newCat) => {
@@ -94,20 +95,22 @@ const Tavern = ({ userData }) => {
         if (!token) {
             return false;
         }
-        const responseTavernCats = await lockoutTavernCat(userData, token)
 
         const lockoutTime = new Date(new Date().setHours(new Date().getHours() - 20))
-
+        
         const usersDay = new Date(userData.lockoutTavernCat);
 
         console.log(tavernCats)
         console.log(usersDay)
         console.log(lockoutTime)
 
-        if (usersDay > lockoutTime) {
+        if (usersDay < lockoutTime || !currentCats.length) {
             try {
                 console.log("duck")
                 const response = await addTavernCat(tavernCats, token);
+
+                const responseTavernCats = await lockoutTavernCat(userData, token)
+
                 if (!response.ok || !responseTavernCats) {
                     throw new Error("duck")
                 }
@@ -121,7 +124,7 @@ const Tavern = ({ userData }) => {
             }
         }
     }
-
+    console.log(tavernCats)
     addTavernCatToDB(tavernCats);
 
     // console.log(userData)
@@ -200,7 +203,6 @@ const Tavern = ({ userData }) => {
         }
 
     }
-    const currentCats = userData.currentTavernCats
     console.log(currentCats)
     console.log(checkTavernCats())
     return (
@@ -209,7 +211,7 @@ const Tavern = ({ userData }) => {
             <h2>Cat Tavern</h2>
             <p>Welcome to the tavern meow, we've got some adventurers here looking for a quest</p>
             <div>
-                {!checkTavernCats() ? (currentCats.map((cat, i) => (
+                {checkTavernCats() ? (currentCats.map((cat, i) => (
                     <CatCard
                         recruitCat={recruitCat}
                         cat={cat}
