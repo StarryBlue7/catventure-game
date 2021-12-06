@@ -100,10 +100,6 @@ const Tavern = ({ userData }) => {
         
         const usersDay = new Date(userData.lockoutTavernCat);
 
-        console.log(tavernCats)
-        console.log(usersDay)
-        console.log(lockoutTime)
-
         if (usersDay < lockoutTime || !currentCats.length) {
             try {
                 console.log("duck")
@@ -138,9 +134,6 @@ const Tavern = ({ userData }) => {
 
         const lockoutTime = new Date(new Date().setHours(new Date().getHours() - 20))
         const usersDay = new Date(userData.lockoutTavernCat);
-
-        console.log(lockoutTime);
-        console.log(usersDay);
 
         if (usersDay > lockoutTime) {
             return true;
@@ -203,8 +196,6 @@ const Tavern = ({ userData }) => {
         }
 
     }
-    console.log(currentCats)
-    console.log(checkTavernCats())
     return (
         <Col className={"location px-0 d-flex flex-column align-items-center"} style={styles.page}>
             <img src={tavern} alt={"Tavern"} style={styles.background} />
