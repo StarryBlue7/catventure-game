@@ -27,6 +27,9 @@ const userSchema = new Schema({
     lastRecruit: {
         type: Date
     },
+    lockoutTavernCat: {
+        type: Date
+    },
 
     currentTavernCats: [{
         class: String,

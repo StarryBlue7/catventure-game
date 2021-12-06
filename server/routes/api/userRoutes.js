@@ -13,6 +13,7 @@ const {
     updateHeal,
     updateRecruit,
     addTavernCat,
+    lockoutTavernCat,
 
 } = require('../../controllers/userController');
 
@@ -38,6 +39,8 @@ router.route('/recruit/:_id').put(authMiddleware, updateRecruit);
 router.route('/cats/update').put(authMiddleware, updateCat);
 // add cat to current generated cat array
 router.route('/addTavern').put(authMiddleware, addTavernCat)
+// lockout user when 3 cats are generated
+router.route('/tavernlockout/:id').put(authMiddleware, lockoutTavernCat)
 
 
 module.exports = router;

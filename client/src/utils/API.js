@@ -102,3 +102,13 @@ export const addTavernCat = (catData, token) => {
     body: JSON.stringify(catData),
   });
 };
+
+export const lockoutTavernCat = (userId, token) => {
+  return fetch(`/api/users/tavernlockout/${userId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+    },
+  });
+};

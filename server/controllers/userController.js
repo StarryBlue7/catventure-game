@@ -78,10 +78,10 @@ module.exports = {
     },
     async updateCat({ user, body }, res) {
         const newBody = body.map((cat) => {
-            while(cat.experience >= 20){
+            while (cat.experience >= 20) {
                 cat.level = cat.level + 1;
                 cat.experience = cat.experience - 20;
-                switch(cat.class){
+                switch (cat.class) {
                     case 'Warrior':
                         cat.maxHP = cat.maxHP + 3;
                         break;
@@ -155,5 +155,17 @@ module.exports = {
             console.log(err);
             return res.status(400).json(err);
         }
-    }
+    },
+    async lockoutTavernCat({ user }, res) {
+        const now = new Date();
+        const lastRecruit = await User.findOneAndUpdate(
+            { _id: user._id },
+            { $set: { lockoutTavernCat: now } },
+            { new: true }
+        );
+        if (!lastRecruit) {
+            return res.status(404).json({ message: "Could not set your lastRecruit" });
+        }
+        return res.json(lastRecruit)
+    },
 }
