@@ -158,11 +158,31 @@ export function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, 
     enemyTurns(newBattlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct)
 }
 
-// Check if either party or all enemies dead
+// End battle if either all party or all enemies dead
 function battleContinues(battlefield) {
     let newBattlefield = {...battlefield};
-
-
+    let partyTotal = 0;
+    let enemyTotal = 0;
+    newBattlefield.party.forEach(cat => {
+        if (cat.currentHP < 1) {
+            cat.currentHP = 0;
+        }
+        partyTotal += cat.currentHP;
+    });
+    if (partyTotal === 0) {
+        endBattle(newBattlefield.party, false);
+        return false; 
+    }
+    newBattlefield.enemies.forEach(enemy => {
+        if (enemy.currentHP < 1) {
+            enemy.currentHP = 0;
+        }
+        enemyTotal += enemy.currentHP;
+    });
+    if (enemyTotal === 0) {
+        endBattle(newBattlefield.party, true);
+        return false; 
+    }
 
     return newBattlefield;
 }
@@ -170,9 +190,10 @@ function battleContinues(battlefield) {
 // Cycle through and executes any enemy turns
 function enemyTurns(battlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct) {
     console.log('Initial battlefield', battlefield)
-    let newBattlefield = {...battlefield};
+    let newBattlefield = battleContinues(battlefield)
+    if (!newBattlefield) { return }
     const takeEnemyTurns = setInterval(() => {
-        if (battleContinues() && newBattlefield.positions[newBattlefield.turns[0]] < 0) {
+        if (newBattlefield.positions[newBattlefield.turns[0]] < 0) {
             enemyTurn(newBattlefield);
             newBattlefield.turns = nextTurn(newBattlefield.turns);
         } else {
@@ -200,9 +221,6 @@ export function newBattle(party, setBattlefield, setMenuShow, setCurrentCat, set
     enemyTurns(newBattlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct)
 }
 
-function endBattle(battlefield, setBattlefield) {
-    battlefield.continue = false;
-    setBattlefield(battlefield);
+function endBattle(party, isWin) {
+    isWin ? console.log('Party won!') : console.log('Party lost!');
 }
-
-// module.exports = { Enemy, newBattle, nextTurn, playerTurn, battleContinues, enemyTurns, endBattle }
