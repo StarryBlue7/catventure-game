@@ -186,7 +186,7 @@ const Tavern = ({ userData }) => {
     // Disables the recruit cat button if either the user already has 3 cats or if the recruit lockout is still in effect
     const recruitLockout = () => {
 
-        const lockoutTime = new Date(new Date().setHours(new Date().getHours() - 0))
+        const lockoutTime = new Date(new Date().setHours(new Date().getHours() - 20))
         const usersDay = new Date(userData.lastRecruit);
 
         if (usersDay > lockoutTime || userData.cats.length >= 3) {
