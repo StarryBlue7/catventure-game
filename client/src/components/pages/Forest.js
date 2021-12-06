@@ -55,10 +55,9 @@ function Forest({ userData }) {
                 </>
             )}
             <Modal size="sm" show={menuShow} onHide={() => setMenuShow(false)}>
-                <Modal.Header>
-                    <h2>Next Turn!</h2>
-                </Modal.Header>
+                    
                 <Modal.Body>
+                    <h2>Next Turn!</h2>
                     <Button>Attack</Button>
                     <Button>"Special"</Button>
                     <Button>Escape</Button>
