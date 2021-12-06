@@ -147,7 +147,7 @@ function enemyTurn(battlefield) {
 }
 
 // Player turn
-export function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, setCurrentCat, setAllowAct) {
+export function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, setCurrentCat, setAllowAct, setCatAnim) {
     console.log('Player turn');
     setMenuShow(false);
 
@@ -156,16 +156,26 @@ export function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, 
     let newEnemies = [...battlefield.enemies];
 
     // Use action
-    const turnCat = newBattlefield.positions[newBattlefield.turns[0]];
+    const turnCatPosition = newBattlefield.turns[0];
+    const turnCat = newBattlefield.positions[turnCatPosition];
     const turnClass = turnCat.class;
-    const { party, enemies, targetPosition } = isSpecial 
-        ? actions[turnClass].special(turnCat, newParty, newEnemies)
-        : actions[turnClass].attack(turnCat, newParty, newEnemies)
-    newBattlefield.party = party;
-    newBattlefield.enemies = enemies;
+    let result;
+    if (isSpecial) {
+        result = actions[turnClass].special(turnCat, newParty, newEnemies);
+        setCatAnim[turnCatPosition][1]('special');
+    } else {
+        result = actions[turnClass].attack(turnCat, newParty, newEnemies);
+        setCatAnim[turnCatPosition][1]('attack');
+    }
+
+    newBattlefield.party = result.party;
+    newBattlefield.enemies = result.enemies;
+
+    // Set animations
+
 
     // API call
-    battleUpdate(party);
+    battleUpdate(result.party);
 
     isSpecial 
         ? console.log(`${newBattlefield.positions[newBattlefield.turns[0]].name} uses their special!`) 
