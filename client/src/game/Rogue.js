@@ -1,15 +1,31 @@
 // Rogues have a chance of striking again
-function rogueAttack(cat) {
+function rogueAttack(cat, party, enemies) {
     const percentChance = 20;
     const damage = Math.ceil(Math.log(cat.power) * ((Math.random() * cat.level)));
     const double = Math.random() < percentChance / 100;
-    return { damage, double };
+
+    const targetIndex = Math.floor(Math.random() * enemies.length);
+    const targetPosition = [party.length + targetIndex - 1];
+    enemies[targetIndex].currentHP -= damage;
+
+    if (double) {
+        const targetIndex2 = Math.floor(Math.random() * enemies.length);
+        targetPosition.push(party.length + targetIndex2 - 1);
+        enemies[targetIndex].currentHP -= damage;
+    }
+
+    return { party, enemies, targetPosition };
 }
 
 // Rogue shoots lightning arrow to damage all enemies
-function rogueArrow(cat) {
+function rogueArrow(cat, party, enemies) {
     const damage = Math.ceil(Math.log(cat.power) * ((Math.random() * cat.level))) / 2;
-    return damage;
+    const targetPosition = [];
+    enemies.forEach((enemy, i) => {
+        enemy.currentHP -= damage;
+        targetPosition.push(i + party.length - 1)
+    })
+    return { party, enemies, targetPosition };
 }
 
 const Rogue = {

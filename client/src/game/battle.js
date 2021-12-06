@@ -117,7 +117,7 @@ function enemyTurn(battlefield) {
     const target = battlefield.party[targetIndex];
 
     // Enemy action
-    const damage = calcDamage(enemy.power, battlefield.multiplier);
+    const damage = calcDamage(enemy.power, target.multiplier);
     const newParty = [...battlefield.party];
     newParty[targetIndex].currentHP = newParty[targetIndex].currentHP - damage;
 
@@ -136,7 +136,7 @@ export function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, 
 
     // Use action
 
-    const targetIndex = Math.floor(Math.random() * battlefield.enemies.length);
+    
 
 
     // API call
