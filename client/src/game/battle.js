@@ -94,7 +94,7 @@ function playerTurn(_id) {
 }
 
 // Check if either party or all enemies dead
-function battleContinues(party, enemies) {
+function battleContinues(battlefield) {
     return true;
 }
 
@@ -112,21 +112,27 @@ function enemyTurns(battlefield, setBattlefield) {
 }
 
 // Setup new battle
-function newBattle(party, setBattlefield) {
+function newBattle(party, setBattlefield, setMenuShow) {
     const enemies = generateEnemies(randomEnemyCount(), partyTotals(party));
     const positions = battlePositions(party, enemies);
     const turns = turnOrder(positions);
-    const newBattlefield = { enemies, positions, turns };
+    const newBattlefield = { enemies, positions, turns, continue: true };
     console.log(newBattlefield)
     // Initial enemy turns
     enemyTurns(newBattlefield, setBattlefield)   
     console.log(newBattlefield)
     // Set battlefield state for user turns
     setBattlefield(newBattlefield);
+    setMenuShow(true);
 }
 
 function isTurn(battlefield, _id) {
     return battlefield.turns[0] === _id;
 }
 
-module.exports = { newBattle, nextTurn, playerTurn, battleContinues, enemyTurns, isTurn };
+function endBattle(battlefield, setBattlefield) {
+    battlefield.continue = false;
+    setBattlefield(battlefield);
+}
+
+module.exports = { newBattle, nextTurn, playerTurn, battleContinues, enemyTurns, isTurn, endBattle };
