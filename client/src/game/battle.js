@@ -1,6 +1,5 @@
 import { updateCat } from "../utils/API";
 import Auth from "../utils/auth";
-import Jobs from "../data/jobs.json";
 import actions from "./actions";
 
 // Update db with 
@@ -158,16 +157,18 @@ export function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, 
     enemyTurns(newBattlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct)
 }
 
-// End battle if either all party or all enemies dead
+// Prevent negative HPs & overheals and check if all party or all enemies dead
 function battleContinues(battlefield) {
     let newBattlefield = {...battlefield};
     let partyTotal = 0;
     let enemyTotal = 0;
-    newBattlefield.party.forEach(cat => {
-        if (cat.currentHP < 1) {
-            cat.currentHP = 0;
+    newBattlefield.party.forEach(ally => {
+        if (ally.currentHP < 1) {
+            ally.currentHP = 0;
+        } else if (ally.currentHP > ally.maxHP) {
+            ally.currentHP = ally.maxHP;
         }
-        partyTotal += cat.currentHP;
+        partyTotal += ally.currentHP;
     });
     if (partyTotal === 0) {
         endBattle(newBattlefield.party, false);
@@ -176,6 +177,8 @@ function battleContinues(battlefield) {
     newBattlefield.enemies.forEach(enemy => {
         if (enemy.currentHP < 1) {
             enemy.currentHP = 0;
+        } else if (enemy.currentHP > enemy.maxHP) {
+            enemy.currentHP = enemy.maxHP;
         }
         enemyTotal += enemy.currentHP;
     });
@@ -195,16 +198,24 @@ function enemyTurns(battlefield, setBattlefield, setMenuShow, setCurrentCat, set
     const takeEnemyTurns = setInterval(() => {
         if (newBattlefield.positions[newBattlefield.turns[0]] < 0) {
             enemyTurn(newBattlefield);
+            newBattlefield = battleContinues(newBattlefield);
+            if (!newBattlefield) { 
+                return setBattlefield(newBattlefield);
+            }
             newBattlefield.turns = nextTurn(newBattlefield.turns);
         } else {
             clearInterval(takeEnemyTurns);
+            newBattlefield = battleContinues(newBattlefield);
+            if (!newBattlefield) { 
+                return setBattlefield(newBattlefield);
+            }
             console.log('Enemy turns ended, next turn for:', newBattlefield.positions[newBattlefield.turns[0]].name);
             setCurrentCat(newBattlefield.positions[newBattlefield.turns[0]]);
             setAllowAct(true);
             setMenuShow(true);
         }
         setBattlefield(newBattlefield)
-        console.log('After enemy turns:', newBattlefield)
+        console.log('After enemy phase:', newBattlefield)
     }, 3000);
 
     setBattlefield(newBattlefield);
