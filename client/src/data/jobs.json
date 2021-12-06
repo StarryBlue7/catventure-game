@@ -11,8 +11,8 @@
         "basePower": 10,
         "baseHitpoints": 14,
         "statName": "Arcane",
-        "description": "Mages wield powerful magic to damage or heal!",
-        "special": "Healing Light",
+        "description": "Mages wield powerful magicks to damage or heal!",
+        "special": "Healing Star",
         "specialDescription": "Heal your party with restorative starlight."
     },
     "Rogue": {

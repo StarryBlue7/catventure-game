@@ -1,11 +1,12 @@
 import forest from '../../images/forest.png';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Col, Modal } from 'react-bootstrap';
+import { Button, Col, Modal, Row } from 'react-bootstrap';
 
 import { Enemy, newBattle, playerTurn, battleContinues, endBattle } from '../../game/battle';
 
 import Jobs from '../../data/jobs.json';
+import Sprites from '../sprites/Sprites';
 
 const styles = {
     page: { 
@@ -17,27 +18,39 @@ const styles = {
         position: "absolute",
         zIndex: -1,
         width: "100%"
-    }
+    },
 }
 
 function Forest({ userData }) {
-    const [battlefield, setBattlefield] = useState({enemies: [], continue: false});
+    const [battlefield, setBattlefield] = useState({party: userData.cats, enemies: [], continue: false});
     const [currentCat, setCurrentCat] = useState({name: ""});
     const [menuShow, setMenuShow] = useState(false);
     const [allowAct, setAllowAct] = useState(false);
+
+    const battleParty = battlefield.party;
+    const battleEnemies = battlefield.enemies;
 
     return (
         <Col className={"location px-0 d-flex flex-column align-items-center"} style={styles.page}>
             <img src={forest} alt={"Forest"} style={styles.background} />
             <h2>The Deadly Forest</h2>
-            <div id="battle-window">
-                {battlefield.enemies.length ? (
-                    <>
+            {battlefield.enemies.length ? (
+                <Row id="battle-window" className={"d-flex flex-row justify-content-between w-100"}>
+                    <Col id="party-sprites" className={"d-flex flex-column align-items-start justify-content-end gap-10"}>
                         <Button disabled={!allowAct} onClick={() => setMenuShow(true)}>Choose Action</Button>
-                    </>
-                ) : (<></>)}
-            </div>
-            {battlefield.continue ? (<></>) : (
+                        {battleParty.map((cat, i) => {
+                            return <Sprites job={cat.class} action={'idle'} setAction={() => {}} scale={1} key={i} />
+                        })}
+                    </Col>
+                    <Col className={"d-flex flex-column align-items-center justify-content-center gap-10"}>
+                    </Col>
+                    <Col id="enemy-sprites" className={"d-flex flex-column align-items-end justify-content-end gap-10"}>
+                        {battleParty.map((cat, i) => {
+                            return <Sprites job={cat.class} action={'idle'} setAction={() => {}} scale={1} key={i} />
+                        })}
+                    </Col>
+                </Row>
+            ) : (
                 <>
                     <Button onClick={() => newBattle(userData.cats, setBattlefield, setMenuShow, setCurrentCat, setAllowAct)}>Battle!</Button>
                     <Button as={Link} to="/village">Back</Button>

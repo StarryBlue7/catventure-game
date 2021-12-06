@@ -1,6 +1,5 @@
 import { updateCat } from "../utils/API";
 import Auth from "../utils/auth";
-import Jobs from "../data/jobs.json";
 import actions from "./actions";
 
 // Update db with 
@@ -100,12 +99,26 @@ function turnOrder(positions) {
 }
 
 // Shift to next turn
-function nextTurn(turns) {
-    console.log('Next turn')
+function nextTurn(turns, battlefield) {
     let newTurns = [...turns];
-    const moved = newTurns.shift();
-    newTurns.push(moved);
-    console.log('New turn order', newTurns)
+    let nextAlive = true;
+    do {
+        console.log('Next turn');
+        const moved = newTurns.shift();
+        newTurns.push(moved);
+        console.log('New turn order', newTurns);
+        if (battlefield.positions[newTurns[0]] < 0) {
+            const nextEnemy = battlefield.enemies[newTurns[0] - battlefield.party.length];
+            console.log('Next enemy is', nextEnemy)
+            console.log('Next enemy HP is', nextEnemy.currentHP)
+            nextAlive = nextEnemy.currentHP > 0;
+        } else {
+            const nextAlly = battlefield.positions[newTurns[0]];
+            console.log('Next ally is', nextAlly);
+            console.log('Next ally HP is', nextAlly.currentHP);
+            nextAlive = nextAlly.currentHP > 0;
+        }
+    } while (!nextAlive);
     return newTurns;  
 }
 
@@ -114,8 +127,13 @@ function enemyTurn(battlefield) {
     console.log('Enemy turn with id:', battlefield.positions[battlefield.turns[0]]);
     const enemyPosition = battlefield.turns[0];
     const enemy = battlefield.enemies[battlefield.positions[enemyPosition] + battlefield.enemies.length];
-    const targetIndex = Math.floor(Math.random() * battlefield.party.length);
-    const target = battlefield.party[targetIndex];
+    
+    // Find random alive target
+    let targetIndex, target;
+    do {
+        targetIndex = Math.floor(Math.random() * battlefield.party.length);
+        target = battlefield.party[targetIndex];
+    } while (!target.currentHP > 0)
 
     // Enemy action
     const damage = calcDamage(enemy.power, target.multiplier);
@@ -138,7 +156,7 @@ export function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, 
     let newEnemies = [...battlefield.enemies];
 
     // Use action
-    const turnCat = newBattlefield.positions[newBattlefield.turns[0]]
+    const turnCat = newBattlefield.positions[newBattlefield.turns[0]];
     const turnClass = turnCat.class;
     const { party, enemies, targetPosition } = isSpecial 
         ? actions[turnClass].special(turnCat, newParty, newEnemies)
@@ -152,22 +170,24 @@ export function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, 
     isSpecial 
         ? console.log(`${newBattlefield.positions[newBattlefield.turns[0]].name} uses their special!`) 
         : console.log(`${newBattlefield.positions[newBattlefield.turns[0]].name} attacks!`);
-    newBattlefield.turns = nextTurn(newBattlefield.turns);
+    newBattlefield.turns = nextTurn(newBattlefield.turns, newBattlefield);
     setBattlefield(newBattlefield);
     console.log('After player turn:', newBattlefield);
     enemyTurns(newBattlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct)
 }
 
-// End battle if either all party or all enemies dead
+// Prevent negative HPs & overheals and check if all party or all enemies dead
 function battleContinues(battlefield) {
     let newBattlefield = {...battlefield};
     let partyTotal = 0;
     let enemyTotal = 0;
-    newBattlefield.party.forEach(cat => {
-        if (cat.currentHP < 1) {
-            cat.currentHP = 0;
+    newBattlefield.party.forEach(ally => {
+        if (ally.currentHP < 1) {
+            ally.currentHP = 0;
+        } else if (ally.currentHP > ally.maxHP) {
+            ally.currentHP = ally.maxHP;
         }
-        partyTotal += cat.currentHP;
+        partyTotal += ally.currentHP;
     });
     if (partyTotal === 0) {
         endBattle(newBattlefield.party, false);
@@ -176,6 +196,8 @@ function battleContinues(battlefield) {
     newBattlefield.enemies.forEach(enemy => {
         if (enemy.currentHP < 1) {
             enemy.currentHP = 0;
+        } else if (enemy.currentHP > enemy.maxHP) {
+            enemy.currentHP = enemy.maxHP;
         }
         enemyTotal += enemy.currentHP;
     });
@@ -195,16 +217,24 @@ function enemyTurns(battlefield, setBattlefield, setMenuShow, setCurrentCat, set
     const takeEnemyTurns = setInterval(() => {
         if (newBattlefield.positions[newBattlefield.turns[0]] < 0) {
             enemyTurn(newBattlefield);
-            newBattlefield.turns = nextTurn(newBattlefield.turns);
+            newBattlefield = battleContinues(newBattlefield);
+            if (!newBattlefield) { 
+                return setBattlefield(newBattlefield);
+            }
+            newBattlefield.turns = nextTurn(newBattlefield.turns, newBattlefield);
         } else {
             clearInterval(takeEnemyTurns);
+            newBattlefield = battleContinues(newBattlefield);
+            if (!newBattlefield) { 
+                return setBattlefield(newBattlefield);
+            }
             console.log('Enemy turns ended, next turn for:', newBattlefield.positions[newBattlefield.turns[0]].name);
             setCurrentCat(newBattlefield.positions[newBattlefield.turns[0]]);
             setAllowAct(true);
             setMenuShow(true);
         }
         setBattlefield(newBattlefield)
-        console.log('After enemy turns:', newBattlefield)
+        console.log('After enemy phase:', newBattlefield)
     }, 3000);
 
     setBattlefield(newBattlefield);
