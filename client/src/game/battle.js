@@ -1,6 +1,9 @@
 import { updateCat } from "../utils/API";
 import Auth from "../utils/auth";
+import Jobs from "../data/jobs.json";
 
+
+// Update db with 
 async function battleUpdate(catsArray) {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -129,9 +132,15 @@ export function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, 
     console.log('Player turn');
     setMenuShow(false);
     let newBattlefield = {...battlefield};
+    let newParty = [...battlefield.party];
+
     // Use action
 
+    const targetIndex = Math.floor(Math.random() * battlefield.enemies.length);
+
+
     // API call
+    battleUpdate(newParty);
 
     isSpecial 
         ? console.log(`${newBattlefield.positions[newBattlefield.turns[0]].name} uses their special!`) 

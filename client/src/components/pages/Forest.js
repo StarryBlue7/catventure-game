@@ -1,10 +1,11 @@
+import forest from '../../images/forest.png';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Col, Modal } from 'react-bootstrap';
 
 import { Enemy, newBattle, playerTurn, battleContinues, endBattle } from '../../game/battle';
 
-import forest from '../../images/forest.png';
+import Jobs from '../../data/jobs.json';
 
 const styles = {
     page: { 
