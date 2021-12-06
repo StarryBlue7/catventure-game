@@ -3,6 +3,9 @@
   --main-font: "Georgia, 'Times New Roman', Times, serif";
 }
 
+#root {
+  min-height: 100vh;
+}
 h1, h2, h3 {
   font-family: var(--title-font);
 }
@@ -26,6 +29,25 @@ p {
   font-family: 'Open Sans', sans-serif
 }
 
+.location > img {
+  min-height: 100%;
+  min-width: 100%;
+  position: absolute;
+  bottom: 0;
+  z-index: -1;
+}
+.location {
+  overflow: hidden;
+  color: white;
+  width: 100%;
+  height: 100%;
+  font-size: 1.2em;
+}
+
+.main-page {
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -47,10 +69,7 @@ body {
 
 aside{
   font-size: 1.2em;
-}
-
-section{
-  font-size: 1.2em;
+  height: 80vh;
 }
 
 .gap-10 {

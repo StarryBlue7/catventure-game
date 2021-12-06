@@ -5,25 +5,11 @@ import { Row, Button, Col } from 'react-bootstrap';
 import Sprites from '../sprites/Sprites';
 import splash from '../../images/splash.png';
 
-const styles = {
-    page: { 
-        color: 'white', 
-        width: "100%", 
-        height: "100%" 
-    },
-    background: {
-        position: "absolute",
-        zIndex: -1,
-        width: "100%"
-    }
-}
-
 function Home() {
     const [action, setAction] = useState('idle')
     return (
-        <section>
-            <Col className={"location px-0 d-flex flex-column align-items-center"} style={styles.page}>
-                <img src={splash} alt={"Splash page background"} style={styles.background} />
+            <Col className={"location px-0 d-flex flex-column align-items-center"}>
+                <img src={splash} alt={"Splash page background"}/>
                 <Row className={"d-flex flex-row gap-10 justify-content-center"}>
                     <h2>Embark upon your very own Catventure!</h2>
                 </Row>
@@ -33,7 +19,6 @@ function Home() {
                     <Sprites job={"Rogue"} action={action} setAction={setAction} scale={.5} />
                 </Row>
             </Col>
-        </section>
     )
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button, Col } from 'react-bootstrap';
 import CatCard from '../gameUI/CatCard';
 
 function Party({userData}) {
@@ -16,7 +16,7 @@ function Party({userData}) {
         }
     }
     return (
-        <section>
+        <Col className={"location px-0 d-flex flex-column align-items-center"}>
             <h2>My Team</h2>
             <div>
                 {userCats.map((cat, i) => (
@@ -29,7 +29,7 @@ function Party({userData}) {
                 ))}
             </div>
             <Button as={Link} to="/">Back</Button>
-        </section>
+        </Col>
     )
 }
 

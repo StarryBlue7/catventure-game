@@ -15,19 +15,6 @@ import Jobs from '../../data/jobs.json'
 import randomGen from '../../utils/RNG';
 import tavern from '../../images/tavern.jpg';
 
-const styles = {
-    page: {
-        color: 'white',
-        width: "100%",
-        height: "100%"
-    },
-    background: {
-        position: "absolute",
-        zIndex: -1,
-        width: "100%"
-    }
-}
-
 // randomly assigns the job/class of the constructed Cat
 function assignJob() {
     let jobRoll = Math.floor(Math.random() * 3);
@@ -197,9 +184,8 @@ const Tavern = ({ userData }) => {
 
     }
     return (
-        <section>
-            <Col className={"location px-0 d-flex flex-column align-items-center"} style={styles.page}>
-                <img src={tavern} alt={"Tavern"} style={styles.background} />
+            <Col className={"location px-0 d-flex flex-column align-items-center"}>
+                <img src={tavern} alt={"Tavern"} />
                 <h2>Cat Tavern</h2>
                 <p>Welcome to the tavern meow, we've got some adventurers here looking for a quest</p>
                 <div>
@@ -228,7 +214,6 @@ const Tavern = ({ userData }) => {
                     disabled={healLockout()} >Eat to recover HP</Button>
                 <Button as={Link} to="/village">Back to the village</Button>
             </Col >
-        </section>
     )
 }
 
