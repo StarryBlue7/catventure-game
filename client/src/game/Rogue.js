@@ -14,6 +14,7 @@ function rogueAttack(cat, party, enemies) {
         enemies[targetIndex].currentHP -= damage;
     }
 
+    console.log(`${cat.name} attacked for ${damage} to enemy at ${targetPosition}`)
     return { party, enemies, targetPosition };
 }
 
@@ -24,7 +25,8 @@ function rogueArrow(cat, party, enemies) {
     enemies.forEach((enemy, i) => {
         enemy.currentHP -= damage;
         targetPosition.push(i + party.length - 1)
-    })
+    });
+    console.log(`${cat.name} attacked for ${damage} to enemy at ${targetPosition}`)
     return { party, enemies, targetPosition };
 }
 

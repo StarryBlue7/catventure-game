@@ -13,8 +13,9 @@ function warriorAttack(cat, party, enemies) {
         if (ally._id === cat._id) {
             ally.currentHP += heal;
         }
+        return ally;
     })
-
+    console.log(`${cat.name} attacked for ${damage} on enemy at ${targetPosition} and healed self for ${heal}`)
     return { party: newParty, enemies, targetPosition };
 }
 
@@ -25,7 +26,7 @@ function warriorShield(cat, party, enemies) {
     party.forEach(ally => {
         ally.multiplier = reductionPercent / 100;
     })
-
+    console.log(`${cat.name} shielded the party for ${reductionPercent}%`)
     return { party, enemies, targetPosition };
 }
 

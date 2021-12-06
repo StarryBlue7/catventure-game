@@ -7,7 +7,8 @@ function mageAttack(cat, party, enemies) {
     const targetIndex = Math.floor(Math.random() * enemies.length);
     const targetPosition = [party.length + targetIndex - 1];
     enemies[targetIndex].currentHP -= damage;
-
+    
+    console.log(`${cat.name} cast spells for ${damage} to enemy at ${targetPosition}!`)
     return { party, enemies, targetPosition }
 }
 
@@ -18,6 +19,7 @@ function mageHeal(cat, party, enemies) {
     party.forEach(ally => {
         ally.currentHP += healing;
     })
+    console.log(`${cat.name} healed party for ${healing}!`)
     return { party, enemies, targetPosition };
 }
 

@@ -1,7 +1,7 @@
 import { updateCat } from "../utils/API";
 import Auth from "../utils/auth";
 import Jobs from "../data/jobs.json";
-
+import actions from "./actions";
 
 // Update db with 
 async function battleUpdate(catsArray) {
@@ -28,7 +28,8 @@ function randomGen(baseValue, spread) {
 
 // Randomly determine quantity of enemies
 function randomEnemyCount() {
-    return Math.ceil(Math.random() * 4);
+    const maxEnemies = 4;
+    return Math.ceil(Math.random() * maxEnemies);
 }
 
 // Build enemy
@@ -42,7 +43,7 @@ export class Enemy {
     }
 }
 
-// Damage calculation
+// Damage calculation for enemies
 function calcDamage(power, level = 3, multiplier = 1) {
     const damage = Math.ceil(Math.log(power) * ((Math.random() * level)) * multiplier);
     return damage
@@ -74,7 +75,7 @@ function generateEnemies(count, partyTotal) {
     return enemies;
 }
 
-// Generate a structure 
+// Generate a battlefield position structure 
 function battlePositions(party, enemies) {
     let positions = [];
     party.forEach(cat => {
@@ -131,16 +132,22 @@ function enemyTurn(battlefield) {
 export function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, setCurrentCat, setAllowAct) {
     console.log('Player turn');
     setMenuShow(false);
+
     let newBattlefield = {...battlefield};
     let newParty = [...battlefield.party];
+    let newEnemies = [...battlefield.enemies];
 
     // Use action
-
-    
-
+    const turnCat = newBattlefield.positions[newBattlefield.turns[0]]
+    const turnClass = turnCat.class;
+    const { party, enemies, targetPosition } = isSpecial 
+        ? actions[turnClass].special(turnCat, newParty, newEnemies)
+        : actions[turnClass].attack(turnCat, newParty, newEnemies)
+    newBattlefield.party = party;
+    newBattlefield.enemies = enemies;
 
     // API call
-    battleUpdate(newParty);
+    battleUpdate(party);
 
     isSpecial 
         ? console.log(`${newBattlefield.positions[newBattlefield.turns[0]].name} uses their special!`) 
@@ -153,7 +160,11 @@ export function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, 
 
 // Check if either party or all enemies dead
 function battleContinues(battlefield) {
-    return true;
+    let newBattlefield = {...battlefield};
+
+
+
+    return newBattlefield;
 }
 
 // Cycle through and executes any enemy turns
