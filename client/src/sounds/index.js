@@ -13,6 +13,7 @@ import mageAttack from './sfx/fast-ignition.wav';
 import mageSpecial from './sfx/fairy-bell.wav';
 import warriorAttack from './sfx/blade-swish.wav';
 import warriorSpecial from './sfx/triple-bounce.wav';
+import enemyAttack from './sfx/strong-punch.mp3';
 
 const Sounds = {
     music: {
@@ -35,10 +36,11 @@ const Sounds = {
         Rogue: {
             attack: rogueAttack,
             special: rogueSpecial
+        },
+        enemy: {
+            attack: enemyAttack
         }
     }
 }
-
-
 
 export default Sounds;

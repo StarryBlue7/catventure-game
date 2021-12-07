@@ -123,7 +123,7 @@ function nextTurn(turns, battlefield) {
 }
 
 // Enemy turn
-function enemyTurn(battlefield, catAnims) {
+function enemyTurn(battlefield, catAnims, setGameUI) {
     console.log('Enemy turn with id:', battlefield.positions[battlefield.turns[0]]);
     const enemyPosition = battlefield.turns[0];
     const enemy = battlefield.enemies[battlefield.positions[enemyPosition] + battlefield.enemies.length];
@@ -143,6 +143,9 @@ function enemyTurn(battlefield, catAnims) {
     const damage = calcDamage(enemy.power, target.multiplier);
     const newParty = [...battlefield.party];
     newParty[targetIndex].currentHP = newParty[targetIndex].currentHP - damage;
+
+    // SFX
+    setGameUI.sounds.enemyAttack();
 
     // Animate damage on target, then die if HP < 1
     catAnims[targetIndex][1]('damaged');
@@ -240,7 +243,7 @@ function enemyTurns(battlefield, setBattlefield, setGameUI, catAnims) {
         const takeEnemyTurns = setInterval(() => {
             // If id is negative, it is an enemy turn
             if (newBattlefield.positions[newBattlefield.turns[0]] < 0) {
-                enemyTurn(newBattlefield, catAnims);
+                enemyTurn(newBattlefield, catAnims, setGameUI);
                 newBattlefield = battleContinues(newBattlefield, setGameUI);
                 if (!newBattlefield) { 
                     return setBattlefield(newBattlefield);

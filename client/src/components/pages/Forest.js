@@ -36,6 +36,7 @@ function Forest({ userData }) {
     const [mageSpecial] = useSound(Sounds.sfx.Mage.special, { volume: 0.3 });
     const [warriorAttack] = useSound(Sounds.sfx.Warrior.attack, { volume: 0.5 });
     const [warriorSpecial] = useSound(Sounds.sfx.Warrior.special, { volume: 0.5 });
+    const [enemyAttack] = useSound(Sounds.sfx.enemy.attack, { volume: 0.5 });
 
     const sfx = {
         Mage: {
@@ -50,7 +51,6 @@ function Forest({ userData }) {
             attack: rogueAttack,
             special: rogueSpecial
         },
-        victory: victory
     }
     
     // Game UI states
@@ -67,7 +67,8 @@ function Forest({ userData }) {
         currentCat: setCurrentCat,
         sounds: {
             stop: stop,
-            victory: victory
+            victory: victory,
+            enemyAttack: enemyAttack
         }
     }
 
