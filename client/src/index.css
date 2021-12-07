@@ -21,9 +21,14 @@ p {
 .logo {
   width: 500px;
 }
-.custom-button:hover, .custom-button:active {
-  background-color: #00e25e;
+.custom-button:hover, 
+.custom-button:active,
+.custom-button:focus {
+  background-color: #00e25e!important;
+  outline: none !important;
+  box-shadow: none !important;
 }
+
 .custom-button {
   background-color: #009c5b;
   font-family: 'Open Sans', sans-serif

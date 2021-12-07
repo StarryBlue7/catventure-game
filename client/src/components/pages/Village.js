@@ -4,6 +4,11 @@ import { Button, Col } from 'react-bootstrap';
 
 import village from '../../images/village.png';
 
+const styles = {
+    villageHeader: {
+        fontSize: '2.5em'
+    }
+}
 
 function Village() {
 

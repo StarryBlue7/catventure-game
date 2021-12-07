@@ -91,6 +91,7 @@ function CatCard(props) {
                 )
                     : (
                         <Button
+                            variant="danger"
                             onClick={() => handleremoveCat(props.cat._id)}
                             disabled={props.isLastCat}>Remove</Button>
                     )}
