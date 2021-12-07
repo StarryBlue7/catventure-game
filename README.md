@@ -1,4 +1,4 @@
-# Catventures!
+# Catventure!
 
 Catventure is a browser-based video game where you assemble a team of cats and go on a catventure! This video game is built entirely in React.js with no external game engine used! The user can add cats to their team, find treasure and engage in Turn-Based Combat.
 
@@ -6,8 +6,11 @@ Catventure is a browser-based video game where you assemble a team of cats and g
 
 * [See Live Site](https://catventure.herokuapp.com/)
 
-## Our Data
-For this application we built our own server and did not use any external API's. Our server utlizes Mongoose/MongoDB, Bcrypt, Express, and JWT(Json Web Token/JWT Decode). JWT and Bcrypt handle our user authentication and password encryption. All of our data stems from our two models, which are our User model and our Cat model. The cat model is attached to our user model in the form of an array, allowing the user to save their cats and have their game progress/data persist. Since we used React for this project, our routes/controllers are only serving up one html page. The bulk of the work our server is doing is serving up and storing data relating to the user and the user's cats.
+## Technical Details
+
+Catventure! is a full-stack app with a React front end, RESTful API routes using Express.js, a Node.js backend and a MongoDB database.
+
+For this application we built our own server and did not use any external API's. Our server utlizes Mongoose ODM, Bcrypt, Express, and JWT(Json Web Token/JWT Decode). JWT and Bcrypt handle our user authentication and password encryption. All of our data stems from our two models, which are our User model and our Cat model. The cat model is attached to our user model in the form of an array, allowing the user to save their cats and have their game progress/data persist. Since we used React for this project, our routes/controllers are only serving up one html page. The bulk of the work our server is doing is serving up and storing data relating to the user and the user's cats.
 
 ## Screenshots
 
@@ -19,23 +22,7 @@ For this application we built our own server and did not use any external API's.
 ![Mobile UI 1](/screenshots/mobile-ui.png)
 ![Mobile UI 2](/screenshots/mobile-ui2.png)
 
-## Code Snippets
-Here are a few code snippets that stand out from our project and a basic explanation of the functionality they served. 
-
----
-![Update Cat](lines 79-105 userController.js)
----
-This portion of code allows users to progress in our project. We decided to use an experience system where if a cat has more than 20 experience, we will increment the cat's level. First we create a new body, essentially copying the body sent back from the client. The switch case you see in this function allows us to increment the cat's hitpoints along with the level up, allowing for diversity in stats for each class of cat(Mage, Warrior, Rogue). After we update the cats experience and level we make a query to our database and send the user model the new body we created to update the user's cats array.
-
----
-![](Battle code snippet?)
----
-Vince do your thing on the battle, or I choose another snippet. Or what I have is enough. Up to you. Idk why I am even typing this but im 4 hrs in on this plane flight and just watched the new Fast and the Furious and honestly it wasnt half bad. Next im going to watch jungle cruise then good place cuz you reccomended it. ok rant over.
-
----
-![Cat Cards](Lines 57-78 CatCard.js)
----
-This is the return statement for our Cat Card component. User Data is being handed to every component and page that is rendered and by prop drilling we send all the data from the user's cat's array to this component. We then render out the users cats party and all the attributes/stat that each cat has. 
+## Code Snippet
 
 ---
 ![code snippet](/screenshots/snippit-tough-bug.png)
@@ -90,4 +77,4 @@ These instructions will get you a copy of the project up and running on your loc
 
 * [The "Cute Legends Heroes" art asset package](https://9e0.itch.io/cute-legends-cat-heroes)
 
-![Catventure Logo]()
+![Catventure Logo](/screenshots/catventures-icon.png)
