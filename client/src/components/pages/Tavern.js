@@ -20,9 +20,6 @@ const styles = {
         marginTop: '10px',
         fontSize: '2.5em'
     },
-    theTavern: {
-        justifyContent: 'space-evenly'
-    },
     catBox:{
         display: 'flex',
         flexDirection: 'row'
@@ -31,6 +28,7 @@ const styles = {
         fontSize: '1.2em'
     },
     tavernOptions: {
+        marginTop: '30px',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-evenly',

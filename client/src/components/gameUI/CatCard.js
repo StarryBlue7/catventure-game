@@ -5,7 +5,15 @@ import Auth from '../../utils/auth';
 import { removeCat } from '../../utils/API';
 import Sprites from '../sprites/Sprites'
 
-
+const styles = {
+    tavernCard: {
+        margin: '5px',
+        paddingBottom: '10px'
+    },
+    tavernClass: {
+        position: 'absolute'
+    }
+}
 
 function CatCard(props) {
 
@@ -57,9 +65,9 @@ function CatCard(props) {
 
     return (
         <>
-            <div className="custom-card">
+            <div className="custom-card" style={styles.tavernCard}>
                 {!props.isTavern ? (<p>{props.cat.name}</p>) : (<></>)}
-                <p>{props.cat.class}</p>
+                <p style={styles.tavernClass}>{props.cat.class}</p>
                 <Sprites job={props.cat.class} action={action} setAction={setAction} />
                 <div className="hp-bar"><div></div></div>
                 <p>HP: {props.cat.currentHP ? props.cat.currentHP : props.cat.maxHP}/{props.cat.maxHP}</p>
