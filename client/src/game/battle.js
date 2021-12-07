@@ -63,8 +63,8 @@ function partyTotals(party) {
 function generateEnemies(count, partyTotal) {
     const hpSpread = 5;
     const powerSpread = 3;
-    const baseHP = Math.ceil(partyTotal.totalHP / count);
-    const basePower = Math.ceil(partyTotal.totalPower / count);
+    const baseHP = Math.ceil(partyTotal.totalHP / (count + 1));
+    const basePower = Math.ceil(partyTotal.totalPower / (count + 2));
 
     let enemies = [];
     for (let i = -1; i > - count - 1; i--) {
@@ -231,6 +231,7 @@ function enemyTurns(battlefield, setBattlefield, setGameUI, catAnims) {
     let newBattlefield = battleContinues(battlefield)
     if (!newBattlefield) { return }
     const takeEnemyTurns = setInterval(() => {
+        // If id is negative, it is an enemy turn
         if (newBattlefield.positions[newBattlefield.turns[0]] < 0) {
             enemyTurn(newBattlefield, catAnims);
             newBattlefield = battleContinues(newBattlefield);
@@ -239,6 +240,7 @@ function enemyTurns(battlefield, setBattlefield, setGameUI, catAnims) {
             }
             newBattlefield.turns = nextTurn(newBattlefield.turns, newBattlefield);
         } else {
+            // End enemy turns phases for player turn
             clearInterval(takeEnemyTurns);
             newBattlefield = battleContinues(newBattlefield);
             if (!newBattlefield) { 

@@ -34,7 +34,7 @@ function Forest({ userData }) {
     const [menuShow, setMenuShow] = useState(false);
     const [allowAct, setAllowAct] = useState(false);
     const [menuText, setMenuText] = useState("");
-    const [currentCat, setCurrentCat] = useState({name: ""});
+    const [currentCat, setCurrentCat] = useState({name: "", class: "Mage"});
     const setGameUI = {
         menu: {
             show: setMenuShow,
@@ -103,26 +103,25 @@ function Forest({ userData }) {
             <Modal size="sm" show={menuShow} onHide={() => setMenuShow(false)}>
                 <Modal.Body>
                     <h2>{currentCat.name}'s Turn!</h2>
-                    <Row className={"d-flex flex-row justify-content-center gap-10"}>
+                    <Row className={"d-flex flex-row justify-content-center px-3 gap-10"}>
                         <Button 
-                            className={"battle-button"}
+                            className={"battle-button flex-fill"}
                             onClick={() => {
                                 setAllowAct(false); 
                                 setTimeout(() => {setCurrentCat({name: ""})}, 2000);
                                 playerTurn(battlefield, setBattlefield, false, setGameUI, catAnims)
                             }}
-                        >Attack</Button>
+                        >{currentCat.name ? Jobs[currentCat.class].mainAttack : "Attack"}</Button>
                         <Button 
-                            className={"battle-button"}
+                            className={"battle-button flex-fill"}
                             onClick={() => {
                                 setAllowAct(false); 
                                 setTimeout(() => {setCurrentCat({name: ""})}, 2000);
                                 playerTurn(battlefield, setBattlefield, true, setGameUI, catAnims)
                             }}
-                        >"Special"</Button>
-                        <Button className={"battle-button"} as={Link} to="/village">Run Away!</Button>
+                        >{currentCat.name ? Jobs[currentCat.class].special : "Special"}</Button>
+                        <Button className={"battle-button flex-fill"} as={Link} to="/village">Run Away!</Button>
                     </Row>
-                    <p>{menuText}</p>
                 </Modal.Body>
             </Modal>
         </Col>
