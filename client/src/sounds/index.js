@@ -7,12 +7,12 @@ import battle from './music/viking-feast.mp3';
 import victory from './music/victory-fanfare.wav';
 
 // Sound effects
-import rogueAttack from './sfx/slide-hit';
-import rogueSpecial from './sfx/intro-bell';
-import mageAttack from './sfx/fast-ignition';
-import mageSpecial from './sfx/fairy-bell';
-import warriorAttack from './sfx/blade-swish';
-import warriorSpecial from './sfx/triple-bounce';
+import rogueAttack from './sfx/slide-hit.wav';
+import rogueSpecial from './sfx/intro-bell.wav';
+import mageAttack from './sfx/fast-ignition.wav';
+import mageSpecial from './sfx/fairy-bell.wav';
+import warriorAttack from './sfx/blade-swish.wav';
+import warriorSpecial from './sfx/triple-bounce.wav';
 
 const Sounds = {
     music: {

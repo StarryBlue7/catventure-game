@@ -14,11 +14,11 @@ const styles = {
     }
 }
 
-function Home() {
+function Home({ setBgm }) {
     const [action, setAction] = useState('idle')
     return (
             <Col className={"location px-0 d-flex flex-column align-items-center"}>
-                    <img src={splash} alt={"Splash page background"}/>
+                    <img onLoad={setBgm()} src={splash} alt={"Splash page background"}/>
                     <div style={styles.splashPage}>
                         <Row className={"d-flex flex-row gap-10 justify-content-center"}>
                             <h2 style={styles.siteSubtite}>Embark upon your very own Catventure!</h2>
