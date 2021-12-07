@@ -27,16 +27,31 @@ const styles = {
 }
 
 function Forest({ userData }) {
+    // Battlefield state
     const [battlefield, setBattlefield] = useState({party: userData.cats, enemies: [], continue: false});
-    const [currentCat, setCurrentCat] = useState({name: ""});
+    
+    // Game UI states
     const [menuShow, setMenuShow] = useState(false);
     const [allowAct, setAllowAct] = useState(false);
+    const [menuText, setMenuText] = useState("");
+    const [currentCat, setCurrentCat] = useState({name: ""});
+    const setGameUI = {
+        menu: {
+            show: setMenuShow,
+            text: setMenuText
+        },
+        action: {
+            allow: setAllowAct
+        },
+        current: {
+            cat: setCurrentCat
+        }
+    }
 
     // Cat animations states
     const [catAnim1, setCatAnim1] = useState('idle');
     const [catAnim2, setCatAnim2] = useState('idle');
     const [catAnim3, setCatAnim3] = useState('idle');
-
     const catAnims = [
         [catAnim1, setCatAnim1],
         [catAnim2, setCatAnim2],
@@ -52,7 +67,7 @@ function Forest({ userData }) {
             <h2>The Deadly Forest</h2>
             {battleEnemies.length ? (
                 <Row id="battle-window" className={"d-flex flex-row justify-content-between w-100"}>
-                    <Col id="party-sprites" className={"d-flex flex-column align-items-start justify-content-end gap-10"}>
+                    <Col id="party-sprites" className={"d-flex flex-column align-items-start justify-content-between gap-10"}>
                         <Button disabled={!allowAct} onClick={() => setMenuShow(true)}>Choose Action</Button>
                         {battleParty.map((cat, i) => {
                             return (
@@ -62,6 +77,7 @@ function Forest({ userData }) {
                                 </div>
                             )
                         })}
+                        <div></div>
                     </Col>
                     <Col className={"d-flex flex-column align-items-center justify-content-center gap-10"}>
                     </Col>
@@ -89,21 +105,24 @@ function Forest({ userData }) {
             <Modal size="sm" show={menuShow} onHide={() => setMenuShow(false)}>
                 <Modal.Body>
                     <h2>{currentCat.name}'s Turn!</h2>
-                    <Button 
-                        onClick={() => {
-                            setAllowAct(false); 
-                            setTimeout(() => {setCurrentCat({name: ""})}, 2000);
-                            playerTurn(battlefield, setBattlefield, false, setMenuShow, setCurrentCat, setAllowAct, catAnims)
-                        }}
-                    >Attack</Button>
-                    <Button 
-                        onClick={() => {
-                            setAllowAct(false); 
-                            setTimeout(() => {setCurrentCat({name: ""})}, 2000);
-                            playerTurn(battlefield, setBattlefield, true, setMenuShow, setCurrentCat, setAllowAct, catAnims)
-                        }}
-                    >"Special"</Button>
-                    <Button as={Link} to="/village">Run Away!</Button>
+                    <Row className={"d-flex flex-row justify-content-center gap-10"}>
+                        <Button 
+                            onClick={() => {
+                                setAllowAct(false); 
+                                setTimeout(() => {setCurrentCat({name: ""})}, 2000);
+                                playerTurn(battlefield, setBattlefield, false, setMenuShow, setCurrentCat, setAllowAct, catAnims)
+                            }}
+                        >Attack</Button>
+                        <Button 
+                            onClick={() => {
+                                setAllowAct(false); 
+                                setTimeout(() => {setCurrentCat({name: ""})}, 2000);
+                                playerTurn(battlefield, setBattlefield, true, setMenuShow, setCurrentCat, setAllowAct, catAnims)
+                            }}
+                        >"Special"</Button>
+                        <Button as={Link} to="/village">Run Away!</Button>
+                    </Row>
+                    <p>{menuText}</p>
                 </Modal.Body>
             </Modal>
         </Col>
