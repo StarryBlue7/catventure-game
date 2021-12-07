@@ -37,6 +37,9 @@ const styles = {
     },
     theMenu: {
         marginTop: '30px'
+    },
+    tavernBackBtn: {
+        marginTop: '20px'
     }
 }
 
@@ -240,14 +243,14 @@ const Tavern = ({ userData }) => {
                         <h3>Today's food</h3>
                         <div style={styles.tavernText}>Deluxe Tuna and Chicken Pâté</div>
                         <Button
-                            className={"game-button"}
+                            className={"game-button eat-btn"}
                             onClick={() => healCats(userData)}
                             disabled={healLockout()} >
                             Eat to recover HP
                         </Button>
                     </div>
                 </div>
-                <Button className={"game-button"} as={Link} to="/village">Back to the village</Button>
+                <Button style={styles.tavernBackBtn} className={"game-button"} as={Link} to="/village">Back to the village</Button>
             </Col >
     )
 }

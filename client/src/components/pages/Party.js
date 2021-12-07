@@ -12,6 +12,10 @@ const styles = {
         marginTop: '10px',
         fontSize: '2.5em',
         marginBottom: '20px'
+    },
+    catventureBtn: {
+        marginTop: '10px',
+        fontSize: '1.5em',
     }
 }
 
@@ -40,7 +44,7 @@ function Party({userData}) {
                      />
                 ))}
             </div>
-            <Button as={Link} to="/village">Back</Button>
+            <Button style={styles.catventureBtn} className={"game-button"} as={Link} to="/village">Go on a Catventure!</Button>
         </Col>
     )
 }

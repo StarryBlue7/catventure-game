@@ -30,7 +30,8 @@ p {
 }
 
 .custom-button {
-  background-color: #009c5b;
+  background-color: #009c5b!important;
+  border: #009c5b!important;
   font-family: 'Open Sans', sans-serif
 }
 
@@ -40,11 +41,14 @@ p {
   font-family: 'Open Sans', sans-serif;
   font-size: 1em;
 }
-
+.eat-btn{
+  margin-top: 10px;
+  text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+}
 .game-button:hover, 
 .game-button:active,
 .game-button:focus {
-  background-color: #ffc355!important;
+  background-color: #e29300!important;
   outline: none !important;
   box-shadow: none !important;
 }
