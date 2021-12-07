@@ -267,6 +267,21 @@ export function newBattle(party, setBattlefield, setMenuShow, setCurrentCat, set
     enemyTurns(newBattlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct, catAnims)
 }
 
-function endBattle(party, isWin) {
+// End battle and send user back to Village
+async function endBattle(party, isWin) {
     isWin ? console.log('Party won!') : console.log('Party lost!');
+    if (isWin) {
+        party.forEach(cat => {
+            if (cat.currentHP > 0) {
+                cat.experience += 6;
+                console.log(`${cat.name} gains 6 XP!`);
+            } else {
+                cat.currentHP = 1;
+                cat.experience += 3;
+                console.log(`${cat.name} gains 3 XP!`);
+                document.location = "/village";
+            }
+        });
+    }
+    battleUpdate(party);
 }
