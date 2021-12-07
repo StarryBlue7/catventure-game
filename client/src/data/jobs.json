@@ -4,6 +4,7 @@
         "baseHitpoints": 20,
         "statName": "Strength",
         "description": "Warriors are brave and resilient defenders!",
+        "mainAttack": "Sword Slash",
         "special": "Shield Wall",
         "specialDescription": "Defend your party until your next turn."
     },
@@ -12,6 +13,7 @@
         "baseHitpoints": 14,
         "statName": "Arcane",
         "description": "Mages wield powerful magicks to damage or heal!",
+        "mainAttack": "Pyromancy",
         "special": "Healing Star",
         "specialDescription": "Heal your party with restorative starlight."
     },
@@ -19,6 +21,7 @@
         "basePower": 7,
         "baseHitpoints": 18,
         "statName": "Dexterity",
+        "mainAttack": "Martial Fury",
         "description": "Rogues are speedy fighters, capable of multi-attacks!",
         "special": "Lightning Arrow",
         "specialDescription": "Strike all enemies with electrified shots."

@@ -10,16 +10,9 @@ import Sprites from '../sprites/Sprites';
 import EnemySprites from '../sprites/EnemySprites';
 
 const styles = {
-    page: { 
-        color: 'white', 
-        width: "100%", 
-        height: "100%",
-        overflowX: "hidden"
-    },
-    background: {
-        position: "absolute",
-        zIndex: -1,
-        height: "100%"
+    forestHeader: {
+        fontSize: '3em',
+        margin: '20px'
     },
     healthBars: {
         width: 100
@@ -27,16 +20,27 @@ const styles = {
 }
 
 function Forest({ userData }) {
+    // Battlefield state
     const [battlefield, setBattlefield] = useState({party: userData.cats, enemies: [], continue: false});
-    const [currentCat, setCurrentCat] = useState({name: ""});
+    
+    // Game UI states
     const [menuShow, setMenuShow] = useState(false);
     const [allowAct, setAllowAct] = useState(false);
+    const [currentCat, setCurrentCat] = useState({name: "", class: "Mage"});
+    const setGameUI = {
+        menu: {
+            show: setMenuShow
+        },
+        action: {
+            allow: setAllowAct
+        },
+        currentCat: setCurrentCat
+    }
 
     // Cat animations states
     const [catAnim1, setCatAnim1] = useState('idle');
     const [catAnim2, setCatAnim2] = useState('idle');
     const [catAnim3, setCatAnim3] = useState('idle');
-
     const catAnims = [
         [catAnim1, setCatAnim1],
         [catAnim2, setCatAnim2],
@@ -47,13 +51,13 @@ function Forest({ userData }) {
     const battleEnemies = battlefield.enemies;
 
     return (
-        <Col className={"location px-0 d-flex flex-column align-items-center"} style={styles.page}>
+        <Col className={"location px-0 d-flex flex-column align-items-center justify-content-between"}>
             <img src={forest} alt={"Forest"} style={styles.background} />
-            <h2>The Deadly Forest</h2>
-            {battleEnemies.length ? (
-                <Row id="battle-window" className={"d-flex flex-row justify-content-between w-100"}>
-                    <Col id="party-sprites" className={"d-flex flex-column align-items-start justify-content-end gap-10"}>
-                        <Button disabled={!allowAct} onClick={() => setMenuShow(true)}>Choose Action</Button>
+            <h2 style={styles.forestHeader}>The Deadly Forest</h2>
+            {battlefield.continue ? (
+                <Row id="battle-window" className={"d-flex flex-row justify-content-between w-100 h-100"}>
+                    <Col id="party-sprites" className={"d-flex flex-column align-items-start justify-content-between gap-10"}>
+                        <Button className={"battle-button"} disabled={!allowAct} onClick={() => setMenuShow(true)}>Choose Action</Button>
                         {battleParty.map((cat, i) => {
                             return (
                                 <div className={cat._id === currentCat._id ? "align-self-center" : ""}>
@@ -62,6 +66,7 @@ function Forest({ userData }) {
                                 </div>
                             )
                         })}
+                        <div></div>
                     </Col>
                     <Col className={"d-flex flex-column align-items-center justify-content-center gap-10"}>
                     </Col>
@@ -82,28 +87,33 @@ function Forest({ userData }) {
                 </Row>
             ) : (
                 <>
-                    <Button onClick={() => newBattle(userData.cats, setBattlefield, setMenuShow, setCurrentCat, setAllowAct, catAnims)}>Battle!</Button>
-                    <Button as={Link} to="/village">Back</Button>
+                    <Button className={"battle-button"} onClick={() => newBattle(userData.cats, setBattlefield, setGameUI, catAnims)}>Battle!</Button>
+                    <Button className={"battle-button"} as={Link} to="/village">Back to the Village</Button>
                 </>
             )}
-            <Modal size="sm" show={menuShow} onHide={() => setMenuShow(false)}>
-                <Modal.Body>
+            <div></div>
+            <Modal size="sm" centered={true} show={menuShow} onHide={() => setMenuShow(false)}>
+                <Modal.Body className={"text-center"} >
                     <h2>{currentCat.name}'s Turn!</h2>
-                    <Button 
-                        onClick={() => {
-                            setAllowAct(false); 
-                            setTimeout(() => {setCurrentCat({name: ""})}, 2000);
-                            playerTurn(battlefield, setBattlefield, false, setMenuShow, setCurrentCat, setAllowAct, catAnims)
-                        }}
-                    >Attack</Button>
-                    <Button 
-                        onClick={() => {
-                            setAllowAct(false); 
-                            setTimeout(() => {setCurrentCat({name: ""})}, 2000);
-                            playerTurn(battlefield, setBattlefield, true, setMenuShow, setCurrentCat, setAllowAct, catAnims)
-                        }}
-                    >"Special"</Button>
-                    <Button as={Link} to="/village">Run Away!</Button>
+                    <Row className={"d-flex flex-row justify-content-center px-3 gap-10"}>
+                        <Button 
+                            className={"battle-button flex-fill"}
+                            onClick={() => {
+                                setAllowAct(false); 
+                                setTimeout(() => {setCurrentCat({name: ""})}, 2000);
+                                playerTurn(battlefield, setBattlefield, false, setGameUI, catAnims)
+                            }}
+                        >{currentCat.name ? Jobs[currentCat.class].mainAttack : "Attack"}</Button>
+                        <Button 
+                            className={"battle-button flex-fill"}
+                            onClick={() => {
+                                setAllowAct(false); 
+                                setTimeout(() => {setCurrentCat({name: ""})}, 2000);
+                                playerTurn(battlefield, setBattlefield, true, setGameUI, catAnims)
+                            }}
+                        >{currentCat.name ? Jobs[currentCat.class].special : "Special"}</Button>
+                        <Button className={"battle-button flex-fill"} as={Link} to="/village">Run Away!</Button>
+                    </Row>
                 </Modal.Body>
             </Modal>
         </Col>
