@@ -11,7 +11,15 @@ const styles = {
         paddingBottom: '10px'
     },
     tavernClass: {
-        position: 'absolute'
+        position: 'absolute',
+        fontSize: '1.2em',
+    },
+    partyClass: {
+        position: 'absolute',
+        marginTop: '40px'
+    },
+    catName: {
+        fontSize: '1.5em',
     }
 }
 
@@ -66,8 +74,10 @@ function CatCard(props) {
     return (
         <>
             <div className="custom-card" style={styles.tavernCard}>
-                {!props.isTavern ? (<p>{props.cat.name}</p>) : (<></>)}
-                <p style={styles.tavernClass}>{props.cat.class}</p>
+                {!props.isTavern ? (<p style={styles.catName}>{props.cat.name}</p>) : (<></>)}
+                    {!props.isTavern ? 
+                        (<p style={styles.partyClass}>{props.cat.class}</p>) 
+                        : (<p style={styles.tavernClass}>{props.cat.class}</p>)}
                 <Sprites job={props.cat.class} action={action} setAction={setAction} />
                 <div className="hp-bar"><div></div></div>
                 <p>HP: {props.cat.currentHP ? props.cat.currentHP : props.cat.maxHP}/{props.cat.maxHP}</p>

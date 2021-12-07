@@ -3,6 +3,18 @@ import { Link } from 'react-router-dom';
 import { Button, Col } from 'react-bootstrap';
 import CatCard from '../gameUI/CatCard';
 
+const styles = {
+    catBox: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
+    teamHeader: {
+        marginTop: '10px',
+        fontSize: '2.5em',
+        marginBottom: '20px'
+    }
+}
+
 function Party({userData}) {
 
     const userCats = userData.cats;
@@ -17,8 +29,8 @@ function Party({userData}) {
     }
     return (
         <Col className={"location px-0 d-flex flex-column align-items-center"}>
-            <h2>My Team</h2>
-            <div>
+            <h2 style={styles.teamHeader}>My Team</h2>
+            <div style={styles.catBox}>
                 {userCats.map((cat, i) => (
                     <CatCard 
                     cat={cat} 
