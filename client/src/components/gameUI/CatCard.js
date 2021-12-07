@@ -32,7 +32,7 @@ function CatCard(props) {
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        setCatFormData({ ...catFormData, [name]: value })
+        setCatFormData({ ...catFormData, [name]: value.substring(0, 12) })
     }
 
     //when user chooses a name, call the recruitCat method which was defined in Tavern component
