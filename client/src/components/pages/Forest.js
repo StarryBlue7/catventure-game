@@ -3,8 +3,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Col, Modal, Row, ProgressBar } from 'react-bootstrap';
 
-import { Enemy, newBattle, playerTurn } from '../../game/battle';
+import useSound from 'use-sound';
+import Sounds from '../../sounds';
 
+import { Enemy, newBattle, playerTurn } from '../../game/battle';
 import Jobs from '../../data/jobs.json';
 import Sprites from '../sprites/Sprites';
 import EnemySprites from '../sprites/EnemySprites';
@@ -23,6 +25,34 @@ function Forest({ userData }) {
     // Battlefield state
     const [battlefield, setBattlefield] = useState({party: userData.cats, enemies: [], continue: false});
     
+    // Battle music
+    const [bgm, { stop }] = useSound(Sounds.music.battle, { volume: 0.2 });
+
+    // SFX
+    const [victory] = useSound(Sounds.music.victory, { volume: 0.5 });
+    const [rogueAttack] = useSound(Sounds.sfx.Rogue.attack, { volume: 0.5 });
+    const [rogueSpecial] = useSound(Sounds.sfx.Rogue.special, { volume: 0.5 });
+    const [mageAttack] = useSound(Sounds.sfx.Mage.attack, { volume: .5 });
+    const [mageSpecial] = useSound(Sounds.sfx.Mage.special, { volume: 0.3 });
+    const [warriorAttack] = useSound(Sounds.sfx.Warrior.attack, { volume: 0.5 });
+    const [warriorSpecial] = useSound(Sounds.sfx.Warrior.special, { volume: 0.5 });
+    const [enemyAttack] = useSound(Sounds.sfx.enemy.attack, { volume: 0.5 });
+
+    const sfx = {
+        Mage: {
+            attack: mageAttack,
+            special: mageSpecial
+        },
+        Warrior: {
+            attack: warriorAttack,
+            special: warriorSpecial
+        },
+        Rogue: {
+            attack: rogueAttack,
+            special: rogueSpecial
+        },
+    }
+    
     // Game UI states
     const [menuShow, setMenuShow] = useState(false);
     const [allowAct, setAllowAct] = useState(false);
@@ -34,7 +64,12 @@ function Forest({ userData }) {
         action: {
             allow: setAllowAct
         },
-        currentCat: setCurrentCat
+        currentCat: setCurrentCat,
+        sounds: {
+            stop: stop,
+            victory: victory,
+            enemyAttack: enemyAttack
+        }
     }
 
     // Cat animations states
@@ -87,7 +122,10 @@ function Forest({ userData }) {
                 </Row>
             ) : (
                 <>
-                    <Button className={"battle-button"} onClick={() => newBattle(userData.cats, setBattlefield, setGameUI, catAnims)}>Battle!</Button>
+                    <Button className={"battle-button"} onClick={() => {
+                        newBattle(userData.cats, setBattlefield, setGameUI, catAnims);
+                        bgm();
+                    }}>Battle!</Button>
                     <Button className={"battle-button"} as={Link} to="/village">Back to the Village</Button>
                 </>
             )}
@@ -100,6 +138,7 @@ function Forest({ userData }) {
                             className={"battle-button flex-fill"}
                             onClick={() => {
                                 setAllowAct(false); 
+                                sfx[currentCat.class].attack();
                                 setTimeout(() => {setCurrentCat({name: ""})}, 2000);
                                 playerTurn(battlefield, setBattlefield, false, setGameUI, catAnims)
                             }}
@@ -108,6 +147,7 @@ function Forest({ userData }) {
                             className={"battle-button flex-fill"}
                             onClick={() => {
                                 setAllowAct(false); 
+                                sfx[currentCat.class].special();
                                 setTimeout(() => {setCurrentCat({name: ""})}, 2000);
                                 playerTurn(battlefield, setBattlefield, true, setGameUI, catAnims)
                             }}
