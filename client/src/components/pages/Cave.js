@@ -3,19 +3,16 @@ import { Link } from 'react-router-dom';
 import { Button, Col, Modal } from 'react-bootstrap';
 import { lastTreasure, updateCat } from '../../utils/API';
 import Auth from '../../utils/auth';
-
+import treasure from '../../images/treasure.gif'
 import cave from '../../images/cave.png';
 
 const styles = {
-    page: { 
-        color: "white", 
-        width: "100%", 
-        height: "100%"
-    },
-    background: {
-        position: "absolute",
-        zIndex: -1,
-        width: "100%"
+    treasureBtn: {
+        backgroundColor: 'transparent',
+        padding: 0,
+        border: '0px',
+        outline: 'none',
+        boxShadow: 'none'
     }
 }
 
@@ -100,9 +97,10 @@ function Cave({ userData }) {
                     <>
                         <p>Look through the cave to find and click on the treasure!</p>
                         <Button
+                            style={styles.treasureBtn}
                             disabled={isLockout()}
                             onClick={() => updateTreasure()}>
-                            Open Treasure
+                            <img src={treasure} alt={"treasure"} />
                         </Button>
                     </>)
                 }
