@@ -5,7 +5,6 @@ import { Button, Col, Modal, Row, ProgressBar } from 'react-bootstrap';
 
 import useSound from 'use-sound';
 import Sounds from '../../sounds';
-import victory from '../../sounds/music/victory-fanfare.wav';
 
 import { Enemy, newBattle, playerTurn } from '../../game/battle';
 import Jobs from '../../data/jobs.json';
@@ -27,31 +26,32 @@ function Forest({ userData }) {
     const [battlefield, setBattlefield] = useState({party: userData.cats, enemies: [], continue: false});
     
     // Battle music
-    // const [bgm, { stop }] = useSound(Sounds.music.battle, { volume: 0.01 });
+    const [bgm, { stop }] = useSound(Sounds.music.battle, { volume: 0.2 });
 
     // SFX
-    const [victory] = useSound(Sounds.music.victory, { volume: 0.01 });
-    // const [rogueAttack] = useSound(Sounds.music.rogueAttack, { volume: 0.01 });
-    // const [rogueSpecial] = useSound(Sounds.music.rogueSpecial, { volume: 0.01 });
-    // const [mageAttackSound] = useSound(Sounds.music.mageAttack, { volume: 5 });
-    // const [mageSpecial] = useSound(Sounds.music.mageSpecial, { volume: 0.01 });
-    // const [warriorAttack] = useSound(Sounds.music.rogueAttack, { volume: 0.01 });
-    // const [warriorSpecial] = useSound(Sounds.music.rogueSpecial, { volume: 0.01 });
+    const [victory] = useSound(Sounds.music.victory, { volume: 0.5 });
+    const [rogueAttack] = useSound(Sounds.sfx.Rogue.attack, { volume: 0.5 });
+    const [rogueSpecial] = useSound(Sounds.sfx.Rogue.special, { volume: 0.5 });
+    const [mageAttack] = useSound(Sounds.sfx.Mage.attack, { volume: .5 });
+    const [mageSpecial] = useSound(Sounds.sfx.Mage.special, { volume: 0.3 });
+    const [warriorAttack] = useSound(Sounds.sfx.Warrior.attack, { volume: 0.5 });
+    const [warriorSpecial] = useSound(Sounds.sfx.Warrior.special, { volume: 0.5 });
 
-    // const sfx = {
-    //     Mage: {
-    //         attack: mageAttack,
-    //         special: mageSpecial
-    //     },
-    //     Warrior: {
-    //         attack: warriorAttack,
-    //         special: warriorSpecial
-    //     },
-    //     Rogue: {
-    //         attack: rogueAttack,
-    //         special: rogueSpecial
-    //     }
-    // }
+    const sfx = {
+        Mage: {
+            attack: mageAttack,
+            special: mageSpecial
+        },
+        Warrior: {
+            attack: warriorAttack,
+            special: warriorSpecial
+        },
+        Rogue: {
+            attack: rogueAttack,
+            special: rogueSpecial
+        },
+        victory: victory
+    }
     
     // Game UI states
     const [menuShow, setMenuShow] = useState(false);
@@ -64,7 +64,11 @@ function Forest({ userData }) {
         action: {
             allow: setAllowAct
         },
-        currentCat: setCurrentCat
+        currentCat: setCurrentCat,
+        sounds: {
+            stop: stop,
+            victory: victory
+        }
     }
 
     // Cat animations states
@@ -119,7 +123,7 @@ function Forest({ userData }) {
                 <>
                     <Button className={"battle-button"} onClick={() => {
                         newBattle(userData.cats, setBattlefield, setGameUI, catAnims);
-                        
+                        bgm();
                     }}>Battle!</Button>
                     <Button className={"battle-button"} as={Link} to="/village">Back to the Village</Button>
                 </>
@@ -133,7 +137,7 @@ function Forest({ userData }) {
                             className={"battle-button flex-fill"}
                             onClick={() => {
                                 setAllowAct(false); 
-                                victory()
+                                sfx[currentCat.class].attack();
                                 setTimeout(() => {setCurrentCat({name: ""})}, 2000);
                                 playerTurn(battlefield, setBattlefield, false, setGameUI, catAnims)
                             }}
@@ -142,7 +146,7 @@ function Forest({ userData }) {
                             className={"battle-button flex-fill"}
                             onClick={() => {
                                 setAllowAct(false); 
-                                // sfx[currentCat.class].special();
+                                sfx[currentCat.class].special();
                                 setTimeout(() => {setCurrentCat({name: ""})}, 2000);
                                 playerTurn(battlefield, setBattlefield, true, setGameUI, catAnims)
                             }}

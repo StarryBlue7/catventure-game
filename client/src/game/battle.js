@@ -197,7 +197,7 @@ export function playerTurn(battlefield, setBattlefield, isSpecial, setGameUI, ca
 }
 
 // Prevent negative HPs & overheals and check if all party or all enemies dead
-function battleContinues(battlefield) {
+function battleContinues(battlefield, setGameUI) {
     let newBattlefield = {...battlefield};
     let partyTotal = 0;
     let enemyTotal = 0;
@@ -222,6 +222,8 @@ function battleContinues(battlefield) {
         enemyTotal += enemy.currentHP;
     });
     if (enemyTotal === 0) {
+        setGameUI.sounds.stop();
+        setGameUI.sounds.victory();
         endBattle(newBattlefield.party, true);
         return false; 
     }
@@ -231,7 +233,7 @@ function battleContinues(battlefield) {
 
 // Cycle through and executes any enemy turns
 function enemyTurns(battlefield, setBattlefield, setGameUI, catAnims) {
-    let newBattlefield = battleContinues(battlefield)
+    let newBattlefield = battleContinues(battlefield, setGameUI)
     if (!newBattlefield) { 
         return 
     } else {
@@ -239,7 +241,7 @@ function enemyTurns(battlefield, setBattlefield, setGameUI, catAnims) {
             // If id is negative, it is an enemy turn
             if (newBattlefield.positions[newBattlefield.turns[0]] < 0) {
                 enemyTurn(newBattlefield, catAnims);
-                newBattlefield = battleContinues(newBattlefield);
+                newBattlefield = battleContinues(newBattlefield, setGameUI);
                 if (!newBattlefield) { 
                     return setBattlefield(newBattlefield);
                 }
@@ -247,7 +249,7 @@ function enemyTurns(battlefield, setBattlefield, setGameUI, catAnims) {
             } else {
                 // End enemy turns phases for player turn
                 clearInterval(takeEnemyTurns);
-                newBattlefield = battleContinues(newBattlefield);
+                newBattlefield = battleContinues(newBattlefield, setGameUI);
                 if (!newBattlefield) { 
                     return setBattlefield(newBattlefield);
                 }
