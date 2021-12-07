@@ -66,7 +66,7 @@ function Forest({ userData }) {
             {battleEnemies.length ? (
                 <Row id="battle-window" className={"d-flex flex-row justify-content-between w-100"}>
                     <Col id="party-sprites" className={"d-flex flex-column align-items-start justify-content-between gap-10"}>
-                        <Button disabled={!allowAct} onClick={() => setMenuShow(true)}>Choose Action</Button>
+                        <Button className={"battle-button"} disabled={!allowAct} onClick={() => setMenuShow(true)}>Choose Action</Button>
                         {battleParty.map((cat, i) => {
                             return (
                                 <div className={cat._id === currentCat._id ? "align-self-center" : ""}>
@@ -96,8 +96,8 @@ function Forest({ userData }) {
                 </Row>
             ) : (
                 <>
-                    <Button onClick={() => newBattle(userData.cats, setBattlefield, setGameUI, catAnims)}>Battle!</Button>
-                    <Button as={Link} to="/village">Back</Button>
+                    <Button className={"battle-button"} onClick={() => newBattle(userData.cats, setBattlefield, setGameUI, catAnims)}>Battle!</Button>
+                    <Button className={"battle-button"} as={Link} to="/village">Back</Button>
                 </>
             )}
             <Modal size="sm" show={menuShow} onHide={() => setMenuShow(false)}>
@@ -105,6 +105,7 @@ function Forest({ userData }) {
                     <h2>{currentCat.name}'s Turn!</h2>
                     <Row className={"d-flex flex-row justify-content-center gap-10"}>
                         <Button 
+                            className={"battle-button"}
                             onClick={() => {
                                 setAllowAct(false); 
                                 setTimeout(() => {setCurrentCat({name: ""})}, 2000);
@@ -112,13 +113,14 @@ function Forest({ userData }) {
                             }}
                         >Attack</Button>
                         <Button 
+                            className={"battle-button"}
                             onClick={() => {
                                 setAllowAct(false); 
                                 setTimeout(() => {setCurrentCat({name: ""})}, 2000);
                                 playerTurn(battlefield, setBattlefield, true, setGameUI, catAnims)
                             }}
                         >"Special"</Button>
-                        <Button as={Link} to="/village">Run Away!</Button>
+                        <Button className={"battle-button"} as={Link} to="/village">Run Away!</Button>
                     </Row>
                     <p>{menuText}</p>
                 </Modal.Body>
