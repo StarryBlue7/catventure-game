@@ -10,16 +10,9 @@ import Sprites from '../sprites/Sprites';
 import EnemySprites from '../sprites/EnemySprites';
 
 const styles = {
-    page: { 
-        color: 'white', 
-        width: "100%", 
-        height: "100%",
-        overflowX: "hidden"
-    },
-    background: {
-        position: "absolute",
-        zIndex: -1,
-        height: "100%"
+    forestHeader: {
+        fontSize: '3em',
+        margin: '20px'
     },
     healthBars: {
         width: 100
@@ -33,12 +26,10 @@ function Forest({ userData }) {
     // Game UI states
     const [menuShow, setMenuShow] = useState(false);
     const [allowAct, setAllowAct] = useState(false);
-    const [menuText, setMenuText] = useState("");
     const [currentCat, setCurrentCat] = useState({name: "", class: "Mage"});
     const setGameUI = {
         menu: {
-            show: setMenuShow,
-            text: setMenuText
+            show: setMenuShow
         },
         action: {
             allow: setAllowAct
@@ -60,11 +51,11 @@ function Forest({ userData }) {
     const battleEnemies = battlefield.enemies;
 
     return (
-        <Col className={"location px-0 d-flex flex-column align-items-center"} style={styles.page}>
+        <Col className={"location px-0 d-flex flex-column align-items-center justify-content-between"}>
             <img src={forest} alt={"Forest"} style={styles.background} />
-            <h2>The Deadly Forest</h2>
-            {battleEnemies.length ? (
-                <Row id="battle-window" className={"d-flex flex-row justify-content-between w-100"}>
+            <h2 style={styles.forestHeader}>The Deadly Forest</h2>
+            {battlefield.continue ? (
+                <Row id="battle-window" className={"d-flex flex-row justify-content-between w-100 h-100"}>
                     <Col id="party-sprites" className={"d-flex flex-column align-items-start justify-content-between gap-10"}>
                         <Button className={"battle-button"} disabled={!allowAct} onClick={() => setMenuShow(true)}>Choose Action</Button>
                         {battleParty.map((cat, i) => {
@@ -97,11 +88,12 @@ function Forest({ userData }) {
             ) : (
                 <>
                     <Button className={"battle-button"} onClick={() => newBattle(userData.cats, setBattlefield, setGameUI, catAnims)}>Battle!</Button>
-                    <Button className={"battle-button"} as={Link} to="/village">Back</Button>
+                    <Button className={"battle-button"} as={Link} to="/village">Back to the Village</Button>
                 </>
             )}
-            <Modal size="sm" show={menuShow} onHide={() => setMenuShow(false)}>
-                <Modal.Body>
+            <div></div>
+            <Modal size="sm" centered={true} show={menuShow} onHide={() => setMenuShow(false)}>
+                <Modal.Body className={"text-center"} >
                     <h2>{currentCat.name}'s Turn!</h2>
                     <Row className={"d-flex flex-row justify-content-center px-3 gap-10"}>
                         <Button 

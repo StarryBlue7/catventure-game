@@ -128,6 +128,10 @@ function enemyTurn(battlefield, catAnims) {
     const enemyPosition = battlefield.turns[0];
     const enemy = battlefield.enemies[battlefield.positions[enemyPosition] + battlefield.enemies.length];
     
+    // Check for all dead party or enemies
+    let newBattlefield = battleContinues(battlefield)
+    if (!newBattlefield) { return }
+    
     // Find random alive target
     let targetIndex, target;
     do {
@@ -227,34 +231,35 @@ function battleContinues(battlefield) {
 
 // Cycle through and executes any enemy turns
 function enemyTurns(battlefield, setBattlefield, setGameUI, catAnims) {
-    console.log('Initial battlefield', battlefield)
     let newBattlefield = battleContinues(battlefield)
-    if (!newBattlefield) { return }
-    const takeEnemyTurns = setInterval(() => {
-        // If id is negative, it is an enemy turn
-        if (newBattlefield.positions[newBattlefield.turns[0]] < 0) {
-            enemyTurn(newBattlefield, catAnims);
-            newBattlefield = battleContinues(newBattlefield);
-            if (!newBattlefield) { 
-                return setBattlefield(newBattlefield);
+    if (!newBattlefield) { 
+        return 
+    } else {
+        const takeEnemyTurns = setInterval(() => {
+            // If id is negative, it is an enemy turn
+            if (newBattlefield.positions[newBattlefield.turns[0]] < 0) {
+                enemyTurn(newBattlefield, catAnims);
+                newBattlefield = battleContinues(newBattlefield);
+                if (!newBattlefield) { 
+                    return setBattlefield(newBattlefield);
+                }
+                newBattlefield.turns = nextTurn(newBattlefield.turns, newBattlefield);
+            } else {
+                // End enemy turns phases for player turn
+                clearInterval(takeEnemyTurns);
+                newBattlefield = battleContinues(newBattlefield);
+                if (!newBattlefield) { 
+                    return setBattlefield(newBattlefield);
+                }
+                console.log('Enemy turns ended, next turn for:', newBattlefield.positions[newBattlefield.turns[0]].name);
+                setGameUI.currentCat(newBattlefield.positions[newBattlefield.turns[0]]);
+                setGameUI.action.allow(true);
+                setGameUI.menu.show(true);
             }
-            newBattlefield.turns = nextTurn(newBattlefield.turns, newBattlefield);
-        } else {
-            // End enemy turns phases for player turn
-            clearInterval(takeEnemyTurns);
-            newBattlefield = battleContinues(newBattlefield);
-            if (!newBattlefield) { 
-                return setBattlefield(newBattlefield);
-            }
-            console.log('Enemy turns ended, next turn for:', newBattlefield.positions[newBattlefield.turns[0]].name);
-            setGameUI.currentCat(newBattlefield.positions[newBattlefield.turns[0]]);
-            setGameUI.action.allow(true);
-            setGameUI.menu.show(true);
-        }
-        setBattlefield(newBattlefield)
-        console.log('After enemy phase:', newBattlefield)
-    }, 3000);
-
+            setBattlefield(newBattlefield)
+            console.log('After enemy phase:', newBattlefield)
+        }, 3000);
+    }
     setBattlefield(newBattlefield);
 }
 
@@ -281,9 +286,10 @@ async function endBattle(party, isWin) {
                 cat.currentHP = 1;
                 cat.experience += 3;
                 console.log(`${cat.name} gains 3 XP!`);
-                document.location = "/village";
             }
         });
+    } else {
+        document.location = "/village";
     }
     battleUpdate(party);
 }
