@@ -107,7 +107,7 @@ function Cave({ userData }) {
                 <p style={styles.caveText}>The party searched the depths of the dark cave to uncover ancient relics for increasing their feline abilities</p>
                 {isLockout() ? (<p style={styles.noTreasure}>No treasures left to find. Come back later!</p>) : (
                     <>
-                        <p>Look through the cave to find and click on the treasure!</p>
+                        <p style={styles.noTreasure}>Your cats find some treasure!!</p>
                         <Button
                             style={styles.treasureBtn}
                             disabled={isLockout()}
