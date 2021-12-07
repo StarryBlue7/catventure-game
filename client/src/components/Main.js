@@ -46,36 +46,32 @@ function Main() {
         getUserData();
     }, [userData]);
 
-    // Sound handler
-    const [bgm, setBgm] = useState(Sounds.music.home);
-    const [bgmPlayer, { bgmStopPlayer }] = useSound(bgm, { volume: 0.01 });
-
     return (
         <Router>
-            <Header onLoad={bgmPlayer()} userData={userData} />
+            <Header userData={userData} />
             <Row className="main-page w-100 row mx-0">
                 <Sidebar userData={userData} />
                     <main className={window.outerWidth > 1300 ? 'col-10 px-0' : "col-12 px-0"}>
                         <Switch>
                             <Route exact path="/" >
-                                <Home setBgm={setBgm} userData={userData || false} />
+                                <Home userData={userData || false} />
                             </Route>
                             {Object.keys(userData).length ? (
                                 <>
                                     <Route exact path="/tavern" >
-                                        <Tavern setBgm={setBgm} userData={userData} />
+                                        <Tavern userData={userData} />
                                     </Route>
                                     <Route exact path="/village">
-                                        <Village setBgm={setBgm} />
+                                        <Village />
                                     </Route>
                                     <Route exact path="/party">
-                                        <Party setBgm={setBgm} userData={userData} />
+                                        <Party userData={userData} />
                                     </Route>
                                     <Route exact path="/forest">
-                                        <Forest setBgm={setBgm} userData={userData} />
+                                        <Forest userData={userData} />
                                     </Route>
                                     <Route exact path="/cave">
-                                        <Cave setBgm={setBgm} userData={userData} />
+                                        <Cave userData={userData} />
                                     </Route>
                                 </>
                             ) : (

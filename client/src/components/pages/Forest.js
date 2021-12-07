@@ -3,8 +3,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Col, Modal, Row, ProgressBar } from 'react-bootstrap';
 
-import { Enemy, newBattle, playerTurn } from '../../game/battle';
+import useSound from 'use-sound';
+import Sounds from '../../sounds';
 
+import { Enemy, newBattle, playerTurn } from '../../game/battle';
 import Jobs from '../../data/jobs.json';
 import Sprites from '../sprites/Sprites';
 import EnemySprites from '../sprites/EnemySprites';
@@ -22,6 +24,33 @@ const styles = {
 function Forest({ userData }) {
     // Battlefield state
     const [battlefield, setBattlefield] = useState({party: userData.cats, enemies: [], continue: false});
+    
+    // Battle music
+    const [bgm, { stop }] = useSound(Sounds.music.battle, { volume: 0.01 });
+
+    // SFX
+    const [victory] = useSound(Sounds.music.victory, { volume: 0.01 });
+    const [rogueAttack] = useSound(Sounds.music.rogueAttack, { volume: 0.01 });
+    const [rogueSpecial] = useSound(Sounds.music.rogueSpecial, { volume: 0.01 });
+    const [mageAttackSound] = useSound(Sounds.music.mageAttack, { volume: 5 });
+    const [mageSpecial] = useSound(Sounds.music.mageSpecial, { volume: 0.01 });
+    const [warriorAttack] = useSound(Sounds.music.rogueAttack, { volume: 0.01 });
+    const [warriorSpecial] = useSound(Sounds.music.rogueSpecial, { volume: 0.01 });
+
+    // const sfx = {
+    //     Mage: {
+    //         attack: mageAttack,
+    //         special: mageSpecial
+    //     },
+    //     Warrior: {
+    //         attack: warriorAttack,
+    //         special: warriorSpecial
+    //     },
+    //     Rogue: {
+    //         attack: rogueAttack,
+    //         special: rogueSpecial
+    //     }
+    // }
     
     // Game UI states
     const [menuShow, setMenuShow] = useState(false);
@@ -87,8 +116,11 @@ function Forest({ userData }) {
                 </Row>
             ) : (
                 <>
-                    <Button className={"battle-button"} onClick={() => newBattle(userData.cats, setBattlefield, setGameUI, catAnims)}>Battle!</Button>
-                    <Button className={"battle-button"} as={Link} to="/village">Back to the Village</Button>
+                    <Button className={"battle-button"} onClick={() => {
+                        newBattle(userData.cats, setBattlefield, setGameUI, catAnims);
+                        
+                    }}>Battle!</Button>
+                    <Button onClick={stop()} className={"battle-button"} as={Link} to="/village">Back to the Village</Button>
                 </>
             )}
             <div></div>
@@ -100,6 +132,7 @@ function Forest({ userData }) {
                             className={"battle-button flex-fill"}
                             onClick={() => {
                                 setAllowAct(false); 
+                                mageAttackSound();
                                 setTimeout(() => {setCurrentCat({name: ""})}, 2000);
                                 playerTurn(battlefield, setBattlefield, false, setGameUI, catAnims)
                             }}
@@ -108,11 +141,12 @@ function Forest({ userData }) {
                             className={"battle-button flex-fill"}
                             onClick={() => {
                                 setAllowAct(false); 
+                                // sfx[currentCat.class].special();
                                 setTimeout(() => {setCurrentCat({name: ""})}, 2000);
                                 playerTurn(battlefield, setBattlefield, true, setGameUI, catAnims)
                             }}
                         >{currentCat.name ? Jobs[currentCat.class].special : "Special"}</Button>
-                        <Button className={"battle-button flex-fill"} as={Link} to="/village">Run Away!</Button>
+                        <Button onClick={stop()} className={"battle-button flex-fill"} as={Link} to="/village">Run Away!</Button>
                     </Row>
                 </Modal.Body>
             </Modal>

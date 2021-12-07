@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import cave from '../../images/cave.png';
 import { Link } from 'react-router-dom';
 import { Button, Col, Modal } from 'react-bootstrap';
 import { lastTreasure, updateCat } from '../../utils/API';
 import Auth from '../../utils/auth';
 import treasure from '../../images/treasure.gif'
-import cave from '../../images/cave.png';
 
 const styles = {
     caveHeader: {
