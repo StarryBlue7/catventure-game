@@ -139,16 +139,10 @@ const Tavern = ({ userData }) => {
             }
         }
     }
-    console.log(tavernCats)
+    
     addTavernCatToDB(tavernCats);
 
-    // console.log(userData)
-    // if i create user, go to tavern, tavernCats empty.
-    // if i comment in code, refresh, cats reload
-    // if i comment code back out, cats do not reload
-
     //20 hr lockout
-
     const checkTavernCats = () => {
 
         const lockoutTime = new Date(new Date().setHours(new Date().getHours() - 20))

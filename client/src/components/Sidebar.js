@@ -9,7 +9,6 @@ const styles = {
 }
 
 function Sidebar({ userData }) {
-    console.log(userData);
     const userCats = userData.cats;
     return (
         <aside className={window.outerWidth > 1300 ? 'col-2 px-0' : 'px-0'}>
