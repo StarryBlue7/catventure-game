@@ -70,10 +70,10 @@ function Forest({ userData }) {
                             return (
                                 <>
                                     {enemy.currentHP > 0 ? (
-                                        <>
+                                        <div className={i === battlefield.turns[0] - battlefield.party.length ? "align-self-center" : ""}>
                                             <EnemySprites img={enemy.img} scale={1} key={'enemy' + i} />
                                             <ProgressBar style={styles.healthBars} variant={"success"} now={100 * (enemy.currentHP / enemy.maxHP)} key={'enemyHP' + i} />
-                                        </>
+                                        </div>
                                     ) : (<></>)}
                                 </>
                             )
