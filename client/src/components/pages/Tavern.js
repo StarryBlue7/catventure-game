@@ -16,15 +16,27 @@ import randomGen from '../../utils/RNG';
 import tavern from '../../images/tavern.jpg';
 
 const styles = {
-    page: {
-        color: 'white',
-        width: "100%",
-        height: "100%"
+    catTavernHeader: {
+        marginTop: '10px',
+        fontSize: '2.5em'
     },
-    background: {
-        position: "absolute",
-        zIndex: -1,
-        width: "100%"
+    catBox:{
+        display: 'flex',
+        flexDirection: 'row'
+    },
+    tavernText:{
+        fontSize: '1.2em'
+    },
+    tavernOptions: {
+        marginTop: '30px',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        width: '100%',
+        flexWrap: 'wrap'
+    },
+    theMenu: {
+        marginTop: '30px'
     }
 }
 
@@ -197,38 +209,45 @@ const Tavern = ({ userData }) => {
 
     }
     return (
-        <section>
-            <Col className={"location px-0 d-flex flex-column align-items-center"} style={styles.page}>
-                <img src={tavern} alt={"Tavern"} style={styles.background} />
-                <h2>Cat Tavern</h2>
-                <p>Welcome to the tavern meow, we've got some adventurers here looking for a quest</p>
-                <div>
-                    {checkTavernCats() ? (currentCats.map((cat, i) => (
-                        <CatCard
-                            recruitCat={recruitCat}
-                            cat={cat}
-                            userData={userData}
-                            key={i}
-                            isTavern={true}
-                            recruitLockout={recruitLockout()} />
-                    ))) : (tavernCats.map((cat, i) => (
-                        <CatCard
-                            recruitCat={recruitCat}
-                            cat={cat}
-                            userData={userData}
-                            key={i}
-                            isTavern={true}
-                            recruitLockout={recruitLockout()} />
-                    )))}
+            <Col style={styles.theTavern}className={"location px-0 d-flex flex-column  align-items-center"}>
+                <img src={tavern} alt={"Tavern"} />
+                <div style={styles.tavernOptions}>
+                    <div>
+                        <h2 style={styles.catTavernHeader}>Cat Tavern</h2>
+                        <p style={styles.tavernText}>Welcome to the tavern meow, </p>
+                        <p style={styles.tavernText}>we've got some adventurers here looking for a quest</p>
+                        <div style={styles.catBox}>
+                            {checkTavernCats() ? (currentCats.map((cat, i) => (
+                                <CatCard
+                                    recruitCat={recruitCat}
+                                    cat={cat}
+                                    userData={userData}
+                                    key={i}
+                                    isTavern={true}
+                                    recruitLockout={recruitLockout()} />
+                            ))) : (tavernCats.map((cat, i) => (
+                                <CatCard
+                                    recruitCat={recruitCat}
+                                    cat={cat}
+                                    userData={userData}
+                                    key={i}
+                                    isTavern={true}
+                                    recruitLockout={recruitLockout()} />
+                            )))}
+                        </div>
+                    </div>
+                    <div style={styles.theMenu}>
+                        <h3>Today's food</h3>
+                        <div style={styles.tavernText}>Deluxe Tuna and Chicken Pâté</div>
+                        <Button
+                            onClick={() => healCats(userData)}
+                            disabled={healLockout()} >
+                            Eat to recover HP
+                        </Button>
+                    </div>
                 </div>
-                <h3>Today's food</h3>
-                <div>Deluxe Tuna and Chicken Pâté</div>
-                <Button
-                    onClick={() => healCats(userData)}
-                    disabled={healLockout()} >Eat to recover HP</Button>
                 <Button as={Link} to="/village">Back to the village</Button>
             </Col >
-        </section>
     )
 }
 

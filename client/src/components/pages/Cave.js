@@ -92,7 +92,6 @@ function Cave({ userData }) {
     }
 
     return (
-        <section>
             <Col className={"location px-0 d-flex flex-column align-items-center"} style={styles.page}>
                 <img src={cave} alt={"Cave"} style={styles.background} />
                 <h2>Dark Cave</h2>
@@ -114,7 +113,6 @@ function Cave({ userData }) {
                     </Modal.Body>
                 </Modal>
             </Col>
-        </section>
     )
 }
 
