@@ -16,6 +16,7 @@
     "react-scripts": "4.0.3",
     "react-sprite-animator": "^2.0.2",
     "sass": "^1.44.0",
+    "use-sound": "^4.0.1",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
