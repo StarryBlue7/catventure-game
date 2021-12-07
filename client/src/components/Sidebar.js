@@ -17,8 +17,6 @@ function Sidebar({ userData }) {
                 <AsideCard cat={cat} key={i} />)
             )) : (<></>)
             }
-
-
         </aside >
     );
 }

@@ -6,6 +6,7 @@ import { removeCat } from '../../utils/API';
 import Sprites from '../sprites/Sprites'
 
 
+
 function CatCard(props) {
 
     const [action, setAction] = useState('idle')
@@ -56,11 +57,11 @@ function CatCard(props) {
 
     return (
         <>
-            <div className="cat-card">
+            <div className="custom-card">
                 {!props.isTavern ? (<p>{props.cat.name}</p>) : (<></>)}
+                <p>{props.cat.class}</p>
                 <Sprites job={props.cat.class} action={action} setAction={setAction} />
                 <div className="hp-bar"><div></div></div>
-                <p>{props.cat.class}</p>
                 <p>HP: {props.cat.currentHP ? props.cat.currentHP : props.cat.maxHP}/{props.cat.maxHP}</p>
                 <p>Lvl: {!props.isTavern ? props.cat.level : 1}</p>
                 {props.isTavern ? (<></>) : (<p>Exp: {props.cat.experience}/20</p>)}
