@@ -43,9 +43,7 @@ function Forest({ userData }) {
         action: {
             allow: setAllowAct
         },
-        current: {
-            cat: setCurrentCat
-        }
+        currentCat: setCurrentCat
     }
 
     // Cat animations states
@@ -98,7 +96,7 @@ function Forest({ userData }) {
                 </Row>
             ) : (
                 <>
-                    <Button onClick={() => newBattle(userData.cats, setBattlefield, setMenuShow, setCurrentCat, setAllowAct, catAnims)}>Battle!</Button>
+                    <Button onClick={() => newBattle(userData.cats, setBattlefield, setGameUI, catAnims)}>Battle!</Button>
                     <Button as={Link} to="/village">Back</Button>
                 </>
             )}
@@ -110,14 +108,14 @@ function Forest({ userData }) {
                             onClick={() => {
                                 setAllowAct(false); 
                                 setTimeout(() => {setCurrentCat({name: ""})}, 2000);
-                                playerTurn(battlefield, setBattlefield, false, setMenuShow, setCurrentCat, setAllowAct, catAnims)
+                                playerTurn(battlefield, setBattlefield, false, setGameUI, catAnims)
                             }}
                         >Attack</Button>
                         <Button 
                             onClick={() => {
                                 setAllowAct(false); 
                                 setTimeout(() => {setCurrentCat({name: ""})}, 2000);
-                                playerTurn(battlefield, setBattlefield, true, setMenuShow, setCurrentCat, setAllowAct, catAnims)
+                                playerTurn(battlefield, setBattlefield, true, setGameUI, catAnims)
                             }}
                         >"Special"</Button>
                         <Button as={Link} to="/village">Run Away!</Button>

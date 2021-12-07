@@ -155,9 +155,9 @@ function enemyTurn(battlefield, catAnims) {
 }
 
 // Player turn
-export function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, setCurrentCat, setAllowAct, catAnims) {
+export function playerTurn(battlefield, setBattlefield, isSpecial, setGameUI, catAnims) {
     console.log('Player turn');
-    setMenuShow(false);
+    setGameUI.menu.show(false);
 
     let newBattlefield = {...battlefield};
     let newParty = [...battlefield.party];
@@ -189,7 +189,7 @@ export function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, 
     newBattlefield.turns = nextTurn(newBattlefield.turns, newBattlefield);
     setBattlefield(newBattlefield);
     console.log('After player turn:', newBattlefield);
-    enemyTurns(newBattlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct, catAnims)
+    enemyTurns(newBattlefield, setBattlefield, setGameUI, catAnims)
 }
 
 // Prevent negative HPs & overheals and check if all party or all enemies dead
@@ -226,7 +226,7 @@ function battleContinues(battlefield) {
 }
 
 // Cycle through and executes any enemy turns
-function enemyTurns(battlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct, catAnims) {
+function enemyTurns(battlefield, setBattlefield, setGameUI, catAnims) {
     console.log('Initial battlefield', battlefield)
     let newBattlefield = battleContinues(battlefield)
     if (!newBattlefield) { return }
@@ -245,9 +245,9 @@ function enemyTurns(battlefield, setBattlefield, setMenuShow, setCurrentCat, set
                 return setBattlefield(newBattlefield);
             }
             console.log('Enemy turns ended, next turn for:', newBattlefield.positions[newBattlefield.turns[0]].name);
-            setCurrentCat(newBattlefield.positions[newBattlefield.turns[0]]);
-            setAllowAct(true);
-            setMenuShow(true);
+            setGameUI.currentCat(newBattlefield.positions[newBattlefield.turns[0]]);
+            setGameUI.action.allow(true);
+            setGameUI.menu.show(true);
         }
         setBattlefield(newBattlefield)
         console.log('After enemy phase:', newBattlefield)
@@ -257,14 +257,14 @@ function enemyTurns(battlefield, setBattlefield, setMenuShow, setCurrentCat, set
 }
 
 // Setup new battle
-export function newBattle(party, setBattlefield, setMenuShow, setCurrentCat, setAllowAct, catAnims) {
+export function newBattle(party, setBattlefield, setGameUI, catAnims) {
     const enemies = generateEnemies(randomEnemyCount(), partyTotals(party));
     const positions = battlePositions(party, enemies);
     const turns = turnOrder(positions);
     const newBattlefield = { party, enemies, positions, turns, continue: true };
     console.log('Generated battlefield', newBattlefield)
     // Initial enemy turns
-    enemyTurns(newBattlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct, catAnims)
+    enemyTurns(newBattlefield, setBattlefield, setGameUI, catAnims)
 }
 
 // End battle and send user back to Village
