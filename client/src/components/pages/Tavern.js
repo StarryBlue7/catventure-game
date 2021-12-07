@@ -18,14 +18,18 @@ import tavern from '../../images/tavern.jpg';
 const styles = {
     catTavernHeader: {
         marginTop: '10px',
-        fontSize: '2.5em'
+        fontSize: '2.5em',
+        padding: '10px'
     },
     catBox:{
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
     },
     tavernText:{
-        fontSize: '1.2em'
+        fontSize: '1.2em',
+        padding: '10px'
     },
     tavernOptions: {
         marginTop: '30px',
@@ -135,16 +139,10 @@ const Tavern = ({ userData }) => {
             }
         }
     }
-    console.log(tavernCats)
+    
     addTavernCatToDB(tavernCats);
 
-    // console.log(userData)
-    // if i create user, go to tavern, tavernCats empty.
-    // if i comment in code, refresh, cats reload
-    // if i comment code back out, cats do not reload
-
     //20 hr lockout
-
     const checkTavernCats = () => {
 
         const lockoutTime = new Date(new Date().setHours(new Date().getHours() - 20))

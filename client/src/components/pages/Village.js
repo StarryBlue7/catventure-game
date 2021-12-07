@@ -11,8 +11,8 @@ const styles = {
     },
     tavernBtn: {
         position: 'absolute',
-        bottom: '210px',
-        left: '250px'
+        bottom: '250px',
+        left: '200px'
     },
     forestBtn: {
         position: 'absolute',

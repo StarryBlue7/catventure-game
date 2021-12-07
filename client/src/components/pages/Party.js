@@ -7,6 +7,8 @@ const styles = {
     catBox: {
         display: 'flex',
         flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
     },
     teamHeader: {
         marginTop: '10px',
@@ -33,7 +35,7 @@ function Party({userData}) {
     }
     return (
         <Col className={"location px-0 d-flex flex-column align-items-center"}>
-            <h2 style={styles.teamHeader}>My Team</h2>
+            <h2 style={styles.teamHeader}>Your Party</h2>
             <div style={styles.catBox}>
                 {userCats.map((cat, i) => (
                     <CatCard 
