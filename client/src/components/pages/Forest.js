@@ -32,6 +32,7 @@ function Forest({ userData }) {
     const [menuShow, setMenuShow] = useState(false);
     const [allowAct, setAllowAct] = useState(false);
 
+    // Cat animations states
     const [catAnim1, setCatAnim1] = useState('idle');
     const [catAnim2, setCatAnim2] = useState('idle');
     const [catAnim3, setCatAnim3] = useState('idle');
@@ -49,7 +50,7 @@ function Forest({ userData }) {
         <Col className={"location px-0 d-flex flex-column align-items-center"} style={styles.page}>
             <img src={forest} alt={"Forest"} style={styles.background} />
             <h2>The Deadly Forest</h2>
-            {battlefield.enemies.length ? (
+            {battleEnemies.length ? (
                 <Row id="battle-window" className={"d-flex flex-row justify-content-between w-100"}>
                     <Col id="party-sprites" className={"d-flex flex-column align-items-start justify-content-end gap-10"}>
                         <Button disabled={!allowAct} onClick={() => setMenuShow(true)}>Choose Action</Button>
@@ -81,7 +82,7 @@ function Forest({ userData }) {
                 </Row>
             ) : (
                 <>
-                    <Button onClick={() => newBattle(userData.cats, setBattlefield, setMenuShow, setCurrentCat, setAllowAct)}>Battle!</Button>
+                    <Button onClick={() => newBattle(userData.cats, setBattlefield, setMenuShow, setCurrentCat, setAllowAct, catAnims)}>Battle!</Button>
                     <Button as={Link} to="/village">Back</Button>
                 </>
             )}

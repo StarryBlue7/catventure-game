@@ -123,7 +123,7 @@ function nextTurn(turns, battlefield) {
 }
 
 // Enemy turn
-function enemyTurn(battlefield) {
+function enemyTurn(battlefield, catAnims) {
     console.log('Enemy turn with id:', battlefield.positions[battlefield.turns[0]]);
     const enemyPosition = battlefield.turns[0];
     const enemy = battlefield.enemies[battlefield.positions[enemyPosition] + battlefield.enemies.length];
@@ -133,13 +133,21 @@ function enemyTurn(battlefield) {
     do {
         targetIndex = Math.floor(Math.random() * battlefield.party.length);
         target = battlefield.party[targetIndex];
-    } while (!target.currentHP > 0)
-
+    } while (!target.currentHP > 0);
+    
     // Enemy action
     const damage = calcDamage(enemy.power, target.multiplier);
     const newParty = [...battlefield.party];
     newParty[targetIndex].currentHP = newParty[targetIndex].currentHP - damage;
 
+    // Animate damage on target, then die if HP < 1
+    catAnims[targetIndex][1]('damaged');
+    if (target.currentHP < 1) {
+        setTimeout(() => {
+            catAnims[targetIndex][1]('die')
+        }, 2000)
+    }
+    
     // API call to update db
     battleUpdate(newParty);
 
@@ -147,7 +155,7 @@ function enemyTurn(battlefield) {
 }
 
 // Player turn
-export function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, setCurrentCat, setAllowAct, setCatAnim) {
+export function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, setCurrentCat, setAllowAct, catAnims) {
     console.log('Player turn');
     setMenuShow(false);
 
@@ -162,12 +170,12 @@ export function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, 
     let result;
     if (isSpecial) {
         result = actions[turnClass].special(turnCat, newParty, newEnemies);
-        setCatAnim[turnCatPosition][1]('special');
+        catAnims[turnCatPosition][1]('special');
     } else {
         result = actions[turnClass].attack(turnCat, newParty, newEnemies);
-        setCatAnim[turnCatPosition][1]('attack');
+        catAnims[turnCatPosition][1]('attack');
     }
-    setTimeout(() => {setCatAnim[turnCatPosition][1]('idle')}, 2000)
+    setTimeout(() => {catAnims[turnCatPosition][1]('idle')}, 2000)
 
     newBattlefield.party = result.party;
     newBattlefield.enemies = result.enemies;
@@ -181,7 +189,7 @@ export function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, 
     newBattlefield.turns = nextTurn(newBattlefield.turns, newBattlefield);
     setBattlefield(newBattlefield);
     console.log('After player turn:', newBattlefield);
-    enemyTurns(newBattlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct)
+    enemyTurns(newBattlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct, catAnims)
 }
 
 // Prevent negative HPs & overheals and check if all party or all enemies dead
@@ -218,13 +226,13 @@ function battleContinues(battlefield) {
 }
 
 // Cycle through and executes any enemy turns
-function enemyTurns(battlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct) {
+function enemyTurns(battlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct, catAnims) {
     console.log('Initial battlefield', battlefield)
     let newBattlefield = battleContinues(battlefield)
     if (!newBattlefield) { return }
     const takeEnemyTurns = setInterval(() => {
         if (newBattlefield.positions[newBattlefield.turns[0]] < 0) {
-            enemyTurn(newBattlefield);
+            enemyTurn(newBattlefield, catAnims);
             newBattlefield = battleContinues(newBattlefield);
             if (!newBattlefield) { 
                 return setBattlefield(newBattlefield);
@@ -249,14 +257,14 @@ function enemyTurns(battlefield, setBattlefield, setMenuShow, setCurrentCat, set
 }
 
 // Setup new battle
-export function newBattle(party, setBattlefield, setMenuShow, setCurrentCat, setAllowAct) {
+export function newBattle(party, setBattlefield, setMenuShow, setCurrentCat, setAllowAct, catAnims) {
     const enemies = generateEnemies(randomEnemyCount(), partyTotals(party));
     const positions = battlePositions(party, enemies);
     const turns = turnOrder(positions);
     const newBattlefield = { party, enemies, positions, turns, continue: true };
     console.log('Generated battlefield', newBattlefield)
     // Initial enemy turns
-    enemyTurns(newBattlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct)
+    enemyTurns(newBattlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct, catAnims)
 }
 
 function endBattle(party, isWin) {
