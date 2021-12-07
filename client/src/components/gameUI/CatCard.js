@@ -20,7 +20,7 @@ const styles = {
     },
     catName: {
         fontSize: '1.5em',
-    }
+    },
 }
 
 function CatCard(props) {
@@ -86,11 +86,13 @@ function CatCard(props) {
                 <p>{Jobs[props.cat.class].statName}: {props.cat.power}</p>
                 {props.isTavern ? (
                     <Button
+                        className={"custom-button"}
                         onClick={namingModalOpen}
                         disabled={props.recruitLockout}>Recruit this cat</Button>
                 )
                     : (
                         <Button
+                            variant="danger"
                             onClick={() => handleremoveCat(props.cat._id)}
                             disabled={props.isLastCat}>Remove</Button>
                     )}

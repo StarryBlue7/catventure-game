@@ -63,8 +63,8 @@ function partyTotals(party) {
 function generateEnemies(count, partyTotal) {
     const hpSpread = 5;
     const powerSpread = 3;
-    const baseHP = Math.ceil(partyTotal.totalHP / count);
-    const basePower = Math.ceil(partyTotal.totalPower / count);
+    const baseHP = Math.ceil(partyTotal.totalHP / (count + 1));
+    const basePower = Math.ceil(partyTotal.totalPower / (count + 2));
 
     let enemies = [];
     for (let i = -1; i > - count - 1; i--) {
@@ -128,6 +128,10 @@ function enemyTurn(battlefield, catAnims) {
     const enemyPosition = battlefield.turns[0];
     const enemy = battlefield.enemies[battlefield.positions[enemyPosition] + battlefield.enemies.length];
     
+    // Check for all dead party or enemies
+    let newBattlefield = battleContinues(battlefield)
+    if (!newBattlefield) { return }
+    
     // Find random alive target
     let targetIndex, target;
     do {
@@ -155,9 +159,9 @@ function enemyTurn(battlefield, catAnims) {
 }
 
 // Player turn
-export function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, setCurrentCat, setAllowAct, catAnims) {
+export function playerTurn(battlefield, setBattlefield, isSpecial, setGameUI, catAnims) {
     console.log('Player turn');
-    setMenuShow(false);
+    setGameUI.menu.show(false);
 
     let newBattlefield = {...battlefield};
     let newParty = [...battlefield.party];
@@ -189,7 +193,7 @@ export function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, 
     newBattlefield.turns = nextTurn(newBattlefield.turns, newBattlefield);
     setBattlefield(newBattlefield);
     console.log('After player turn:', newBattlefield);
-    enemyTurns(newBattlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct, catAnims)
+    enemyTurns(newBattlefield, setBattlefield, setGameUI, catAnims)
 }
 
 // Prevent negative HPs & overheals and check if all party or all enemies dead
@@ -226,47 +230,66 @@ function battleContinues(battlefield) {
 }
 
 // Cycle through and executes any enemy turns
-function enemyTurns(battlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct, catAnims) {
-    console.log('Initial battlefield', battlefield)
+function enemyTurns(battlefield, setBattlefield, setGameUI, catAnims) {
     let newBattlefield = battleContinues(battlefield)
-    if (!newBattlefield) { return }
-    const takeEnemyTurns = setInterval(() => {
-        if (newBattlefield.positions[newBattlefield.turns[0]] < 0) {
-            enemyTurn(newBattlefield, catAnims);
-            newBattlefield = battleContinues(newBattlefield);
-            if (!newBattlefield) { 
-                return setBattlefield(newBattlefield);
+    if (!newBattlefield) { 
+        return 
+    } else {
+        const takeEnemyTurns = setInterval(() => {
+            // If id is negative, it is an enemy turn
+            if (newBattlefield.positions[newBattlefield.turns[0]] < 0) {
+                enemyTurn(newBattlefield, catAnims);
+                newBattlefield = battleContinues(newBattlefield);
+                if (!newBattlefield) { 
+                    return setBattlefield(newBattlefield);
+                }
+                newBattlefield.turns = nextTurn(newBattlefield.turns, newBattlefield);
+            } else {
+                // End enemy turns phases for player turn
+                clearInterval(takeEnemyTurns);
+                newBattlefield = battleContinues(newBattlefield);
+                if (!newBattlefield) { 
+                    return setBattlefield(newBattlefield);
+                }
+                console.log('Enemy turns ended, next turn for:', newBattlefield.positions[newBattlefield.turns[0]].name);
+                setGameUI.currentCat(newBattlefield.positions[newBattlefield.turns[0]]);
+                setGameUI.action.allow(true);
+                setGameUI.menu.show(true);
             }
-            newBattlefield.turns = nextTurn(newBattlefield.turns, newBattlefield);
-        } else {
-            clearInterval(takeEnemyTurns);
-            newBattlefield = battleContinues(newBattlefield);
-            if (!newBattlefield) { 
-                return setBattlefield(newBattlefield);
-            }
-            console.log('Enemy turns ended, next turn for:', newBattlefield.positions[newBattlefield.turns[0]].name);
-            setCurrentCat(newBattlefield.positions[newBattlefield.turns[0]]);
-            setAllowAct(true);
-            setMenuShow(true);
-        }
-        setBattlefield(newBattlefield)
-        console.log('After enemy phase:', newBattlefield)
-    }, 3000);
-
+            setBattlefield(newBattlefield)
+            console.log('After enemy phase:', newBattlefield)
+        }, 3000);
+    }
     setBattlefield(newBattlefield);
 }
 
 // Setup new battle
-export function newBattle(party, setBattlefield, setMenuShow, setCurrentCat, setAllowAct, catAnims) {
+export function newBattle(party, setBattlefield, setGameUI, catAnims) {
     const enemies = generateEnemies(randomEnemyCount(), partyTotals(party));
     const positions = battlePositions(party, enemies);
     const turns = turnOrder(positions);
     const newBattlefield = { party, enemies, positions, turns, continue: true };
     console.log('Generated battlefield', newBattlefield)
     // Initial enemy turns
-    enemyTurns(newBattlefield, setBattlefield, setMenuShow, setCurrentCat, setAllowAct, catAnims)
+    enemyTurns(newBattlefield, setBattlefield, setGameUI, catAnims)
 }
 
-function endBattle(party, isWin) {
+// End battle and send user back to Village
+async function endBattle(party, isWin) {
     isWin ? console.log('Party won!') : console.log('Party lost!');
+    if (isWin) {
+        party.forEach(cat => {
+            if (cat.currentHP > 0) {
+                cat.experience += 6;
+                console.log(`${cat.name} gains 6 XP!`);
+            } else {
+                cat.currentHP = 1;
+                cat.experience += 3;
+                console.log(`${cat.name} gains 3 XP!`);
+            }
+        });
+    } else {
+        document.location = "/village";
+    }
+    battleUpdate(party);
 }

@@ -5,6 +5,12 @@ import { Form, Button, Alert } from 'react-bootstrap';
 import { loginUser } from '../../utils/API';
 import Auth from '../../utils/auth';
 
+const styles = {
+  submitBtn: {
+    fontSize: '1.1em'
+  }
+}
+
 const LoginForm = () => {
 
   //useStates for the form data, validation and alerts
@@ -81,6 +87,7 @@ const LoginForm = () => {
           <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
         </Form.Group>
         <Button
+          style={styles.submitBtn}
           disabled={!(userFormData.username && userFormData.password)}
           type='submit'
           variant='success'>

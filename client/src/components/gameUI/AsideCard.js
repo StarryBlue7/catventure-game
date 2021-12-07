@@ -20,7 +20,7 @@ const styles = {
 const AsideCard = (props) => {
     const [action, setAction] = useState('idle')
     return (
-        <div className="custom-card">
+        <div className="custom-card mx-3">
             <div style={styles.catName}>{props.cat.name}</div>
             <div style={styles.catClass}>{props.cat.class}</div>
             <div>
@@ -29,7 +29,6 @@ const AsideCard = (props) => {
             <p>Lvl: {props.cat.level}</p>
             <p>HP: {props.cat.currentHP}/{props.cat.maxHP}</p>
             <p>Exp: {props.cat.experience}/20</p>
-            {/* <p>{Jobs[props.cat.class].statName}: {props.cat.power}</p> */}
         </div>
     )
 }
