@@ -5,6 +5,23 @@ import Auth from '../../utils/auth';
 import { removeCat } from '../../utils/API';
 import Sprites from '../sprites/Sprites'
 
+const styles = {
+    tavernCard: {
+        margin: '5px',
+        paddingBottom: '10px'
+    },
+    tavernClass: {
+        position: 'absolute',
+        fontSize: '1.2em',
+    },
+    partyClass: {
+        position: 'absolute',
+        marginTop: '40px'
+    },
+    catName: {
+        fontSize: '1.5em',
+    }
+}
 
 function CatCard(props) {
 
@@ -56,11 +73,13 @@ function CatCard(props) {
 
     return (
         <>
-            <div className="cat-card">
-                {!props.isTavern ? (<p>{props.cat.name}</p>) : (<></>)}
+            <div className="custom-card" style={styles.tavernCard}>
+                {!props.isTavern ? (<p style={styles.catName}>{props.cat.name}</p>) : (<></>)}
+                    {!props.isTavern ? 
+                        (<p style={styles.partyClass}>{props.cat.class}</p>) 
+                        : (<p style={styles.tavernClass}>{props.cat.class}</p>)}
                 <Sprites job={props.cat.class} action={action} setAction={setAction} />
                 <div className="hp-bar"><div></div></div>
-                <p>{props.cat.class}</p>
                 <p>HP: {props.cat.currentHP ? props.cat.currentHP : props.cat.maxHP}/{props.cat.maxHP}</p>
                 <p>Lvl: {!props.isTavern ? props.cat.level : 1}</p>
                 {props.isTavern ? (<></>) : (<p>Exp: {props.cat.experience}/20</p>)}
