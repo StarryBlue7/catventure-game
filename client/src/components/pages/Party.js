@@ -7,6 +7,8 @@ const styles = {
     catBox: {
         display: 'flex',
         flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
     },
     teamHeader: {
         marginTop: '10px',

@@ -18,14 +18,18 @@ import tavern from '../../images/tavern.jpg';
 const styles = {
     catTavernHeader: {
         marginTop: '10px',
-        fontSize: '2.5em'
+        fontSize: '2.5em',
+        padding: '10px'
     },
     catBox:{
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
     },
     tavernText:{
-        fontSize: '1.2em'
+        fontSize: '1.2em',
+        padding: '10px'
     },
     tavernOptions: {
         marginTop: '30px',
