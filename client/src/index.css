@@ -21,12 +21,42 @@ p {
 .logo {
   width: 500px;
 }
-.custom-button:hover, .custom-button:active {
-  background-color: #00e25e;
+.custom-button:hover, 
+.custom-button:active,
+.custom-button:focus {
+  background-color: #00e25e!important;
+  outline: none !important;
+  box-shadow: none !important;
 }
+
 .custom-button {
-  background-color: #009c5b;
+  background-color: #009c5b!important;
+  border: #009c5b!important;
   font-family: 'Open Sans', sans-serif
+}
+
+.game-button {
+  background-color: #ffa500!important;
+  border: #ffa500;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1em;
+}
+
+.battle-button {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1em;
+}
+
+.eat-btn{
+  margin-top: 10px;
+  text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+}
+.game-button:hover, 
+.game-button:active,
+.game-button:focus {
+  background-color: #e29300!important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .location > img {
@@ -94,6 +124,15 @@ aside{
     margin-top: 50px;
   }
 
+}
+
+@media only screen and (max-width: 990px){
+  aside h2 {
+    display: none;
+  }
+  aside .custom-card {
+    display: none;
+  }
 }
 
 @media only screen and (max-width: 500px){
