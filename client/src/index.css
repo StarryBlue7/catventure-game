@@ -126,6 +126,7 @@ aside{
 
 }
 
+/* hides the aside bar on smaller screens */
 @media only screen and (max-width: 1300px){
   aside h2 {
     display: none;

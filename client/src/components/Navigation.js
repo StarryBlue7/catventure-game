@@ -23,6 +23,10 @@ const styles = {
         fontSize: '1.2em',
         color: 'black',
         borderRadius: '8px'
+    },
+    modal: {
+        fontSize: '1.2em',
+        borderTop: 'green'
     }
 }
 
@@ -60,7 +64,7 @@ function Navigation({userData}) {
                 aria-labelledby='signup-modal'>
                 {/* Tabbed form to show either signup or login component */}
                 <Tab.Container defaultActiveKey='login'>
-                    <Modal.Header closeButton>
+                    <Modal.Header style={styles.modalHeader} closeButton>
                         <Modal.Title id='signup-modal'>
                             <Nav variant='pills'>
                                 <Nav.Item>
@@ -72,7 +76,7 @@ function Navigation({userData}) {
                             </Nav>
                         </Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>
+                    <Modal.Body style={styles.modal}>
                         <Tab.Content>
                             <Tab.Pane eventKey='login'>
                                 <LoginForm handleModalClose={() => setLoginShow(false)} />
