@@ -40,7 +40,7 @@ function Party({userData}) {
                      />
                 ))}
             </div>
-            <Button as={Link} to="/">Back</Button>
+            <Button as={Link} to="/village">Back</Button>
         </Col>
     )
 }

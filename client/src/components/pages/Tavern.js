@@ -240,13 +240,14 @@ const Tavern = ({ userData }) => {
                         <h3>Today's food</h3>
                         <div style={styles.tavernText}>Deluxe Tuna and Chicken Pâté</div>
                         <Button
+                            className={"game-button"}
                             onClick={() => healCats(userData)}
                             disabled={healLockout()} >
                             Eat to recover HP
                         </Button>
                     </div>
                 </div>
-                <Button as={Link} to="/village">Back to the village</Button>
+                <Button className={"game-button"} as={Link} to="/village">Back to the village</Button>
             </Col >
     )
 }
