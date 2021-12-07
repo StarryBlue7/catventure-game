@@ -167,12 +167,10 @@ export function playerTurn(battlefield, setBattlefield, isSpecial, setMenuShow, 
         result = actions[turnClass].attack(turnCat, newParty, newEnemies);
         setCatAnim[turnCatPosition][1]('attack');
     }
+    setTimeout(() => {setCatAnim[turnCatPosition][1]('idle')}, 2000)
 
     newBattlefield.party = result.party;
     newBattlefield.enemies = result.enemies;
-
-    // Set animations
-
 
     // API call
     battleUpdate(result.party);
