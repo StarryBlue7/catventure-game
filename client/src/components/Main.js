@@ -48,7 +48,7 @@ function Main() {
             <Header userData={userData} />
             <Row className="main-page w-100 row mx-0">
                 <Sidebar userData={userData} />
-                    <main className={window.outerWidth > 990 ? 'col-10 px-0' : "col-12 px-0"}>
+                    <main className={window.outerWidth > 1300 ? 'col-10 px-0' : "col-12 px-0"}>
                         <Switch>
                             <Route exact path="/" >
                                 <Home userData={userData || false} />

@@ -20,7 +20,7 @@ const styles = {
 const AsideCard = (props) => {
     const [action, setAction] = useState('idle')
     return (
-        <div className="custom-card">
+        <div className="custom-card mx-3">
             <div style={styles.catName}>{props.cat.name}</div>
             <div style={styles.catClass}>{props.cat.class}</div>
             <div>
