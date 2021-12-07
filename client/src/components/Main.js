@@ -4,6 +4,9 @@ import { Row } from 'react-bootstrap';
 import Auth from '../utils/auth';
 import { getMe } from '../utils/API';
 
+import useSound from 'use-sound';
+import Sounds from '../sounds/index.js'
+
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
