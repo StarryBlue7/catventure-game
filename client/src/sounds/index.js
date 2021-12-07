@@ -36,7 +36,6 @@ const Sounds = {
             attack: rogueAttack,
             special: rogueSpecial
         }
-
     }
 }
 
