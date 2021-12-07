@@ -88,7 +88,7 @@ function Cave({ userData }) {
     }
 
     // Looks at the userdata and figures out if they are in a lockout or not
-    // if they are, disable the button
+    // Returns a boolean that gets fed into a ternary operator
     const isLockout = () => {
         const yesterday = new Date(new Date().setHours(new Date().getHours() - 20))
         const usersDay = new Date(userData.lastTreasure);
