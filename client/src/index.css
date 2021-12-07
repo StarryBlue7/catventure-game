@@ -36,11 +36,17 @@ p {
 }
 
 .game-button {
-  background-color: #ffa500;
+  background-color: #ffa500!important;
   border: #ffa500;
   font-family: 'Open Sans', sans-serif;
   font-size: 1em;
 }
+
+.battle-button {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1em;
+}
+
 .eat-btn{
   margin-top: 10px;
   text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
