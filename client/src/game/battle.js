@@ -41,13 +41,13 @@ export class Enemy {
 // Damage calculation for enemies
 function calcDamage(power, level = 3, multiplier = 1) {
     const damage = Math.ceil(Math.log(power) * ((Math.random() * level)) * multiplier);
-    return damage;
+    return damage > 0 ? damage : 0;
 }
 
 // Total player party's HP and Power stats
 function partyTotals(party) {
     let totalHP = 0;
-    let totalPower = 0
+    let totalPower = 0;
     party.forEach(cat => {
         totalHP += cat.maxHP;
         totalPower += cat.power;
