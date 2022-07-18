@@ -40,7 +40,7 @@ export class Enemy {
 
 // Damage calculation for enemies
 function calcDamage(power, level = 3, multiplier = 1) {
-    const damage = Math.ceil(Math.log(power) * ((Math.random() * level)) * multiplier);
+    const damage = Math.ceil(Math.log(power) * (Math.random() * level) * multiplier);
     return damage > 0 ? damage : 0;
 }
 
@@ -136,7 +136,7 @@ function enemyTurn(battlefield, catAnims, setGameUI) {
     } while (!target.currentHP > 0);
     
     // Enemy action
-    const damage = calcDamage(enemy.power, target.multiplier);
+    const damage = calcDamage(enemy.power, enemy.level, target.multiplier);
     const newParty = [...newBattlefield.party];
     newParty[targetIndex].currentHP = newParty[targetIndex].currentHP - damage;
 
