@@ -59,8 +59,9 @@ function partyTotals(party) {
 function generateEnemies(count, partyTotal) {
     const hpSpread = 5;
     const powerSpread = 3;
-    const baseHP = Math.ceil(partyTotal.totalHP / (count + 1));
-    const basePower = Math.ceil(partyTotal.totalPower / (count + 2));
+    const enemyScaling = .8;
+    const baseHP = Math.ceil((partyTotal.totalHP * enemyScaling) / (count + Math.log(count)));
+    const basePower = Math.ceil((partyTotal.totalPower * enemyScaling) / (count + (2 * Math.log(count))));
 
     const enemies = [];
     for (let i = -1; i > - count - 1; i--) {
