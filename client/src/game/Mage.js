@@ -1,10 +1,12 @@
+import { randomAliveTarget } from "../utils/RNG";
+
 // Mage attacks have a chance to crit for double damage
 function mageAttack(cat, party, enemies) {
     const percentCrit = 20;
     const multiplier = Math.random() < percentCrit / 100 ? 2 : 1;
     const damage = Math.ceil(Math.log(cat.power) * ((Math.random() * cat.level))) * multiplier;
     
-    const targetIndex = Math.floor(Math.random() * enemies.length);
+    const targetIndex = randomAliveTarget(enemies);
     const targetPosition = [party.length + targetIndex - 1];
     enemies[targetIndex].currentHP -= damage;
     

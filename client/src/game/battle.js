@@ -1,7 +1,7 @@
 import { updateCat } from "../utils/API";
 import Auth from "../utils/auth";
 import actions from "./actions";
-import randomGen from "../utils/RNG";
+import { randomGen, randomAliveTarget } from "../utils/RNG";
 
 // Update db with 
 async function battleUpdate(catsArray) {
@@ -29,10 +29,11 @@ function randomEnemyCount() {
 
 // Build enemy
 export class Enemy {
-    constructor(maxHP, hpSpread, power, powerSpread, id, img) {
-        this.maxHP = randomGen(maxHP, hpSpread);
+    constructor(level, maxHP, hpSpread, power, powerSpread, id, img) {
+        this.level = randomGen(level, 2) || 1;
+        this.maxHP = randomGen(maxHP, hpSpread) || 1;
         this.currentHP = this.maxHP;
-        this.power = randomGen(power, powerSpread);
+        this.power = randomGen(power, powerSpread) || 1;
         this.img = img;
         this.id = id;
     }
@@ -48,25 +49,29 @@ function calcDamage(power, level = 3, multiplier = 1) {
 function partyTotals(party) {
     let totalHP = 0;
     let totalPower = 0;
+    let totalLevels = 0;
     party.forEach(cat => {
         totalHP += cat.maxHP;
         totalPower += cat.power;
+        totalLevels += cat.level;
     });
-    return { totalHP, totalPower };
+    return { totalHP, totalPower, totalLevels };
 }
 
 // Generates enemies of random stats based on the count and party totals
 function generateEnemies(count, partyTotal) {
+    const levels = partyTotal.totalLevels;
     const hpSpread = 5;
     const powerSpread = 3;
-    const enemyScaling = .8;
-    const baseHP = Math.ceil((partyTotal.totalHP * enemyScaling) / (count + Math.log(count)));
-    const basePower = Math.ceil((partyTotal.totalPower * enemyScaling) / (count + (2 * Math.log(count))));
+    const hpScaling = 1.8;
+    const powerScaling = .6;
+    const baseHP = Math.ceil((partyTotal.totalHP * hpScaling) / (count + Math.log(count)));
+    const basePower = Math.ceil((partyTotal.totalPower * powerScaling) / (count + (2 * Math.log(count))));
 
     const enemies = [];
     for (let i = -1; i > - count - 1; i--) {
         const randomImg = Math.floor(Math.random() * 3);
-        enemies.push(new Enemy(baseHP, hpSpread, basePower, powerSpread, i, randomImg))
+        enemies.push(new Enemy(levels, baseHP, hpSpread, basePower, powerSpread, i, randomImg))
     }
     return enemies;
 }
@@ -129,14 +134,9 @@ function enemyTurn(battlefield, catAnims, setGameUI) {
     let newBattlefield = battleContinues(battlefield);
     if (!newBattlefield) { return }
     
-    // Find random alive target
-    let targetIndex, target;
-    do {
-        targetIndex = Math.floor(Math.random() * newBattlefield.party.length);
-        target = newBattlefield.party[targetIndex];
-    } while (!target.currentHP > 0);
-    
     // Enemy action
+    const targetIndex = randomAliveTarget(newBattlefield.party);
+    const target = newBattlefield.party[targetIndex];
     const damage = calcDamage(enemy.power, enemy.level, target.multiplier);
     const newParty = [...newBattlefield.party];
     newParty[targetIndex].currentHP = newParty[targetIndex].currentHP - damage;
