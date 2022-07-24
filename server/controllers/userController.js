@@ -85,7 +85,7 @@ module.exports = {
                     case 'Warrior':
                         cat.maxHP = cat.maxHP + 3;
                         break;
-                    case 'Mage':
+                    case 'Rogue':
                         cat.maxHP = cat.maxHP + 2;
                         break;
                     default:
