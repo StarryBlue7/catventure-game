@@ -1,9 +1,11 @@
+import { randomAliveTarget } from "../utils/RNG";
+
 // Warrior attacks have a chance to heal themselves for half damage done
 function warriorAttack(cat, party, enemies) {
     const percentChance = 20;
     const damage = Math.ceil(Math.log(cat.power) * ((Math.random() * cat.level)));
     
-    const targetIndex = Math.floor(Math.random() * enemies.length);
+    const targetIndex = randomAliveTarget(enemies);
     const targetPosition = [party.length + targetIndex - 1];
     enemies[targetIndex].currentHP -= damage;
 

@@ -1,15 +1,17 @@
+import { randomAliveTarget } from "../utils/RNG";
+
 // Rogues have a chance of striking again
 function rogueAttack(cat, party, enemies) {
     const percentChance = 20;
     const damage = Math.ceil(Math.log(cat.power) * ((Math.random() * cat.level)));
     const double = Math.random() < percentChance / 100;
 
-    const targetIndex = Math.floor(Math.random() * enemies.length);
+    const targetIndex = randomAliveTarget(enemies);
     const targetPosition = [party.length + targetIndex - 1];
     enemies[targetIndex].currentHP -= damage;
 
     if (double) {
-        const targetIndex2 = Math.floor(Math.random() * enemies.length);
+        const targetIndex2 = randomAliveTarget(enemies);
         targetPosition.push(party.length + targetIndex2 - 1);
         enemies[targetIndex].currentHP -= damage;
     }
