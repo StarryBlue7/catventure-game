@@ -8,6 +8,10 @@ export function randomGen(baseValue, spread) {
     return value > 0 ? value : 0;
 }
 
+/**
+ * @param {integer} targetParty Party containing targets
+ * @returns {integer} Randomly selected alive target index
+ */
 export function randomAliveTarget(targetParty) {
     let targetIndex, target;
     do {
