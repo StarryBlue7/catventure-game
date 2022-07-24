@@ -1,7 +1,7 @@
 import { updateCat } from "../utils/API";
 import Auth from "../utils/auth";
 import actions from "./actions";
-import randomGen from "../utils/RNG";
+import { randomGen, randomAliveTarget } from "../utils/RNG";
 
 // Update db with 
 async function battleUpdate(catsArray) {
@@ -129,14 +129,9 @@ function enemyTurn(battlefield, catAnims, setGameUI) {
     let newBattlefield = battleContinues(battlefield);
     if (!newBattlefield) { return }
     
-    // Find random alive target
-    let targetIndex, target;
-    do {
-        targetIndex = Math.floor(Math.random() * newBattlefield.party.length);
-        target = newBattlefield.party[targetIndex];
-    } while (!target.currentHP > 0);
-    
     // Enemy action
+    const targetIndex = randomAliveTarget(newBattlefield.party);
+    const target = newBattlefield.party[targetIndex];
     const damage = calcDamage(enemy.power, enemy.level, target.multiplier);
     const newParty = [...newBattlefield.party];
     newParty[targetIndex].currentHP = newParty[targetIndex].currentHP - damage;
