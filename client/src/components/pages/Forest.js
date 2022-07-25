@@ -95,8 +95,8 @@ function Forest({ userData }) {
                         <Button className={"battle-button"} disabled={!allowAct} onClick={() => setMenuShow(true)}>Choose Action</Button>
                         {battleParty.map((cat, i) => {
                             return (
-                                <div className={cat._id === currentCat._id ? "align-self-center" : ""}>
-                                    <Sprites job={cat.class} action={catAnims[i][0]} setAction={catAnims[i][1]} scale={1} key={'ally' + i} />
+                                <div className={cat._id === currentCat._id ? "align-self-center" : ""} key={'ally' + i}>
+                                    <Sprites job={cat.class} action={catAnims[i][0]} setAction={catAnims[i][1]} scale={1} key={'allySprite' + i} />
                                     <ProgressBar style={styles.healthBars} variant={"success"} now={100 * (cat.currentHP / cat.maxHP)} key={'allyHP' + i} />
                                 </div>
                             )
@@ -110,8 +110,8 @@ function Forest({ userData }) {
                             return (
                                 <>
                                     {enemy.currentHP > 0 ? (
-                                        <div className={i === battlefield.turns[0] - battlefield.party.length ? "align-self-center" : ""}>
-                                            <EnemySprites img={enemy.img} scale={1} key={'enemy' + i} />
+                                        <div className={i === battlefield.turns[0] - battlefield.party.length ? "align-self-center" : ""} key={'enemy' + i}>
+                                            <EnemySprites img={enemy.img} scale={1} key={'enemySprite' + i} />
                                             <ProgressBar style={styles.healthBars} variant={"success"} now={100 * (enemy.currentHP / enemy.maxHP)} key={'enemyHP' + i} />
                                         </div>
                                     ) : (<></>)}
