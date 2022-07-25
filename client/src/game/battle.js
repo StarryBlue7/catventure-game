@@ -112,12 +112,10 @@ function nextTurn(turns, battlefield) {
         if (battlefield.positions[newTurns[0]] < 0) {
             const nextEnemy = battlefield.enemies[newTurns[0] - battlefield.party.length];
             console.log('Next enemy is', nextEnemy);
-            console.log('Next enemy HP is', nextEnemy.currentHP);
             nextAlive = nextEnemy.currentHP > 0;
         } else {
             const nextAlly = battlefield.positions[newTurns[0]];
             console.log('Next ally is', nextAlly);
-            console.log('Next ally HP is', nextAlly.currentHP);
             nextAlive = nextAlly.currentHP > 0;
         }
     } while (!nextAlive);
@@ -160,7 +158,6 @@ function enemyTurn(battlefield, catAnims, setGameUI) {
 
 // Player turn
 export function playerTurn(battlefield, setBattlefield, isSpecial, setGameUI, catAnims) {
-    console.log('Player turn');
     setGameUI.menu.show(false);
 
     let newBattlefield = {...battlefield};
@@ -187,9 +184,6 @@ export function playerTurn(battlefield, setBattlefield, isSpecial, setGameUI, ca
     // API call
     battleUpdate(result.party);
 
-    isSpecial 
-        ? console.log(`${newBattlefield.positions[newBattlefield.turns[0]].name} uses their special!`) 
-        : console.log(`${newBattlefield.positions[newBattlefield.turns[0]].name} attacks!`);
     newBattlefield.turns = nextTurn(newBattlefield.turns, newBattlefield);
     setBattlefield(newBattlefield);
     console.log('After player turn:', newBattlefield);
