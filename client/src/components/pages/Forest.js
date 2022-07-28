@@ -65,6 +65,10 @@ function Forest({ userData }) {
     const [menuShow, setMenuShow] = useState(false);
     const [allowAct, setAllowAct] = useState(false);
     const [currentCat, setCurrentCat] = useState({ name: "", class: "Mage" });
+    const [currentEnemy, setCurrentEnemy] = useState({
+        name: "",
+        class: "Mage",
+    });
     const setGameUI = {
         menu: {
             show: setMenuShow,
@@ -73,6 +77,7 @@ function Forest({ userData }) {
             allow: setAllowAct,
         },
         currentCat: setCurrentCat,
+        currentEnemy: setCurrentEnemy,
         sounds: {
             stop: stop,
             victory: victory,
@@ -166,9 +171,7 @@ function Forest({ userData }) {
                                     {enemy.currentHP > 0 ? (
                                         <div
                                             className={
-                                                i ===
-                                                battlefield.turns[0] -
-                                                    battlefield.party.length
+                                                i === currentEnemy
                                                     ? "align-self-center"
                                                     : ""
                                             }

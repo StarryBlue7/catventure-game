@@ -145,7 +145,10 @@ function enemyTurn(battlefield, catAnims, setGameUI) {
         "Enemy turn with id:",
         battlefield.positions[battlefield.turns[0]]
     );
+
     const enemyPosition = battlefield.turns[0];
+    // Move enemy sprite to active position
+    setGameUI.currentEnemy(enemyPosition - battlefield.party.length);
     const enemy =
         battlefield.enemies[
             battlefield.positions[enemyPosition] + battlefield.enemies.length
@@ -289,6 +292,7 @@ function enemyTurns(battlefield, setBattlefield, setGameUI, catAnims) {
                     "Enemy turns ended, next turn for:",
                     newBattlefield.positions[newBattlefield.turns[0]].name
                 );
+                setGameUI.currentEnemy(null);
                 setGameUI.currentCat(
                     newBattlefield.positions[newBattlefield.turns[0]]
                 );
