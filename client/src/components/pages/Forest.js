@@ -6,7 +6,7 @@ import { Button, Col, Modal, Row, ProgressBar } from "react-bootstrap";
 import useSound from "use-sound";
 import Sounds from "../../sounds";
 
-import { Enemy, newBattle, playerTurn } from "../../game/battle";
+import { newBattle, playerTurn } from "../../game/battle";
 import Jobs from "../../data/jobs.json";
 import Sprites from "../sprites/Sprites";
 import EnemySprites from "../sprites/EnemySprites";
