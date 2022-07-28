@@ -23,5 +23,8 @@
   "homepage": "https://github.com/StarryBlue7/catventure-game#readme",
   "dependencies": {
     "concurrently": "^6.4.0"
+  },
+  "devDependencies": {
+    "prettier": "2.7.1"
   }
 }
