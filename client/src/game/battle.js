@@ -3,7 +3,7 @@ import Auth from "../utils/auth";
 import actions from "./actions";
 import { randomGen, randomAliveTarget } from "../utils/RNG";
 
-// Update db with 
+// Update db with current party status
 async function battleUpdate(catsArray) {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -13,7 +13,7 @@ async function battleUpdate(catsArray) {
     try {
         const responseCats = await updateCat(catsArray, token);
         if (!responseCats.ok) {
-            throw new Error('something went wrong!');
+            throw new Error("something went wrong!");
         }
     } catch (err) {
         console.error(err);
@@ -41,7 +41,9 @@ export class Enemy {
 
 // Damage calculation for enemies
 function calcDamage(power, level = 3, multiplier = 1) {
-    const damage = Math.ceil(Math.log(power) * (Math.random() * level) * multiplier);
+    const damage = Math.ceil(
+        Math.log(power) * (Math.random() * level) * multiplier
+    );
     return damage > 0 ? damage : 0;
 }
 
@@ -50,7 +52,7 @@ function partyTotals(party) {
     let totalHP = 0;
     let totalPower = 0;
     let totalLevels = 0;
-    party.forEach(cat => {
+    party.forEach((cat) => {
         totalHP += cat.maxHP;
         totalPower += cat.power;
         totalLevels += cat.level;
@@ -64,25 +66,39 @@ function generateEnemies(count, partyTotal) {
     const hpSpread = 5;
     const powerSpread = 3;
     const hpScaling = 1.8;
-    const powerScaling = .6;
-    const baseHP = Math.ceil((partyTotal.totalHP * hpScaling) / (count + Math.log(count)));
-    const basePower = Math.ceil((partyTotal.totalPower * powerScaling) / (count + (2 * Math.log(count))));
+    const powerScaling = 0.6;
+    const baseHP = Math.ceil(
+        (partyTotal.totalHP * hpScaling) / (count + Math.log(count))
+    );
+    const basePower = Math.ceil(
+        (partyTotal.totalPower * powerScaling) / (count + 2 * Math.log(count))
+    );
 
     const enemies = [];
-    for (let i = -1; i > - count - 1; i--) {
+    for (let i = -1; i > -count - 1; i--) {
         const randomImg = Math.floor(Math.random() * 3);
-        enemies.push(new Enemy(levels, baseHP, hpSpread, basePower, powerSpread, i, randomImg))
+        enemies.push(
+            new Enemy(
+                levels,
+                baseHP,
+                hpSpread,
+                basePower,
+                powerSpread,
+                i,
+                randomImg
+            )
+        );
     }
     return enemies;
 }
 
-// Generate a battlefield position structure 
+// Generate a battlefield position structure
 function battlePositions(party, enemies) {
     const positions = [];
-    party.forEach(cat => {
+    party.forEach((cat) => {
         positions.push(cat);
     });
-    enemies.forEach(enemy => {
+    enemies.forEach((enemy) => {
         positions.push(enemy.id);
     });
     return positions;
@@ -93,7 +109,7 @@ function turnOrder(positions) {
     let turnOrder = [];
     while (turnOrder.length < positions.length) {
         const order = Math.floor(Math.random() * positions.length);
-        if(turnOrder.indexOf(order) === -1) {
+        if (turnOrder.indexOf(order) === -1) {
             turnOrder.push(order);
         }
     }
@@ -105,35 +121,42 @@ function nextTurn(turns, battlefield) {
     let newTurns = [...turns];
     let nextAlive = true;
     do {
-        console.log('Next turn');
+        console.log("Next turn");
         const moved = newTurns.shift();
         newTurns.push(moved);
-        console.log('New turn order', newTurns);
+        console.log("New turn order", newTurns);
         if (battlefield.positions[newTurns[0]] < 0) {
-            const nextEnemy = battlefield.enemies[newTurns[0] - battlefield.party.length];
-            console.log('Next enemy is', nextEnemy);
-            console.log('Next enemy HP is', nextEnemy.currentHP);
+            const nextEnemy =
+                battlefield.enemies[newTurns[0] - battlefield.party.length];
+            console.log("Next enemy is", nextEnemy);
             nextAlive = nextEnemy.currentHP > 0;
         } else {
             const nextAlly = battlefield.positions[newTurns[0]];
-            console.log('Next ally is', nextAlly);
-            console.log('Next ally HP is', nextAlly.currentHP);
+            console.log("Next ally is", nextAlly);
             nextAlive = nextAlly.currentHP > 0;
         }
     } while (!nextAlive);
-    return newTurns;  
+    return newTurns;
 }
 
 // Enemy turn
 function enemyTurn(battlefield, catAnims, setGameUI) {
-    console.log('Enemy turn with id:', battlefield.positions[battlefield.turns[0]]);
+    console.log(
+        "Enemy turn with id:",
+        battlefield.positions[battlefield.turns[0]]
+    );
     const enemyPosition = battlefield.turns[0];
-    const enemy = battlefield.enemies[battlefield.positions[enemyPosition] + battlefield.enemies.length];
-    
+    const enemy =
+        battlefield.enemies[
+            battlefield.positions[enemyPosition] + battlefield.enemies.length
+        ];
+
     // Check for all dead party or enemies
     let newBattlefield = battleContinues(battlefield);
-    if (!newBattlefield) { return }
-    
+    if (!newBattlefield) {
+        return;
+    }
+
     // Enemy action
     const targetIndex = randomAliveTarget(newBattlefield.party);
     const target = newBattlefield.party[targetIndex];
@@ -145,25 +168,32 @@ function enemyTurn(battlefield, catAnims, setGameUI) {
     setGameUI.sounds.enemyAttack();
 
     // Animate damage on target, then die if HP < 1
-    catAnims[targetIndex][1]('damaged');
+    catAnims[targetIndex][1]("damaged");
     if (target.currentHP < 1) {
         setTimeout(() => {
-            catAnims[targetIndex][1]('die');
+            catAnims[targetIndex][1]("die");
         }, 2000);
     }
-    
+
     // API call to update db
     battleUpdate(newParty);
 
-    console.log(`Monster in position ${enemyPosition} attacks ${target.name} for ${damage}`)
+    console.log(
+        `Monster in position ${enemyPosition} attacks ${target.name} for ${damage}`
+    );
 }
 
 // Player turn
-export function playerTurn(battlefield, setBattlefield, isSpecial, setGameUI, catAnims) {
-    console.log('Player turn');
+export function playerTurn(
+    battlefield,
+    setBattlefield,
+    isSpecial,
+    setGameUI,
+    catAnims
+) {
     setGameUI.menu.show(false);
 
-    let newBattlefield = {...battlefield};
+    let newBattlefield = { ...battlefield };
     let newParty = [...battlefield.party];
     let newEnemies = [...battlefield.enemies];
 
@@ -174,12 +204,14 @@ export function playerTurn(battlefield, setBattlefield, isSpecial, setGameUI, ca
     let result;
     if (isSpecial) {
         result = actions[turnClass].special(turnCat, newParty, newEnemies);
-        catAnims[turnCatPosition][1]('special');
+        catAnims[turnCatPosition][1]("special");
     } else {
         result = actions[turnClass].attack(turnCat, newParty, newEnemies);
-        catAnims[turnCatPosition][1]('attack');
+        catAnims[turnCatPosition][1]("attack");
     }
-    setTimeout(() => {catAnims[turnCatPosition][1]('idle')}, 2000);
+    setTimeout(() => {
+        catAnims[turnCatPosition][1]("idle");
+    }, 2000);
 
     newBattlefield.party = result.party;
     newBattlefield.enemies = result.enemies;
@@ -187,21 +219,18 @@ export function playerTurn(battlefield, setBattlefield, isSpecial, setGameUI, ca
     // API call
     battleUpdate(result.party);
 
-    isSpecial 
-        ? console.log(`${newBattlefield.positions[newBattlefield.turns[0]].name} uses their special!`) 
-        : console.log(`${newBattlefield.positions[newBattlefield.turns[0]].name} attacks!`);
     newBattlefield.turns = nextTurn(newBattlefield.turns, newBattlefield);
     setBattlefield(newBattlefield);
-    console.log('After player turn:', newBattlefield);
-    enemyTurns(newBattlefield, setBattlefield, setGameUI, catAnims)
+    console.log("After player turn:", newBattlefield);
+    enemyTurns(newBattlefield, setBattlefield, setGameUI, catAnims);
 }
 
 // Prevent negative HPs & overheals and check if all party or all enemies dead
 function battleContinues(battlefield, setGameUI) {
-    let newBattlefield = {...battlefield};
+    let newBattlefield = { ...battlefield };
     let partyTotal = 0;
     let enemyTotal = 0;
-    newBattlefield.party.forEach(ally => {
+    newBattlefield.party.forEach((ally) => {
         if (ally.currentHP < 1) {
             ally.currentHP = 0;
         } else if (ally.currentHP > ally.maxHP) {
@@ -211,9 +240,9 @@ function battleContinues(battlefield, setGameUI) {
     });
     if (partyTotal === 0) {
         endBattle(newBattlefield.party, false);
-        return false; 
+        return false;
     }
-    newBattlefield.enemies.forEach(enemy => {
+    newBattlefield.enemies.forEach((enemy) => {
         if (enemy.currentHP < 1) {
             enemy.currentHP = 0;
         } else if (enemy.currentHP > enemy.maxHP) {
@@ -225,7 +254,7 @@ function battleContinues(battlefield, setGameUI) {
         setGameUI.sounds.stop();
         setGameUI.sounds.victory();
         endBattle(newBattlefield.party, true);
-        return false; 
+        return false;
     }
 
     return newBattlefield;
@@ -233,8 +262,8 @@ function battleContinues(battlefield, setGameUI) {
 
 // Cycle through and executes any enemy turns
 function enemyTurns(battlefield, setBattlefield, setGameUI, catAnims) {
-    let newBattlefield = battleContinues(battlefield, setGameUI)
-    if (!newBattlefield) { 
+    let newBattlefield = battleContinues(battlefield, setGameUI);
+    if (!newBattlefield) {
         return;
     } else {
         const takeEnemyTurns = setInterval(() => {
@@ -242,24 +271,32 @@ function enemyTurns(battlefield, setBattlefield, setGameUI, catAnims) {
             if (newBattlefield.positions[newBattlefield.turns[0]] < 0) {
                 enemyTurn(newBattlefield, catAnims, setGameUI);
                 newBattlefield = battleContinues(newBattlefield, setGameUI);
-                if (!newBattlefield) { 
+                if (!newBattlefield) {
                     return setBattlefield(newBattlefield);
                 }
-                newBattlefield.turns = nextTurn(newBattlefield.turns, newBattlefield);
+                newBattlefield.turns = nextTurn(
+                    newBattlefield.turns,
+                    newBattlefield
+                );
             } else {
                 // End enemy turns phases for player turn
                 clearInterval(takeEnemyTurns);
                 newBattlefield = battleContinues(newBattlefield, setGameUI);
-                if (!newBattlefield) { 
+                if (!newBattlefield) {
                     return setBattlefield(newBattlefield);
                 }
-                console.log('Enemy turns ended, next turn for:', newBattlefield.positions[newBattlefield.turns[0]].name);
-                setGameUI.currentCat(newBattlefield.positions[newBattlefield.turns[0]]);
+                console.log(
+                    "Enemy turns ended, next turn for:",
+                    newBattlefield.positions[newBattlefield.turns[0]].name
+                );
+                setGameUI.currentCat(
+                    newBattlefield.positions[newBattlefield.turns[0]]
+                );
                 setGameUI.action.allow(true);
                 setGameUI.menu.show(true);
             }
             setBattlefield(newBattlefield);
-            console.log('After enemy phase:', newBattlefield);
+            console.log("After enemy phase:", newBattlefield);
         }, 3000);
     }
     setBattlefield(newBattlefield);
@@ -271,16 +308,16 @@ export function newBattle(party, setBattlefield, setGameUI, catAnims) {
     const positions = battlePositions(party, enemies);
     const turns = turnOrder(positions);
     const newBattlefield = { party, enemies, positions, turns, continue: true };
-    console.log('Generated battlefield', newBattlefield);
+    console.log("Generated battlefield", newBattlefield);
     // Initial enemy turns
     enemyTurns(newBattlefield, setBattlefield, setGameUI, catAnims);
 }
 
 // End battle and send user back to Village
 async function endBattle(party, isWin) {
-    isWin ? console.log('Party won!') : console.log('Party lost!');
+    isWin ? console.log("Party won!") : console.log("Party lost!");
     if (isWin) {
-        party.forEach(cat => {
+        party.forEach((cat) => {
             if (cat.currentHP > 0) {
                 cat.experience += 6;
                 console.log(`${cat.name} gains 6 XP!`);

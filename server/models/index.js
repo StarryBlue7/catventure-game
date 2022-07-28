@@ -1,4 +1,4 @@
-const User = require('./User');
-const Cat = require('./Cat');
+const User = require("./User");
+const Cat = require("./Cat");
 
-module.exports = { User, Cat }
+module.exports = { User, Cat };
