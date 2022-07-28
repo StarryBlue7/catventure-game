@@ -8,7 +8,7 @@ Catventure! is a browser-based video game where you assemble a team of fantasy r
 
 ## Deployed Link
 
-* [See Live Site](https://catventure.herokuapp.com/)
+-   [See Live Site](https://catventure.herokuapp.com/)
 
 ## Technical Details
 
@@ -26,11 +26,11 @@ For this application we built our own server and did not use any external API's.
 
 ## Time Gating
 
-One of the signature features of browser-based gamees is the implementation of time-gating mechanics, which enforce that users can only access certain benefits once per a set time interval, whether it's one hour or one day. 
+One of the signature features of browser-based gamees is the implementation of time-gating mechanics, which enforce that users can only access certain benefits once per a set time interval, whether it's one hour or one day.
 
 ![Cat Tavern](/screenshots/tavern.png)
 
-And from a game-balancing standpoint, we did not want our users to be able to consistently refresh the page to either spawn new cats or open infinitely many treasures. That led us to time-gating the user, which you can see on lines 99 & 101. We have an attribute in our user model called "lockoutTavern" in which the first time this function runs, the exact time/date are saved to our database. 
+And from a game-balancing standpoint, we did not want our users to be able to consistently refresh the page to either spawn new cats or open infinitely many treasures. That led us to time-gating the user, which you can see on lines 99 & 101. We have an attribute in our user model called "lockoutTavern" in which the first time this function runs, the exact time/date are saved to our database.
 
 ![Time gating function code snippet](/screenshots/snippet-lockout-api.png)
 
@@ -62,9 +62,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-* IDE to view/edit source code (e.g. Visual Studio Code).
-* [Node.js](https://nodejs.org/en/).
-* [MongoDB](https://www.mongodb.com/).
+-   IDE to view/edit source code (e.g. Visual Studio Code).
+-   [Node.js](https://nodejs.org/en/).
+-   [MongoDB](https://www.mongodb.com/).
 
 ### Installing
 
@@ -90,31 +90,32 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## Built With
 
-* [React Sprite Animator](https://www.npmjs.com/package/react-sprite-animator)
-* [React useSound](https://www.joshwcomeau.com/react/announcing-use-sound-react-hook/)
-* [React](https://reactjs.org/)
-* [React Bootstrap](https://react-bootstrap.github.io/)
-* [Mongoose](https://mongoosejs.com/)
-* [JWT/JWT Decode](https://jwt.io/)
-* [Express](https://expressjs.com/)
-* [Bcrypt](https://www.npmjs.com/package/bcrypt)
-* [GitHub](https://github.com/)
-* [Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-* [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
-* [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+-   [React Sprite Animator](https://www.npmjs.com/package/react-sprite-animator)
+-   [React useSound](https://www.joshwcomeau.com/react/announcing-use-sound-react-hook/)
+-   [React](https://reactjs.org/)
+-   [React Bootstrap](https://react-bootstrap.github.io/)
+-   [Mongoose](https://mongoosejs.com/)
+-   [JWT/JWT Decode](https://jwt.io/)
+-   [Express](https://expressjs.com/)
+-   [Bcrypt](https://www.npmjs.com/package/bcrypt)
+-   [GitHub](https://github.com/)
+-   [Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+-   [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
+-   [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
 
 ## Authors
 
-|**Emily Dorgan** | **Vince Lee** | **Derek Banister** |
-|-----------------|---------------|------------------|
-| - [Portfolio](https://emdorgan.github.io/portfolio/)| - [Portfolio](https://starryblue7.github.io/portfolio-iv/)| - [Portfolio](https://tylerbyeager.github.io/first-portfolio/) |
-| - [Github](https://github.com/emdorgan)| - [Github](https://github.com/StarryBlue7) | - [Github](https://github.com/DerekBanister) |
-| - [LinkedIn](https://www.linkedin.com/in/emily-dorgan/)| - [LinkedIn](https://www.linkedin.com/in/vince-lee/) | - [LinkedIn](https://www.linkedin.com/in/DerekBanister/)|
+| **Emily Dorgan**                                        | **Vince Lee**                                              | **Derek Banister**                                             |
+| ------------------------------------------------------- | ---------------------------------------------------------- | -------------------------------------------------------------- |
+| - [Portfolio](https://emdorgan.github.io/portfolio/)    | - [Portfolio](https://starryblue7.github.io/portfolio-iv/) | - [Portfolio](https://tylerbyeager.github.io/first-portfolio/) |
+| - [Github](https://github.com/emdorgan)                 | - [Github](https://github.com/StarryBlue7)                 | - [Github](https://github.com/DerekBanister)                   |
+| - [LinkedIn](https://www.linkedin.com/in/emily-dorgan/) | - [LinkedIn](https://www.linkedin.com/in/vince-lee/)       | - [LinkedIn](https://www.linkedin.com/in/DerekBanister/)       |
 
 ## Acknowledgments
-* Pixel-art backgrounds provided by [Jesse M](https://jesse-m.itch.io/jungle-pack), [Szadi Art](https://szadiart.itch.io/pixel-fantasy-caves), & [Anokolisa](https://anokolisa.itch.io/montain-forest-asset-pack).
-* Pixel-art enemy sprites also provided by [Szadi Art](https://szadiart.itch.io/animated-character-pack).
-* Background music provided by [Fesliyan Studios](https://www.fesliyanstudios.com/).
-* Battle sound effects provided by [Mixkit](https://mixkit.co/).
+
+-   Pixel-art backgrounds provided by [Jesse M](https://jesse-m.itch.io/jungle-pack), [Szadi Art](https://szadiart.itch.io/pixel-fantasy-caves), & [Anokolisa](https://anokolisa.itch.io/montain-forest-asset-pack).
+-   Pixel-art enemy sprites also provided by [Szadi Art](https://szadiart.itch.io/animated-character-pack).
+-   Background music provided by [Fesliyan Studios](https://www.fesliyanstudios.com/).
+-   Battle sound effects provided by [Mixkit](https://mixkit.co/).
 
 ![Catventure Logo](/screenshots/catventure-icon.png)

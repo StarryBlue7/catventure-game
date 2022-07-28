@@ -1,5 +1,4 @@
-const { Schema } = require('mongoose')
-
+const { Schema } = require("mongoose");
 
 const catSchema = new Schema({
     //name?
@@ -8,7 +7,7 @@ const catSchema = new Schema({
         required: true,
     },
     class: {
-        type: String
+        type: String,
     },
     // level
     level: {
@@ -34,6 +33,5 @@ const catSchema = new Schema({
         default: 1,
     },
 });
-
 
 module.exports = catSchema;

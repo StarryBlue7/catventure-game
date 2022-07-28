@@ -1,16 +1,20 @@
-const { User, Cat } = require('../models');
+const { User, Cat } = require("../models");
 
-const { signToken } = require('../utils/auth');
+const { signToken } = require("../utils/auth");
 
 module.exports = {
-
     async getUser({ user = null, params }, res) {
         //find user by id or username
         //bring cats that are assigned to that model
-        const findUser = await User.findOne({ $or: [{ _id: user ? user._id : params.id }, { username: params.username }], });
+        const findUser = await User.findOne({
+            $or: [
+                { _id: user ? user._id : params.id },
+                { username: params.username },
+            ],
+        });
 
         if (!findUser) {
-            return res.status(400).json({ message: 'Cannot find user' });
+            return res.status(400).json({ message: "Cannot find user" });
         }
         res.json(findUser);
     },
@@ -20,7 +24,7 @@ module.exports = {
         const findUsers = await User.find({});
 
         if (!findUsers) {
-            return res.status(400).json({ message: 'Cannot find users' });
+            return res.status(400).json({ message: "Cannot find users" });
         }
         res.json(findUsers);
     },
@@ -29,7 +33,7 @@ module.exports = {
         const user = await User.create(body);
 
         if (!user) {
-            return res.status(400).json({ message: 'Cannot create user' });
+            return res.status(400).json({ message: "Cannot create user" });
         }
         const token = signToken(user);
         res.json({ token, user });
@@ -44,7 +48,7 @@ module.exports = {
         const correctPw = await user.isCorrectPassword(body.password);
 
         if (!correctPw) {
-            return res.status(400).json({ message: 'Wrong password!' });
+            return res.status(400).json({ message: "Wrong password!" });
         }
         const token = signToken(user);
         res.json({ token, user });
@@ -72,7 +76,9 @@ module.exports = {
             { new: true }
         );
         if (!removedCat) {
-            return res.status(404).json({ message: "Could not remove your cat!" });
+            return res
+                .status(404)
+                .json({ message: "Could not remove your cat!" });
         }
         return res.json(removedCat);
     },
@@ -82,10 +88,10 @@ module.exports = {
                 cat.level = cat.level + 1;
                 cat.experience = cat.experience - 20;
                 switch (cat.class) {
-                    case 'Warrior':
+                    case "Warrior":
                         cat.maxHP = cat.maxHP + 3;
                         break;
-                    case 'Rogue':
+                    case "Rogue":
                         cat.maxHP = cat.maxHP + 2;
                         break;
                     default:
@@ -93,14 +99,16 @@ module.exports = {
                 }
             }
             return cat;
-        })
+        });
         const updatedCat = await User.findOneAndUpdate(
             { _id: user._id },
             { $set: { cats: newBody } },
             { new: true }
         );
         if (!updatedCat) {
-            return res.status(404).json({ message: "Could not boost your cat!" });
+            return res
+                .status(404)
+                .json({ message: "Could not boost your cat!" });
         }
         return res.json(updatedCat);
     },
@@ -112,9 +120,11 @@ module.exports = {
             { new: true }
         );
         if (!lastTreasure) {
-            return res.status(404).json({ message: "Could not set your lastTreasure" });
+            return res
+                .status(404)
+                .json({ message: "Could not set your lastTreasure" });
         }
-        return res.json(lastTreasure)
+        return res.json(lastTreasure);
     },
 
     async updateHeal({ user }, res) {
@@ -125,9 +135,11 @@ module.exports = {
             { new: true }
         );
         if (!lastHeal) {
-            return res.status(404).json({ message: "Could not set your lastHeal" });
+            return res
+                .status(404)
+                .json({ message: "Could not set your lastHeal" });
         }
-        return res.json(lastHeal)
+        return res.json(lastHeal);
     },
 
     async updateRecruit({ user }, res) {
@@ -138,9 +150,11 @@ module.exports = {
             { new: true }
         );
         if (!lastRecruit) {
-            return res.status(404).json({ message: "Could not set your lastRecruit" });
+            return res
+                .status(404)
+                .json({ message: "Could not set your lastRecruit" });
         }
-        return res.json(lastRecruit)
+        return res.json(lastRecruit);
     },
     async addTavernCat({ user, body }, res) {
         console.log(user);
@@ -164,8 +178,10 @@ module.exports = {
             { new: true }
         );
         if (!lastRecruit) {
-            return res.status(404).json({ message: "Could not set your lastRecruit" });
+            return res
+                .status(404)
+                .json({ message: "Could not set your lastRecruit" });
         }
-        return res.json(lastRecruit)
+        return res.json(lastRecruit);
     },
-}
+};

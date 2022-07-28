@@ -1,43 +1,45 @@
-const { Schema, model } = require('mongoose')
-const bcrypt = require('bcrypt');
-const catSchema = require('./Cat');
+const { Schema, model } = require("mongoose");
+const bcrypt = require("bcrypt");
+const catSchema = require("./Cat");
 
-const userSchema = new Schema({
-    // username
-    username: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    // password
-    password: {
-        type: String,
-        required: true,
-    },
+const userSchema = new Schema(
+    {
+        // username
+        username: {
+            type: String,
+            required: true,
+            unique: true,
+        },
+        // password
+        password: {
+            type: String,
+            required: true,
+        },
 
-    lastTreasure: {
-        type: Date,
+        lastTreasure: {
+            type: Date,
+        },
 
-    },
+        lastHeal: {
+            type: Date,
+        },
 
-    lastHeal: {
-        type: Date
-    },
+        lastRecruit: {
+            type: Date,
+        },
+        lockoutTavernCat: {
+            type: Date,
+        },
 
-    lastRecruit: {
-        type: Date
+        currentTavernCats: [
+            {
+                class: String,
+                power: Number,
+                maxHP: Number,
+            },
+        ],
+        cats: [catSchema],
     },
-    lockoutTavernCat: {
-        type: Date
-    },
-
-    currentTavernCats: [{
-        class: String,
-        power: Number,
-        maxHP: Number,
-    }],
-    cats: [catSchema],
-},
     {
         toJSON: {
             virtuals: true,
@@ -46,8 +48,8 @@ const userSchema = new Schema({
 );
 
 // hashing
-userSchema.pre('save', async function (next) {
-    if (this.isNew || this.isModified('password')) {
+userSchema.pre("save", async function (next) {
+    if (this.isNew || this.isModified("password")) {
         const saltRounds = 10;
         this.password = await bcrypt.hash(this.password, saltRounds);
     }
@@ -61,10 +63,10 @@ userSchema.methods.isCorrectPassword = async function (password) {
 };
 
 //amount of cats per user
-userSchema.virtual('catCount').get(function () {
+userSchema.virtual("catCount").get(function () {
     return this.cats.length;
 });
 
-const User = model('User', userSchema);
+const User = model("User", userSchema);
 
 module.exports = User;

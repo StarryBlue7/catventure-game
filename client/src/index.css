@@ -1,143 +1,146 @@
 :root {
-  --title-font: 'Pacifico', 'Montserrat';
-  --main-font: "Georgia, 'Times New Roman', Times, serif";
+    --title-font: "Pacifico", "Montserrat";
+    --main-font: "Georgia, 'Times New Roman', Times, serif";
 }
 
 #root {
-  min-height: 100vh;
+    min-height: 100vh;
 }
-h1, h2, h3 {
-  font-family: var(--title-font);
+h1,
+h2,
+h3 {
+    font-family: var(--title-font);
 }
 
-p, div, header a {
-  font-family: var(--main-font);
+p,
+div,
+header a {
+    font-family: var(--main-font);
 }
 
 p {
-  padding: 0;
-  margin: 0;
+    padding: 0;
+    margin: 0;
 }
 .logo {
-  width: 500px;
+    width: 500px;
 }
-.custom-button:hover, 
+.custom-button:hover,
 .custom-button:active,
 .custom-button:focus {
-  background-color: #00e25e!important;
-  outline: none !important;
-  box-shadow: none !important;
+    background-color: #00e25e !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .custom-button {
-  background-color: #009c5b!important;
-  border: #009c5b!important;
-  font-family: 'Open Sans', sans-serif
+    background-color: #009c5b !important;
+    border: #009c5b !important;
+    font-family: "Open Sans", sans-serif;
 }
 
 .game-button {
-  background-color: #ffa500!important;
-  border: #ffa500;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1em;
+    background-color: #ffa500 !important;
+    border: #ffa500;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1em;
 }
 
 .battle-button {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1em;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1em;
 }
 
-.eat-btn{
-  margin-top: 10px;
-  text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+.eat-btn {
+    margin-top: 10px;
+    text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
 }
-.game-button:hover, 
+.game-button:hover,
 .game-button:active,
 .game-button:focus {
-  background-color: #e29300!important;
-  outline: none !important;
-  box-shadow: none !important;
+    background-color: #e29300 !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .location > img {
-  min-height: 100%;
-  min-width: 100%;
-  position: absolute;
-  bottom: 0;
-  z-index: -1;
+    min-height: 100%;
+    min-width: 100%;
+    position: absolute;
+    bottom: 0;
+    z-index: -1;
 }
 .location {
-  overflow: hidden;
-  color: white;
-  width: 100%;
-  height: 100%;
-  font-size: 1.2em;
-  text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+    overflow: hidden;
+    color: white;
+    width: 100%;
+    height: 100%;
+    font-size: 1.2em;
+    text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
 }
 
 .main-page {
-  height: 100%;
+    height: 100%;
 }
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  background-color: #009c5b;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
+    background-color: #009c5b;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .custom-card {
-  margin: 5px 5px 10px 1%;
-  background-color: rgba(255,255,255,0.5);
-  padding: 0px 15px 0px 15px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  border: 1px solid black;
-  border-radius: 5px;
-  min-width: 200px;
-  /* filter: drop-shadow(4px 4px 5px black) */
+    margin: 5px 5px 10px 1%;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 0px 15px 0px 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid black;
+    border-radius: 5px;
+    min-width: 200px;
+    /* filter: drop-shadow(4px 4px 5px black) */
 }
 
-aside{
-  font-size: 1.2em;
-  height: 80vh;
+aside {
+    font-size: 1.2em;
+    height: 80vh;
 }
 
 .gap-10 {
-  gap: 10px
+    gap: 10px;
 }
 
 /* sets the header component on large desktop screens */
-@media only screen and (min-width: 990px){
-  .logo {
-    position: absolute;
-  }
-  
-  header {
-    height: 160px;
-  }
-  nav {
-    margin-top: 50px;
-  }
+@media only screen and (min-width: 990px) {
+    .logo {
+        position: absolute;
+    }
 
+    header {
+        height: 160px;
+    }
+    nav {
+        margin-top: 50px;
+    }
 }
 
 /* hides the aside bar on smaller screens */
-@media only screen and (max-width: 1300px){
-  aside h2 {
-    display: none;
-  }
-  aside .custom-card {
-    display: none;
-  }
+@media only screen and (max-width: 1300px) {
+    aside h2 {
+        display: none;
+    }
+    aside .custom-card {
+        display: none;
+    }
 }
 
-@media only screen and (max-width: 500px){
-  .logo{
-    width: 100%;
-  }
+@media only screen and (max-width: 500px) {
+    .logo {
+        width: 100%;
+    }
 }
